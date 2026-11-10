@@ -1,3 +1,15 @@
+# Tigris API25 artifact verified — physical testing pending
+
+2026-11-10: the user authorized one additional free cloud build. Run42894116665 passed compilation/assembly,226 JVM tests,75 host tests, mocked shell contracts and both debug/release lint (0errors,79warnings each). All nine previous lint errors are resolved in the verified source. APK minSDK25,DEX037,ZIP/alignment,manifest isolation and API25 v2 signature passed cloud and independent local verification.
+
+APK SHA256 `435b7b1434a467ce801ea58af0b9db4fc6557c81e921d9f80fc65391ed14e4ba`. Runtime source `2ae8bcd8099246fcdbe5e7c19b85cca06d7b198c`; evidence `d9fc2a371383573ae514a89869ce7ef6f6cc8834`. [APK/evidence](https://github.com/lanaxpgg-boop/MantisTV/releases/tag/tigris-verified-42894116665) · [Experimental source](https://github.com/lanaxpgg-boop/MantisTV/tree/experiment/tigris-verified-42894116665).
+
+One6second preparation-only failure exposed a missing new resource in the old patch; the complete patch was source-replayed before the successful build. One additional actual verification build used; no more builds in this window. No physical device commands or installation occurred. Existing Mantis0.4/0.4.1/0.5 APK and app-source hashes remain unchanged. Cloud-only development tools/caches; no local build or new SDK.
+
+Valid experimental signing uses an ephemeral cloud key; persistent update continuity remains unresolved. Hardware startup/navigation/performance, all-firmware support, exact tvOS27 acceptance, Apple integration and full OS replacement are not verified by this result. OptionA remains conditional; Mantis is preserved as the physical fallback. The119-row feature statuses are unchanged.
+
+## Previous checkpoints
+
 # Tigris audit checkpoint — bounded experiment saved
 
 2026-11-10: recommended direction is **Option A conditionally**: Tigris as the proposed primary UI/runtime after API25, AFTMM, fidelity and performance gates. Mantis remains the validated fallback; no primary-codebase switch or app-source overwrite occurred.
