@@ -14,3 +14,7 @@ Physical regression plan on exact AFTMM NS6711/5908:
 Signing: the original0.4 development private key is unavailable. This build retains the established temporary development signing mechanism and separate debug package for isolated QA; it does not establish persistent signing or a data-preserving in-place update path. No persistent credential is created or published. Persistent private signing plus export/import migration remains required before a release can be called safely updatable.
 
 No local SDK downloads, local builds, paid services, firmware/default-launcher/system-package changes or destructive cleanup. Mac resource reserve must remain satisfied. Current119-feature physical audit applies to unchanged0.4;0.4.1 behavior stays unverified until new physical evidence is recorded separately.
+
+## Subsequent physical evidence
+
+Both clock fixes passed real-minute AFTMM regressions in separate0.4.1 debug, source b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Original0.4 is preserved and retains its known defects. See CLOCK-PHYSICAL-QA.md. These narrow passes do not accept the current UI as a faithful tvOS recreation or establish signing continuity.

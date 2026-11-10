@@ -1,0 +1,38 @@
+{
+  "header": {
+    "passed": true,
+    "before": "16:20",
+    "after": "16:21",
+    "device_after": "16:21",
+    "real_wait_seconds": 27,
+    "no_keys_or_page_rebuild_during_wait": true,
+    "accessibility_class": "android.widget.TextView; TextClock subclass is identified by source and packaged build, not accessibility class name"
+  },
+  "reduced": {
+    "passed": true,
+    "before": "16:21",
+    "after": "16:22",
+    "device_after": "16:22",
+    "real_wait_seconds": 11,
+    "real_clock_no_time_setting_changed": true,
+    "no_keys_or_page_rebuild_during_wait": true,
+    "screen_capture_changed": true
+  },
+  "final": {
+    "completed_at_utc": "2026-11-10T15:24:09.046229+00:00",
+    "candidate_header_clock_real_minute_passed": true,
+    "candidate_reduced_clock_real_minute_passed": true,
+    "candidate_clock_pause_resume_passed": true,
+    "candidate_home_and_double_back_escape_passed": true,
+    "candidate_reduce_motion_restored_off": true,
+    "candidate_process_stopped_after_qa": true,
+    "candidate_installed_data_retained": true,
+    "original_preview_apk_sha256": "6cc7dfe086518130770c7ceae6397d3ba1fd1dc8f1bd6a9efc00b2f5b12e30e4",
+    "original_watchlist_fixture_preserved": true,
+    "default_amazon_home_preserved": true,
+    "disabled_package_count": 0,
+    "host_free_bytes": 46961967104,
+    "qa_output_bytes": 5124480,
+    "no_uninstall_data_clear_or_firmware_change": true
+  }
+}

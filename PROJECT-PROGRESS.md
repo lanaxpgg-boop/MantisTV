@@ -56,7 +56,7 @@ Total: **119 distinct audited feature/engineering rows**. These counts are not a
 
 | ID | Planned feature | Status | Source/test evidence and actual gap |
 |---|---|---|---|
-| H01 | Foreground Home screen | Completed and verified. | M.home, M.show; physical 2026-11-10 DEVICE-TEST-REPORT: Physical Home rendering and explicit launch/reopen verified on exact NS6711/5908; screenshot001/018 and LAUNCH-RESULT. Basic foreground Home acceptance only; fidelity separately fails. |
+| H01 | Foreground Home screen | Completed and verified. | M.home, M.show; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA: Physical Home rendering and explicit launch/reopen verified on exact NS6711/5908; screenshot001/018 and LAUNCH-RESULT. Basic foreground Home acceptance only; fidelity separately fails. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged. |
 | H02 | Cinematic hero artwork and poster presentation | Partially implemented. | M.home; app/res: Procedural mountains and static text only; no cinematic title posters, licensed hero feed or video artwork. |
 | H03 | Top Shelf | Partially implemented. | M.home:240-245: At most six local recent app launches; no provider content shelf, previews or recommendations. |
 | H04 | Application dock | Partially implemented. | M.home, M.section: A six-column app grid inside the scrolling page, not a persistent tvOS-style dock. |
@@ -64,7 +64,7 @@ Total: **119 distinct audited feature/engineering rows**. These counts are not a
 | H06 | Recent applications opened through MantisTV | Completed and verified. | M.launch; R.recent; physical 2026-11-10 DEVICE-TEST-REPORT: Official Appstore launch appeared in Recent after own-app process restart; recent-after-restart XML. Only launches through MantisTV are observed. |
 | H07 | Continue Watching | Not implemented. | M.home:243-245; source tree: Only an explicit unavailable message; no provider/session/progress implementation. |
 | H08 | Dynamic Home backgrounds | Partially implemented. | M.show; L.onDraw: Two selected palettes and static Home landscape; periodic landscape motion is fullscreen-screensaver-only. |
-| H09 | Focus transitions and reduced motion | Partially implemented. | M.focus:118-130; physical 2026-11-10 DEVICE-TEST-REPORT: D-pad focus changes and Reduce motion toggle exercised; reduced-motion clock defect reproduced, parallax/timing/fidelity not accepted. |
+| H09 | Focus transitions and reduced motion | Partially implemented. | M.focus:118-130; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA: D-pad focus changes and Reduce motion toggle exercised; reduced-motion clock defect reproduced, parallax/timing/fidelity not accepted. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged. |
 | H10 | tvOS-like focus engine and restoration | Partially implemented. | M.show:144-222; M.section: Android focus plus string tags; duplicate app tags and rebuilt pages limit restoration fidelity. |
 | H11 | Parallax animations | Partially implemented. | L.onDraw:54-61; M.focus: Small horizontal landscape layer drift in screensaver; no app-card tilt/depth or Home parallax engine. |
 | H12 | Liquid Glass-inspired rendering | Partially implemented. | M.glass:103-108: Rounded translucent backgrounds; no blur, optical refraction or material sampling. |
@@ -122,7 +122,7 @@ Total: **119 distinct audited feature/engineering rows**. These counts are not a
 
 | ID | Planned feature | Status | Source/test evidence and actual gap |
 |---|---|---|---|
-| SC01 | Original landscape screensaver | Partially implemented. | L; M.screensaver:558-568; physical 2026-11-10 DEVICE-TEST-REPORT: Landscape rendered under real idle/manual activation, but reduced-motion clock freezes; original procedural scenery remains unlike licensed aerial tvOS screensaver. |
+| SC01 | Original landscape screensaver | Partially implemented. | L; M.screensaver:558-568; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA: Landscape rendered under real idle/manual activation, but reduced-motion clock freezes; original procedural scenery remains unlike licensed aerial tvOS screensaver. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged. |
 | SC02 | High-quality licensed aerial images/video | Not implemented. | app/res; source tree: Only two vector icon/banner resources and procedural artwork; no aerial media assets or player. |
 | SC03 | Automatic idle behavior | Completed and verified. | M.armIdle:76-80; lifecycle methods; physical 2026-11-10 DEVICE-TEST-REPORT: Real no-input idle: Home at~295.6s, screensaver at~327.5s; screenshots002/003. Back dismissal verified; exact trigger instant and all lifecycle cases not measured. |
 | SC04 | Smooth transitions and scene sequencing | Partially implemented. | L.onDraw: Layer translation at nominal 100 ms invalidations; no scene crossfades, media sequencing or hardware smoothness evidence. |
@@ -275,7 +275,7 @@ Private raw package inventory, connection endpoint, screenshots and logs stay lo
 
 ## 10. Next ten prioritized engineering tasks
 
-1. **Repair both clock defects and establish safe signing continuity:** add lifecycle-aware minute updates, including reduced motion; cloud-build and verify API 25/signature/package policy. Preserve installed0.4; do not bypass a certificate mismatch by uninstalling.
+1. **Establish safe signing continuity and data migration:** both clock fixes passed isolated0.4.1 regressions. Preserve installed apps/data and never bypass a certificate mismatch by uninstalling.
 2. **Complete a versioned tvOS 27.2 reference pack:** Home/Top Shelf, Library, Controls, Switcher, Settings, Search, Screensaver and media focused/unfocused/dialog states; measure geometry/type/motion and record source/version/rights. Existing26 images are inherited references only.
 3. **Implement the measured Home/Top Shelf shell:** replace seven page tabs with reference composition and spatial focus navigation; preserve catalog/store/launch logic. Genuine provider content only; keep missing Continue Watching explicit.
 4. **Build the focus/transition system and regressions:** distinct view identity, row/scroll/query/filter restoration, actual hold/repeat/release behavior, measured scaling/parallax/curves and reduced-motion support. Retest favorites long-press with a physical remote.
@@ -287,3 +287,17 @@ Private raw package inventory, connection endpoint, screenshots and logs stay lo
 10. **Progress genuine Apple integration and release acceptance:** evaluate legally reusable AirPlay/companion/media/smart-home implementations, security and licenses; implement and test protocols independently from visuals. Maintain explicit OS-replacement/private-service limits, export/recovery and non-destructive upgrade acceptance.
 
 The definitive product target remains maximum feasible1:1 latest tvOS. A narrow completed smoke row is not a claim of final design, Apple ecosystem, all-firmware or full OS parity.
+
+## 11. Subsequent0.4.1 clock regression milestone
+
+The two clock defects are fixed and passed real-minute regressions in the separate dev.mantistv.home.debug0.4.1/code5 candidate on AFTMM/mantis, Fire OS6.7.1.1(NS6711/5908), Android7.1.2/API25/ARMv7. Header16:20→16:21; reduced-motion screensaver16:21→16:22, with no input/page rebuild during each boundary wait. Preference restored off; pause/resume and Home/double-Back escape passed.
+
+Source:b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Cloud run42842633249 passed API25 compilation, existing host rules, seven selected lint rules and APK signature/manifest/ABI/ZIP/alignment checks. Downloaded debug APK hash/signature/source verified independently. Candidate release:https://github.com/lanaxpgg-boop/MantisTV/releases/tag/clock-candidate-42842633249.
+
+Original0.4 dev.mantistv.home remains installed: exact APK SHA256 and prior watchlist fixture both verified unchanged. Candidate retained but its process stopped after QA; Amazon Home foreground/default, zero disabled packages. No uninstall/data clear/firmware/root/DNS/OTA/launcher mapping change. Signing remains ephemeral; no safe in-place update path is established. Never bypass a mismatch by uninstalling.
+
+Candidate final PSS40.62MiB;357frames/4.76% cumulative jank in this different debug workload, not proof of an optimization. No observed fatal/ANR/OOM in bounded captured relevant logs; no long/thermal soak. Normal Mac reserve restored(~43.7GiB free); combined QA below100MiB. Cloud-only builds, existing QA tools, no SDK/cache downloads or paid services.
+
+Definitive target remains maximum feasible1:1 latest tvOS.0.4.1 does not redesign the seven-tab scaffold, deliver media/Apple integration or prove all-firmware compatibility. All119feature statuses/counts remain unchanged:22narrow completed/verified,4implemented but not physically tested,45partial,46not implemented,2blocked. See documentation/CLOCK-PHYSICAL-QA.md, TVOS-DESIGN-SPEC.md and PROJECT-PROGRESS.md. Next:stable signing/migration, versioned references and measured Home/Top Shelf/focus reconstruction.
+
+The119-row matrix retains its prior status assignments. Supporting clock regression evidence supplements H01/H09/SC01; a clock fix does not complete focus/parallax, licensed aerial media or overall tvOS visual acceptance. The latest actual application build is now0.4.1/code5, source b6f7a673a01619aca100adbcc4abcf97cbf3ab80; original0.4 and its earlier evidence remain immutable baseline history.

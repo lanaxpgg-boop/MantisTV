@@ -2,7 +2,7 @@
 
 Maximum feasible1:1 latest tvOS is the acceptance target.0.4 is preserved as a tested scaffold, not the final design. See TVOS-DESIGN-SPEC.md and PROJECT-PROGRESS.md. Existing upstream baseline and completed build/QA work are retained; prefer legally reusable components after source/license/API 25/ARMv7 review, replace inadequate UI components.
 
-1. **Repair both clock defects and establish safe signing continuity:** add lifecycle-aware minute updates, including reduced motion; cloud-build and verify API 25/signature/package policy. Preserve installed0.4; do not bypass a certificate mismatch by uninstalling.
+1. **Establish safe signing continuity and data migration:** clocks are fixed and verified in isolated0.4.1. Preserve installed apps/data; never bypass a certificate mismatch by uninstalling.
 2. **Complete a versioned tvOS 27.2 reference pack:** Home/Top Shelf, Library, Controls, Switcher, Settings, Search, Screensaver and media focused/unfocused/dialog states; measure geometry/type/motion and record source/version/rights. Existing26 images are inherited references only.
 3. **Implement the measured Home/Top Shelf shell:** replace seven page tabs with reference composition and spatial focus navigation; preserve catalog/store/launch logic. Genuine provider content only; keep missing Continue Watching explicit.
 4. **Build the focus/transition system and regressions:** distinct view identity, row/scroll/query/filter restoration, actual hold/repeat/release behavior, measured scaling/parallax/curves and reduced-motion support. Retest favorites long-press with a physical remote.

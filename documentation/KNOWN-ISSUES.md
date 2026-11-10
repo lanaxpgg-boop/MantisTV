@@ -11,3 +11,7 @@
 - Only one exact firmware smoke-tested. Thermal, long soak, native4K quality, real media/DRM/audio and comprehensive accessibility remain unverified.
 
 See device-test/2026-11-10/DEVICE-TEST-REPORT.md for observed versus inferred evidence. Existing APK/artifacts/commits are preserved.
+
+## Subsequent physical evidence
+
+Both clock fixes passed real-minute AFTMM regressions in separate0.4.1 debug, source b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Original0.4 is preserved and retains its known defects. See CLOCK-PHYSICAL-QA.md. These narrow passes do not accept the current UI as a faithful tvOS recreation or establish signing continuity.

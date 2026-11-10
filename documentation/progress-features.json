@@ -14,8 +14,8 @@
       "id": "H01",
       "feature": "Foreground Home screen",
       "status": "Completed and verified.",
-      "evidence": "M.home, M.show; physical 2026-11-10 DEVICE-TEST-REPORT",
-      "finding": "Physical Home rendering and explicit launch/reopen verified on exact NS6711/5908; screenshot001/018 and LAUNCH-RESULT. Basic foreground Home acceptance only; fidelity separately fails."
+      "evidence": "M.home, M.show; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA",
+      "finding": "Physical Home rendering and explicit launch/reopen verified on exact NS6711/5908; screenshot001/018 and LAUNCH-RESULT. Basic foreground Home acceptance only; fidelity separately fails. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged."
     },
     {
       "group": "Home and navigation",
@@ -78,8 +78,8 @@
       "id": "H09",
       "feature": "Focus transitions and reduced motion",
       "status": "Partially implemented.",
-      "evidence": "M.focus:118-130; physical 2026-11-10 DEVICE-TEST-REPORT",
-      "finding": "D-pad focus changes and Reduce motion toggle exercised; reduced-motion clock defect reproduced, parallax/timing/fidelity not accepted."
+      "evidence": "M.focus:118-130; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA",
+      "finding": "D-pad focus changes and Reduce motion toggle exercised; reduced-motion clock defect reproduced, parallax/timing/fidelity not accepted. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged."
     },
     {
       "group": "Home and navigation",
@@ -342,8 +342,8 @@
       "id": "SC01",
       "feature": "Original landscape screensaver",
       "status": "Partially implemented.",
-      "evidence": "L; M.screensaver:558-568; physical 2026-11-10 DEVICE-TEST-REPORT",
-      "finding": "Landscape rendered under real idle/manual activation, but reduced-motion clock freezes; original procedural scenery remains unlike licensed aerial tvOS screensaver."
+      "evidence": "L; M.screensaver:558-568; physical 2026-11-10 DEVICE-TEST-REPORT; CLOCK-PHYSICAL-QA",
+      "finding": "Landscape rendered under real idle/manual activation, but reduced-motion clock freezes; original procedural scenery remains unlike licensed aerial tvOS screensaver. Subsequent0.4.1 isolated debug source b6f7a673: live header and reduced-motion clock pass real-minute physical checks; CLOCK-PHYSICAL-QA.md. Other fidelity/feature gaps unchanged."
     },
     {
       "group": "Screensaver",
@@ -963,5 +963,12 @@
     }
   ],
   "physical_evidence": "device-test/2026-11-10/DEVICE-TEST-REPORT.md",
-  "product_acceptance": "Maximum feasible1:1 latest tvOS; basic smoke completion is not screen fidelity or integration completion."
+  "product_acceptance": "Maximum feasible1:1 latest tvOS; basic smoke completion is not screen fidelity or integration completion.",
+  "clock_candidate": {
+    "version": "0.4.1-preview",
+    "source_commit": "b6f7a673a01619aca100adbcc4abcf97cbf3ab80",
+    "package": "dev.mantistv.home.debug",
+    "physical_clock_regressions_passed": true,
+    "status_counts_changed": false
+  }
 }

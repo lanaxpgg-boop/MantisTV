@@ -1,0 +1,151 @@
+{
+  "source_commit": "b6f7a673a01619aca100adbcc4abcf97cbf3ab80",
+  "private_raw_evidence_retained_locally": true,
+  "files": [
+    {
+      "file": "LOGS/candidate-alignment.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/candidate-crash-buffer.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/candidate-final-cpuinfo.txt",
+      "bytes": 1874,
+      "sha256": "9b12d8266da84c3579e26e355ae07a60a7c91e76a4f34b11e8bf1c8f47ed6e38"
+    },
+    {
+      "file": "LOGS/candidate-final-gfxinfo.txt",
+      "bytes": 2871,
+      "sha256": "288066323f845a0f55c47e78c34a4f99c84a41c88523963069efec0d7561256d"
+    },
+    {
+      "file": "LOGS/candidate-final-logcat.txt",
+      "bytes": 900,
+      "sha256": "ed5f6bf5e5989a8bd3eff17dba8613430654e13922faa00e9b8ec35b131d6427"
+    },
+    {
+      "file": "LOGS/candidate-final-meminfo.txt",
+      "bytes": 2470,
+      "sha256": "86198cbf6a74d618f2188b825103af194dcb245e45740abd8ede327bdce17fec"
+    },
+    {
+      "file": "LOGS/candidate-final-package.txt",
+      "bytes": 2202,
+      "sha256": "6381c9571ffaec7dc77b55ffe372e7e4d7ec75aeee6a2cea939cda231fbc7606"
+    },
+    {
+      "file": "LOGS/candidate-final-storage.txt",
+      "bytes": 192,
+      "sha256": "8fbeb74cc429a53e8d55756e541c1a5048d05cb1054147dd50c7bb4785a08a47"
+    },
+    {
+      "file": "LOGS/candidate-manifest.txt",
+      "bytes": 1025,
+      "sha256": "2fbfe0a0a55a8ac6fbf935b3aa67cb2512a341e415c532acf7088425797ff6fb"
+    },
+    {
+      "file": "LOGS/candidate-signature.txt",
+      "bytes": 991,
+      "sha256": "9fc6ef5de1a64e52a30a666b7d108f0202d8b8e344aeb219f16bac26f39e03a9"
+    },
+    {
+      "file": "LOGS/first-launch.txt",
+      "bytes": 212,
+      "sha256": "88f82ab5caf71bcb6edc26af7a3eeae79e4a70d7eed267f898b75624847dd04b"
+    },
+    {
+      "file": "LOGS/ui-clock-after-pause-resume.txt",
+      "bytes": 15953,
+      "sha256": "39c72cfa7e652a7b2966e76568dacaf7d6145c703a5c9119b7387d5eceb8af82"
+    },
+    {
+      "file": "LOGS/ui-header-before-observed-class.txt",
+      "bytes": 15953,
+      "sha256": "5eaa28e5dd887977c02f5ea16613baad35829bb6945b59404aab44eb0238b518"
+    },
+    {
+      "file": "LOGS/ui-header-before.txt",
+      "bytes": 15953,
+      "sha256": "a2c828df6f6e3d776a2671b5dc7a108b7b03472b75d4e012d69c96e7b36a65f4"
+    },
+    {
+      "file": "LOGS/ui-header-regression-after.txt",
+      "bytes": 15953,
+      "sha256": "366d99a8be20a1639ebbb50e0bdcdd237dbcbd10f4140cf4420caab0e32e147c"
+    },
+    {
+      "file": "LOGS/ui-header-regression-before.txt",
+      "bytes": 15953,
+      "sha256": "0ecfbd731e6ab2a197a4dbe032366055f158605d64d7f8b4ddf9c4750f187b00"
+    },
+    {
+      "file": "LOGS/ui-original-watchlist-preserved.txt",
+      "bytes": 7950,
+      "sha256": "a8b5fc0d5d1a32bb13d0f019ee09b8dad3581169ca112edffe8b7c3715d62f8f"
+    },
+    {
+      "file": "LOGS/ui-reduced-clock-after.txt",
+      "bytes": 1530,
+      "sha256": "6e5e7b2b3252f8da5ef85802e480d531d504b51d0a677bbf07f48c2b9c57123c"
+    },
+    {
+      "file": "LOGS/ui-reduced-clock-before.txt",
+      "bytes": 1530,
+      "sha256": "9499ae5702c981ad2ece41b2d297201447b3b788de30e2ccb44be3a0216b5f5f"
+    },
+    {
+      "file": "LOGS/ui-reduced-off-focused.txt",
+      "bytes": 9320,
+      "sha256": "0c943cdafec5931dcdca20aa74b1131384bf3d46d91c1e2aa5c18bbf38a52a53"
+    },
+    {
+      "file": "LOGS/ui-reduced-on.txt",
+      "bytes": 9319,
+      "sha256": "4c499be79e5da536c93b4cef38773c6c9f75d7a44dc35a20add4fca2660b1835"
+    },
+    {
+      "file": "LOGS/ui-restore-reduced-on-focused.txt",
+      "bytes": 9319,
+      "sha256": "88b179b06653b812d2261dd33c4646416dec215d88f8d5b2f54fa3cfc5ef0419"
+    },
+    {
+      "file": "LOGS/ui-restored-reduced-off.txt",
+      "bytes": 9320,
+      "sha256": "4f6e1141f068370cca081045e6cc2e0b187705cc0e9a985bb865c33f73a893ed"
+    },
+    {
+      "file": "LOGS/ui-screensaver-focused.txt",
+      "bytes": 9680,
+      "sha256": "f23c10e933ab152a7d65e05c9bc8274e19be9028465506813c48ad6f838f5fdf"
+    },
+    {
+      "file": "SCREENSHOTS/001-candidate-home.png",
+      "bytes": 1303641,
+      "sha256": "f9c61ee1e979db60178b88cf3529fcfa3f00ababd7908d79466a11c4ec999e22"
+    },
+    {
+      "file": "SCREENSHOTS/002-header-before-minute.png",
+      "bytes": 1306223,
+      "sha256": "a72d5e08e0086aba3c08a5dad344e85d5ad7a3d19a4542be8d7644b8a1ec6942"
+    },
+    {
+      "file": "SCREENSHOTS/003-header-after-minute.png",
+      "bytes": 1301770,
+      "sha256": "1ae16afd3d9cdf47ab86a958155edfe277e0933a7cedb4c693458ae5ed59c265"
+    },
+    {
+      "file": "SCREENSHOTS/004-reduced-clock-before.png",
+      "bytes": 507660,
+      "sha256": "86c6cf66999cc9399eaa88c3015ba228483f3d05f36959a6ab281f25f9c7ad3c"
+    },
+    {
+      "file": "SCREENSHOTS/005-reduced-clock-after.png",
+      "bytes": 505438,
+      "sha256": "01bf97291d343ff02b2f4d5dcd0a50ad86489daa2a9502b890bb6d62e43d400f"
+    }
+  ]
+}

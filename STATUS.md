@@ -1,23 +1,11 @@
-# MantisTV status — physical QA and product direction, November10,2026
+# Current checkpoint —0.4.1 clock fixes physically verified
 
-**Milestone:0.4 preview installed and smoke-tested on one exact AFTMM firmware; full tvOS recreation acceptance remains incomplete.** Definitive target is maximum feasible1:1 latest Apple tvOS, not a generic Android TV launcher with glass styling. Current layouts/focus/media integrations fail final fidelity acceptance. See documentation/TVOS-DESIGN-SPEC.md.
+The two clock defects are fixed and passed real-minute regressions in the separate dev.mantistv.home.debug0.4.1/code5 candidate on AFTMM/mantis, Fire OS6.7.1.1(NS6711/5908), Android7.1.2/API25/ARMv7. Header16:20→16:21; reduced-motion screensaver16:21→16:22, with no input/page rebuild during each boundary wait. Preference restored off; pause/resume and Home/double-Back escape passed.
 
-Exact target:Fire OS 6.7.1.1(NS6711/5908), Android7.1.2/API 25, armeabi-v7a. Verified normal install, Home, D-pad/OK, Search, official Appstore launch/Back return, recent history, Menu, Home/double-Back escape, local watchlist save/profile1↔2 isolation/process persistence, manual and real5min idle screensaver. Confirmed stale Home clock and frozen reduced-motion screensaver clock; ADB long-press actions failed, real-remote path outstanding. No observed MantisTV fatal/ANR/OOM in bounded captured relevant logs. About24min mixed QA is not long-term stability acceptance.
+Source:b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Cloud run42842633249 passed API25 compilation, existing host rules, seven selected lint rules and APK signature/manifest/ABI/ZIP/alignment checks. Downloaded debug APK hash/signature/source verified independently. Candidate release:https://github.com/lanaxpgg-boop/MantisTV/releases/tag/clock-candidate-42842633249.
 
-First launch 840 ms; PSS37.58 MiB initial/72.20 MiB post-interaction;2,556 frames/3.21% cumulative jank. These are snapshots/mixed counters, not sustained/native4K performance proof. Exact test/performance/safety evidence:device-test/2026-11-10/DEVICE-TEST-REPORT.md and PERFORMANCE-REPORT.md.
+Original0.4 dev.mantistv.home remains installed: exact APK SHA256 and prior watchlist fixture both verified unchanged. Candidate retained but its process stopped after QA; Amazon Home foreground/default, zero disabled packages. No uninstall/data clear/firmware/root/DNS/OTA/launcher mapping change. Signing remains ephemeral; no safe in-place update path is established. Never bypass a mismatch by uninstalling.
 
-119unique feature rows, exactly one status each:22Completed and verified(narrow behavior/tool scope),4Implemented but not physically tested,45Partially implemented,46Not implemented,2Blocked. No functional pass credits tvOS visual or Apple-protocol fidelity. Full firmware-family support, media/Apple integrations and OS replacement remain unmet.
+Candidate final PSS40.62MiB;357frames/4.76% cumulative jank in this different debug workload, not proof of an optimization. No observed fatal/ANR/OOM in bounded captured relevant logs; no long/thermal soak. Normal Mac reserve restored(~43.7GiB free); combined QA below100MiB. Cloud-only builds, existing QA tools, no SDK/cache downloads or paid services.
 
-APK0.4.0-preview/code4/dev.mantistv.home,29,235bytes; SHA2566cc7dfe086518130770c7ceae6397d3ba1fd1dc8f1bd6a9efc00b2f5b12e30e4; compiled source ab022168a5d8fff173ff0169fd328adb2040be89. Unchanged installed APK retained. Persistent signing/update continuity unresolved; no automatic uninstall/data clear.
-
-User-approved temporary 15 GiB free-space floor/100 MiB QA cap/noSDKdownloads/no localbuilds applied; final~28.3 GiB free/~18.6 MiB evidence. Existing tools only. No paid service. Original Amazon default launcher retained; only MantisTV added; none removed/disabled. No firmware/root/reset/DNS/OTA/launcher mapping change.
-
-Next:repair clocks/signing continuity; obtain versioned latest tvOS screen references; reconstruct measured Home/TopShelf and focus system while preserving working catalog/store/search; then capability-backed Controls/Settings, media and firmware/performance gates. PROJECT-PROGRESS.md contains all features and ten prioritized tasks. This run updates evidence/design/backlog, not runtime source or app version. Public release provenance is recorded separately after actual publication.
-
-## Storage recovery
-
-The latest user-requested recheck confirms 43.79 GiB free against the normal 34.24 GiB reserve (9.54 GiB headroom). The normal reserve is satisfied; the temporary 15 GiB exception is no longer needed. Cloud-only builds and no new local SDK/cache downloads remain in force. This recheck made no device changes. See RESOURCE-RECOVERY.json in the device-test directory.
-
-## 0.4.1 source candidate — verification pending
-
-The two reproduced clock defects have source fixes: native live header clock and minute-boundary reduced-motion screensaver redraw.0.4.1/code5 remains pending cloud and physical regression gates; do not credit it from source changes alone. Preserve installed0.4 and use only the separate debug candidate for new physical QA after artifact validation. Persistent signing remains unresolved. See documentation/CLOCK-FIX-CANDIDATE.md.
+Definitive target remains maximum feasible1:1 latest tvOS.0.4.1 does not redesign the seven-tab scaffold, deliver media/Apple integration or prove all-firmware compatibility. All119feature statuses/counts remain unchanged:22narrow completed/verified,4implemented but not physically tested,45partial,46not implemented,2blocked. See documentation/CLOCK-PHYSICAL-QA.md, TVOS-DESIGN-SPEC.md and PROJECT-PROGRESS.md. Next:stable signing/migration, versioned references and measured Home/Top Shelf/focus reconstruction.

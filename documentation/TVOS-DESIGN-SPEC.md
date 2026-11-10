@@ -46,3 +46,7 @@ Current measured baseline is in PERFORMANCE-REPORT:840 ms first launch,37.58 MiB
 ## Delivery gates
 
 Keep0.4 installed as the baseline. Publish only explicit development prereleases with exact source/APK/certificate/checksum identity and honest known defects. Persistent signing/certificate continuity must be solved before an in-place upgrade; never uninstall user data to bypass mismatch. Use free standard public GitHub Actions runners, no caches or paid services. This run changes evidence/specification/backlog only; no unverified redesign replaces the tested binary. Next source work should repair the two clocks and add reference-measured Home without discarding working app/profile/search logic. Apple ecosystem and full OS replacement gaps remain visible in PROJECT-PROGRESS.
+
+## Subsequent physical evidence
+
+Both clock fixes passed real-minute AFTMM regressions in separate0.4.1 debug, source b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Original0.4 is preserved and retains its known defects. See CLOCK-PHYSICAL-QA.md. These narrow passes do not accept the current UI as a faithful tvOS recreation or establish signing continuity.
