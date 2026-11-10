@@ -1,0 +1,430 @@
+name: Rendering performance and lint gate
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: mantistv-cloud
+  cancel-in-progress: false
+jobs:
+  quality:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      JAVA_TOOL_OPTIONS: -Xmx768m
+    steps:
+      - name: Cloud storage gate
+        run: |
+          python3 - <<'PY'
+          import os
+          s=os.statvfs(os.environ['GITHUB_WORKSPACE'])
+          assert s.f_bavail*s.f_frsize > max(5*1024**3,s.f_blocks*s.f_frsize*.15)+2*1024**3, 'STOP: storage reserve'
+          PY
+      - name: Checkout public source
+        run: git clone --depth 1 "https://github.com/$GITHUB_REPOSITORY.git" project
+      - name: Apply original source refinement once
+        working-directory: project
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          files=json.loads(r'''{
+            "app/src/dev/mantistv/home/LandscapeView.java": [
+              "package dev.mantistv.home;",
+              "import android.content.Context;",
+              "import android.view.View;",
+              "import android.graphics.*;",
+              "import android.os.SystemClock;",
+              "import java.text.SimpleDateFormat;",
+              "import java.util.*;",
+              "/** Original landscape renderer. Paths and gradient are rebuilt only when size changes. */",
+              "public final class LandscapeView extends View {",
+              " private static final int[] SKY={0xff163f50,0xff54747e,0xff141e36};",
+              " private static final int[] LAYERS={0xff4c7479,0xff305565,0xff203b50,0xff16283b};",
+              " private final Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);",
+              " private final Path[] mountains={new Path(),new Path(),new Path(),new Path()};",
+              " private final SimpleDateFormat clockFormat=new SimpleDateFormat(\"HH:mm\",Locale.getDefault());",
+              " private final Date clockDate=new Date();",
+              " private final boolean fullscreen, reduced;",
+              " private final float density;",
+              " private Shader sky;",
+              " private long minute=Long.MIN_VALUE;",
+              " private String clock=\"\";",
+              " public LandscapeView(Context context,boolean full,boolean motionReduced){",
+              "  super(context);fullscreen=full;reduced=motionReduced;density=getResources().getDisplayMetrics().density;",
+              " }",
+              " private float dp(float n){return n*density;}",
+              " @Override protected void onSizeChanged(int w,int h,int oldw,int oldh){",
+              "  super.onSizeChanged(w,h,oldw,oldh);",
+              "  if(w<=0 || h<=0)return;",
+              "  sky=new LinearGradient(0,0,w,h,SKY,null,Shader.TileMode.CLAMP);",
+              "  for(int i=0;i<mountains.length;i++){",
+              "   Path path=mountains[i];path.reset();path.moveTo(-w*.1f,h);path.lineTo(-w*.1f,h*(.62f+i*.09f));",
+              "   for(int x=0;x<9;x++)path.lineTo(x*w/7f,h*(.36f+i*.12f)+(float)Math.sin(x*1.8+i)*h*.1f);",
+              "   path.lineTo(w*1.2f,h);path.close();",
+              "  }",
+              " }",
+              " @Override protected void onDraw(Canvas canvas){",
+              "  super.onDraw(canvas);float w=getWidth(),h=getHeight();",
+              "  paint.setShader(sky);canvas.drawRect(0,0,w,h,paint);paint.setShader(null);",
+              "  long uptime=SystemClock.uptimeMillis();",
+              "  for(int i=0;i<mountains.length;i++){",
+              "   float offset=reduced?0:(float)Math.sin(uptime/18000d+i)*w*.008f;",
+              "   int saved=canvas.save();canvas.translate(offset,0);paint.setColor(LAYERS[i]);canvas.drawPath(mountains[i],paint);canvas.restoreToCount(saved);",
+              "  }",
+              "  if(fullscreen){",
+              "   long now=System.currentTimeMillis();long current=now/60000;",
+              "   if(current!=minute){minute=current;clockDate.setTime(now);clock=clockFormat.format(clockDate);}",
+              "   paint.setColor(0xddffffff);paint.setTextSize(dp(40));canvas.drawText(clock,dp(50),h-dp(70),paint);",
+              "   paint.setTextSize(dp(16));canvas.drawText(\"MANTIS  /  Quiet horizons\",dp(52),h-dp(40),paint);",
+              "   if(!reduced)postInvalidateDelayed(100);",
+              "  }",
+              " }",
+              "}",
+              ""
+            ],
+            "app/AndroidManifest.xml": [
+              "<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\" package=\"dev.mantistv.home\" android:versionCode=\"4\" android:versionName=\"0.4.0-preview\"><uses-sdk android:minSdkVersion=\"25\" android:targetSdkVersion=\"25\"/><uses-feature android:name=\"android.hardware.touchscreen\" android:required=\"false\"/><uses-feature android:name=\"android.software.leanback\" android:required=\"false\"/><uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/><application android:label=\"MantisTV\" android:icon=\"@drawable/icon\" android:banner=\"@drawable/banner\" android:theme=\"@android:style/Theme.Material.NoActionBar\" android:allowBackup=\"false\" android:hardwareAccelerated=\"true\"><activity android:name=\".MainActivity\" android:exported=\"true\" android:screenOrientation=\"landscape\" android:launchMode=\"singleTask\"><intent-filter><action android:name=\"android.intent.action.MAIN\"/><category android:name=\"android.intent.category.LAUNCHER\"/><category android:name=\"android.intent.category.LEANBACK_LAUNCHER\"/></intent-filter></activity></application></manifest>"
+            ],
+            "app/src/dev/mantistv/home/MainActivity.java": [
+              "package dev.mantistv.home;",
+              "import android.app.*;",
+              "import dev.mantistv.home.AppCatalog.AppItem;",
+              "import android.os.*;",
+              "import android.content.*;",
+              "import android.content.pm.*;",
+              "import android.content.res.Configuration;",
+              "import android.graphics.*;",
+              "import android.graphics.drawable.*;",
+              "import android.media.AudioManager;",
+              "import android.net.*;",
+              "import android.provider.Settings;",
+              "import android.text.*;",
+              "import android.util.LruCache;",
+              "import android.view.*;",
+              "import android.view.inputmethod.InputMethodManager;",
+              "import android.widget.*;",
+              "import org.json.*;",
+              "import java.text.SimpleDateFormat;",
+              "import java.util.*;",
+              "import java.util.concurrent.*;",
+              "",
+              "public class MainActivity extends Activity {",
+              " private final Handler handler=new Handler();",
+              " private final ExecutorService worker=Executors.newSingleThreadExecutor();",
+              " private final ArrayList<AppItem> apps=new ArrayList<>();",
+              " private final LruCache<String,Bitmap> icons=new LruCache<String,Bitmap>(2048){protected int sizeOf(String k,Bitmap b){return Math.max(1,b.getByteCount()/1024);}};",
+              " private android.content.SharedPreferences prefs;",
+              " private LinearLayout body, root;",
+              " private String page=\"Home\", profile=\"0\", focusToken=\"nav:Home\";",
+              " private boolean resumed=false, reduced=false, destroyed=false;",
+              " private long lastBack=0;",
+              " private int accent=0xff86e9c6;",
+              " private final Runnable idle=()->screensaver();",
+              " @Override public void onCreate(Bundle state){super.onCreate(state);prefs=getSharedPreferences(\"mantistv\",MODE_PRIVATE);profile=StoreRules.profileId(prefs.getString(\"profile\",\"0\"));reduced=prefs.getBoolean(key(\"reduced\"),false);discover();show(\"Home\");}",
+              " @Override protected void onResume(){super.onResume();resumed=true;discover();if(root!=null)show(page);armIdle();}",
+              " @Override protected void onPause(){resumed=false;handler.removeCallbacks(idle);super.onPause();}",
+              " @Override protected void onDestroy(){destroyed=true;handler.removeCallbacksAndMessages(null);worker.shutdownNow();icons.evictAll();super.onDestroy();}",
+              " @Override public void onUserInteraction(){super.onUserInteraction();armIdle();}",
+              " private void armIdle(){handler.removeCallbacks(idle);if(resumed && !page.equals(\"Screensaver\"))handler.postDelayed(idle,300000);}",
+              " private int dp(float n){return (int)(n*getResources().getDisplayMetrics().density+.5f);}",
+              " private String key(String name){return \"p\"+profile+\".\"+name;}",
+              " private ArrayList<String> list(String name){ArrayList<String> out=new ArrayList<>();try{JSONArray a=new JSONArray(prefs.getString(key(name),\"[]\"));for(int i=0;i<a.length();i++)out.add(a.getString(i));}catch(JSONException ignored){}return out;}",
+              " private void save(String name,List<String> value){prefs.edit().putString(key(name),new JSONArray(value).toString()).apply();}",
+              " private void discover(){apps.clear();apps.addAll(AppCatalog.discover(this));}",
+              " private GradientDrawable glass(int color){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(dp(18));d.setStroke(dp(1),0x33ffffff);return d;}",
+              " private TextView text(String value,int size){TextView t=new TextView(this);t.setText(value);t.setTextSize(size);t.setTextColor(Color.WHITE);t.setPadding(dp(8),dp(6),dp(8),dp(6));return t;}",
+              " private void focus(View v){v.setFocusable(true);v.setOnFocusChangeListener((w,on)->{if(on && w.getTag() instanceof String)focusToken=(String)w.getTag();w.setElevation(on?dp(10):0);if(reduced){w.setScaleX(1);w.setScaleY(1);}else w.animate().scaleX(on?1.045f:1).scaleY(on?1.045f:1).setDuration(140).start();w.setBackground(glass(on?0x995b8587:0x443d4e60));});}",
+              " private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setTextColor(Color.WHITE);b.setTextSize(14);b.setAllCaps(false);b.setPadding(dp(16),dp(6),dp(16),dp(6));b.setBackground(glass(0x443d4e60));focus(b);b.setOnClickListener(v->action.run());return b;}",
+              " private void show(String next){String desired=page.equals(next)?focusToken:\"nav:\"+next;page=next;getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(dp(32),dp(16),dp(32),dp(12));boolean warm=prefs.getBoolean(key(\"warm\"),false);root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,warm?new int[]{0xff342539,0xff131326}:new int[]{0xff103944,0xff101426}));setContentView(root);",
+              "  LinearLayout header=new LinearLayout(this);header.setGravity(Gravity.CENTER_VERTICAL);TextView brand=text(\"MANTIS  /  \"+prefs.getString(\"name\"+profile,\"Profile \"+(Integer.parseInt(profile)+1)),18);brand.setTextColor(accent);header.addView(brand,new LinearLayout.LayoutParams(0,dp(48),1));header.addView(text(new SimpleDateFormat(\"HH:mm\",Locale.getDefault()).format(new Date()),17));root.addView(header);",
+              "  HorizontalScrollView navScroll=new HorizontalScrollView(this);navScroll.setHorizontalScrollBarEnabled(false);LinearLayout nav=new LinearLayout(this);nav.setPadding(0,dp(4),0,dp(8));for(String name:new String[]{\"Home\",\"Library\",\"Search\",\"Recent\",\"Watchlist\",\"Controls\",\"Settings\"}){Button b=button(name,()->show(name));b.setTag(\"nav:\"+name);LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-2,dp(44));lp.setMargins(dp(4),0,dp(4),0);nav.addView(b,lp);}navScroll.addView(nav);root.addView(navScroll);",
+              "  ScrollView scroll=new ScrollView(this);scroll.setClipToPadding(false);body=new LinearLayout(this);body.setOrientation(LinearLayout.VERTICAL);body.setPadding(dp(8),dp(8),dp(8),dp(18));scroll.addView(body);root.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));",
+              "  switch(next){case \"Home\":home();break;case \"Library\":library(\"All apps\");break;case \"Recent\":section(\"Recently opened with MantisTV\",selected(list(\"recent\")));body.addView(text(\"This list tracks launches from MantisTV. Other apps and their tasks are managed by Fire OS.\",14));break;case \"Search\":search();break;case \"Controls\":controls();break;case \"Settings\":settings();break;case \"Watchlist\":watchlist();break;default:page=\"Home\";home();}",
+              "  body.addView(text(\"Menu: controls    Hold OK on an app: favorites and app info    Back: Home / exit\",12));View restored=root.findViewWithTag(desired);if(restored!=null)restored.requestFocus();else nav.getChildAt(0).requestFocus();armIdle();",
+              " }",
+              " private void home(){FrameLayout hero=new FrameLayout(this);hero.setBackground(glass(0x44202d40));hero.addView(new LandscapeView(this,false,reduced),new FrameLayout.LayoutParams(-1,-1));LinearLayout caption=new LinearLayout(this);caption.setOrientation(LinearLayout.VERTICAL);caption.setPadding(dp(20),dp(18),dp(20),dp(16));caption.addView(text(\"YOUR EVENING, REIMAGINED\",13));caption.addView(text(\"Welcome home.\",34));caption.addView(text(\"Your apps. A quieter place to watch.\",17));hero.addView(caption);body.addView(hero,new LinearLayout.LayoutParams(-1,dp(170)));",
+              "  ArrayList<AppItem> fav=selected(list(\"favorites\"));if(fav.isEmpty())fav.addAll(apps.subList(0,Math.min(6,apps.size())));section(\"Dock\",fav);ArrayList<AppItem> recent=selected(list(\"recent\"));if(!recent.isEmpty())section(\"Top Shelf · recently opened\",recent.subList(0,Math.min(6,recent.size())));body.addView(text(\"Continue Watching from streaming providers is not available in this preview. Your local watchlist is in the navigation bar.\",14));}",
+              " private ArrayList<AppItem> selected(List<String> names){ArrayList<AppItem> out=new ArrayList<>();for(String p:names)for(AppItem a:apps)if(a.pkg.equals(p)){out.add(a);break;}return out;}",
+              " private void section(String title,List<AppItem> entries){body.addView(text(title,22));if(entries.isEmpty()){body.addView(text(\"No applications here yet.\",16));return;}GridLayout grid=new GridLayout(this);grid.setColumnCount(6);grid.setClipChildren(false);grid.setPadding(dp(4),dp(8),dp(4),dp(10));for(AppItem a:entries){LinearLayout card=new LinearLayout(this);card.setGravity(Gravity.CENTER);card.setOrientation(LinearLayout.VERTICAL);card.setPadding(dp(8),dp(8),dp(8),dp(6));card.setBackground(glass(0x443d4e60));card.setContentDescription(a.label);card.setTag(\"app:\"+a.pkg);ImageView image=new ImageView(this);image.setScaleType(ImageView.ScaleType.FIT_CENTER);card.addView(image,new LinearLayout.LayoutParams(dp(46),dp(46)));loadIcon(a.pkg,image);TextView label=text(a.label,13);label.setSingleLine(true);label.setEllipsize(TextUtils.TruncateAt.END);label.setGravity(Gravity.CENTER);card.addView(label,new LinearLayout.LayoutParams(-1,dp(34)));focus(card);card.setOnClickListener(v->launch(a));card.setOnLongClickListener(v->{appActions(a);return true;});GridLayout.LayoutParams lp=new GridLayout.LayoutParams();lp.width=0;lp.height=dp(104);lp.columnSpec=GridLayout.spec(GridLayout.UNDEFINED,1f);lp.setMargins(dp(5),dp(5),dp(5),dp(5));grid.addView(card,lp);}body.addView(grid,new LinearLayout.LayoutParams(-1,-2));}",
+              " private void loadIcon(String pkg,ImageView target){Bitmap cached=icons.get(pkg);if(cached!=null){target.setImageBitmap(cached);return;}if(worker.isShutdown())return;worker.execute(()->{try{Drawable icon=getPackageManager().getApplicationIcon(pkg);Bitmap b=Bitmap.createBitmap(96,96,Bitmap.Config.ARGB_8888);Canvas c=new Canvas(b);icon.setBounds(0,0,96,96);icon.draw(c);icons.put(pkg,b);handler.post(()->{if(!destroyed && target.isAttachedToWindow())target.setImageBitmap(b);});}catch(PackageManager.NameNotFoundException|RuntimeException ignored){}});}",
+              " private void launch(AppItem a){try{startActivity(a.intent);save(\"recent\",StoreRules.recent(list(\"recent\"),a.pkg,12));}catch(ActivityNotFoundException|SecurityException e){Toast.makeText(this,\"This app is unavailable. Refresh Library or open Fire OS settings.\",Toast.LENGTH_LONG).show();}}",
+              " private void appActions(AppItem a){boolean fav=list(\"favorites\").contains(a.pkg);new AlertDialog.Builder(this).setTitle(a.label).setItems(new String[]{fav?\"Remove from favorites\":\"Add to favorites\",\"Application information\"},(d,n)->{if(n==0){ArrayList<String> items=list(\"favorites\");if(fav)items.remove(a.pkg);else if(items.size()<24)items.add(a.pkg);save(\"favorites\",items);show(page);}else safe(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.parse(\"package:\"+a.pkg)));}).show();}",
+              " private void library(String filter){body.removeAllViews();LinearLayout categories=new LinearLayout(this);for(String category:new String[]{\"All apps\",\"Favorites\",\"Recently opened\"}){Button b=button(category,()->library(category));LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(0,dp(48),1);lp.setMargins(dp(4),0,dp(4),dp(10));categories.addView(b,lp);}body.addView(categories);section(filter,filter.equals(\"Favorites\")?selected(list(\"favorites\")):filter.equals(\"Recently opened\")?selected(list(\"recent\")):apps);}",
+              " private void search(){body.addView(text(\"Search installed applications\",24));EditText input=new EditText(this);input.setSingleLine(true);input.setTextColor(Color.WHITE);input.setHintTextColor(0xffbbccdd);input.setHint(\"Name or package\");body.addView(input);LinearLayout results=new LinearLayout(this);results.setOrientation(LinearLayout.VERTICAL);body.addView(results);input.addTextChangedListener(new TextWatcher(){public void beforeTextChanged(CharSequence s,int st,int c,int a){}public void onTextChanged(CharSequence s,int st,int before,int count){results.removeAllViews();int matches=0;for(AppItem app:apps)if(StoreRules.matches(app.label,app.pkg,s.toString())){results.addView(button(app.label,()->{((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(input.getWindowToken(),0);launch(app);}));matches++;}if(matches==0)results.addView(text(\"No matching applications\",16));}public void afterTextChanged(Editable e){}});input.setText(\"\");}",
+              " private void controls(){body.addView(text(\"Control Center\",26));ConnectivityManager cm=(ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);NetworkInfo net=cm.getActiveNetworkInfo();body.addView(text(net!=null&&net.isConnected()?\"Network · \"+net.getTypeName():\"Network · disconnected\",17));android.util.DisplayMetrics m=new android.util.DisplayMetrics();getWindowManager().getDefaultDisplay().getRealMetrics(m);body.addView(text(\"Display · \"+m.widthPixels+\" × \"+m.heightPixels+\" · \"+getWindowManager().getDefaultDisplay().getRefreshRate()+\" Hz\",17));AudioManager audio=(AudioManager)getSystemService(AUDIO_SERVICE);body.addView(button(\"Volume down\",()->volume(audio,-1)));body.addView(button(\"Volume up\",()->volume(audio,1)));body.addView(text(\"HDMI and TV volume may require your TV remote.\",14));body.addView(button(\"Network settings\",()->safe(new Intent(Settings.ACTION_WIFI_SETTINGS))));body.addView(button(\"Sound settings\",()->safe(new Intent(Settings.ACTION_SOUND_SETTINGS))));body.addView(button(\"Display settings\",()->safe(new Intent(Settings.ACTION_DISPLAY_SETTINGS))));body.addView(button(\"Screensaver\",()->screensaver()));body.addView(text(\"System sleep remains controlled by the Fire TV remote. No privileged power commands are used.\",14));}",
+              " private void volume(AudioManager audio,int direction){try{if(audio.isVolumeFixed())Toast.makeText(this,\"Volume is controlled by your TV or receiver\",Toast.LENGTH_SHORT).show();else audio.adjustStreamVolume(AudioManager.STREAM_MUSIC,direction,AudioManager.FLAG_SHOW_UI);}catch(SecurityException e){Toast.makeText(this,\"Volume control unavailable\",Toast.LENGTH_SHORT).show();}}",
+              " private void safe(Intent intent){try{if(intent.resolveActivity(getPackageManager())!=null)startActivity(intent);else Toast.makeText(this,\"This shortcut is unavailable on this firmware\",Toast.LENGTH_SHORT).show();}catch(ActivityNotFoundException|SecurityException e){Toast.makeText(this,\"Fire OS does not allow this shortcut\",Toast.LENGTH_SHORT).show();}}",
+              " private void settings(){body.addView(text(\"Settings\",26));body.addView(button(\"Switch local profile\",()->profiles()));body.addView(button(\"Rename current profile\",()->{EditText field=new EditText(this);field.setSingleLine(true);field.setText(prefs.getString(\"name\"+profile,\"Profile \"+(Integer.parseInt(profile)+1)));new AlertDialog.Builder(this).setTitle(\"Profile name\").setView(field).setPositiveButton(\"Save\",(d,w)->{String name=field.getText().toString().trim();if(!name.isEmpty())prefs.edit().putString(\"name\"+profile,name.substring(0,Math.min(32,name.length()))).apply();show(\"Settings\");}).setNegativeButton(\"Cancel\",null).show();}));body.addView(button(\"Appearance · \"+(prefs.getBoolean(key(\"warm\"),false)?\"Dusk\":\"Ocean\"),()->{prefs.edit().putBoolean(key(\"warm\"),!prefs.getBoolean(key(\"warm\"),false)).apply();show(\"Settings\");}));body.addView(button(\"Reduce motion · \"+(reduced?\"on\":\"off\"),()->{reduced=!reduced;prefs.edit().putBoolean(key(\"reduced\"),reduced).apply();show(\"Settings\");}));body.addView(button(\"Refresh applications\",()->{icons.evictAll();discover();show(\"Library\");}));body.addView(button(\"System accessibility\",()->safe(new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))));body.addView(button(\"System settings\",()->safe(new Intent(Settings.ACTION_SETTINGS))));body.addView(button(\"Return to Fire OS\",()->finish()));body.addView(text(\"Device · \"+Build.MODEL+\" / \"+Build.DEVICE+\"\\nAndroid API \"+Build.VERSION.SDK_INT+\" · \"+Arrays.toString(Build.SUPPORTED_ABIS)+\"\\nFirmware · \"+Build.DISPLAY+\"\\nMantisTV 0.4.0 preview · dev.mantistv.home\\nOriginal native implementation. Not affiliated with Apple or Amazon.\\nFavorites, recent launches and watchlist are local to each profile. Profile switching is not parental access control.\",15));}",
+              " private void profiles(){String[] names=new String[4];for(int i=0;i<4;i++)names[i]=prefs.getString(\"name\"+i,\"Profile \"+(i+1));new AlertDialog.Builder(this).setTitle(\"Local profiles\").setSingleChoiceItems(names,Integer.parseInt(profile),(d,which)->{profile=\"\"+which;reduced=prefs.getBoolean(key(\"reduced\"),false);prefs.edit().putString(\"profile\",profile).apply();d.dismiss();show(\"Home\");}).setNegativeButton(\"Cancel\",null).show();}",
+              " private void watchlist(){body.addView(text(\"Local watchlist\",25));body.addView(text(\"Save titles to remember. Streaming accounts and viewing progress are managed by each streaming app.\",15));body.addView(button(\"Add a title\",()->{EditText field=new EditText(this);field.setSingleLine(true);new AlertDialog.Builder(this).setTitle(\"Add title\").setView(field).setPositiveButton(\"Save\",(d,w)->{String title=field.getText().toString().trim();if(!title.isEmpty()){ArrayList<String> items=list(\"watchlist\");if(items.size()<100)items.add(title.substring(0,Math.min(200,title.length())));save(\"watchlist\",items);show(\"Watchlist\");}}).setNegativeButton(\"Cancel\",null).show();}));for(String title:list(\"watchlist\")){Button b=button(title,()->new AlertDialog.Builder(this).setTitle(title).setMessage(\"Remove this title from your local watchlist?\").setPositiveButton(\"Remove\",(d,w)->{ArrayList<String> items=list(\"watchlist\");items.remove(title);save(\"watchlist\",items);show(\"Watchlist\");}).setNegativeButton(\"Keep\",null).show());body.addView(b);}}",
+              " private void screensaver(){if(!resumed)return;handler.removeCallbacks(idle);page=\"Screensaver\";LandscapeView scene=new LandscapeView(this,true,reduced);scene.setFocusable(true);scene.setContentDescription(\"MantisTV landscape screensaver. Press Back to return home.\");setContentView(scene);scene.requestFocus();}",
+              " @Override public boolean dispatchKeyEvent(KeyEvent e){if(page.equals(\"Screensaver\")&&e.getAction()==KeyEvent.ACTION_DOWN){show(\"Home\");return true;}if(e.getKeyCode()==KeyEvent.KEYCODE_MENU){if(e.getAction()==KeyEvent.ACTION_DOWN&&e.getRepeatCount()==0)show(page.equals(\"Controls\")?\"Home\":\"Controls\");return true;}return super.dispatchKeyEvent(e);}",
+              " @Override public void onBackPressed(){if(!page.equals(\"Home\")){show(\"Home\");return;}long now=SystemClock.elapsedRealtime();if(now-lastBack<2000){finish();return;}lastBack=now;Toast.makeText(this,\"Press Back again to return to Fire OS\",Toast.LENGTH_SHORT).show();}",
+              " @Override public void onTrimMemory(int level){super.onTrimMemory(level);if(level>=TRIM_MEMORY_RUNNING_LOW)icons.evictAll();}",
+              "",
+              "}",
+              ""
+            ],
+            "scripts/build.sh": [
+              "#!/usr/bin/env bash",
+              "set -euo pipefail",
+              "cd \"$(dirname \"$0\")/..\"",
+              "python3 scripts/check-resources.py",
+              "SDK=\"${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}\"",
+              "BT=\"$SDK/build-tools/34.0.0\"",
+              "JAR=\"$SDK/platforms/android-25/android.jar\"",
+              "test -f \"$JAR\" && test -x \"$BT/aapt2\"",
+              "mkdir -p out/gen out/classes out/dex out/tests releases",
+              "javac -proc:none --release 8 -d out/tests app/src/dev/mantistv/home/StoreRules.java tests/StoreRulesTest.java",
+              "java -cp out/tests StoreRulesTest | tee out/unit-tests.txt",
+              "\"$BT/aapt2\" compile --dir app/res -o out/resources.zip",
+              "\"$BT/aapt2\" link -o out/unsigned.apk -I \"$JAR\" --manifest app/AndroidManifest.xml --java out/gen --min-sdk-version 25 --target-sdk-version 25 out/resources.zip",
+              "find app/src out/gen -name '*.java' > out/sources.txt",
+              "javac -proc:none -encoding UTF-8 --release 8 -Xlint:deprecation -classpath \"$JAR\" -d out/classes @out/sources.txt 2> out/javac-diagnostics.txt",
+              "find out/classes -name '*.class' > out/classes.txt",
+              "\"$BT/d8\" --release --min-api 25 --lib \"$JAR\" --output out/dex @out/classes.txt",
+              "(cd out/dex && zip -q ../unsigned.apk classes.dex)",
+              "\"$BT/zipalign\" -f 4 out/unsigned.apk out/aligned.apk",
+              "if [ ! -f out/development.keystore ]; then",
+              " keytool -genkeypair -keystore out/development.keystore -storepass android -keypass android -alias mantistv -keyalg RSA -keysize 2048 -validity 365 -dname 'CN=MantisTV preview development'",
+              "fi",
+              "\"$BT/apksigner\" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.4.0-preview.apk out/aligned.apk",
+              "\"$BT/apksigner\" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.4.0-preview.apk > releases/signature.txt",
+              "\"$BT/aapt\" dump badging releases/MantisTV-0.4.0-preview.apk > releases/manifest.txt",
+              "\"$BT/zipalign\" -c 4 releases/MantisTV-0.4.0-preview.apk",
+              "python3 - <<'PY'",
+              "from pathlib import Path",
+              "s=Path('app/AndroidManifest.xml').read_text().replace('package=\"dev.mantistv.home\"','package=\"dev.mantistv.home.debug\"').replace('android:name=\".MainActivity\"','android:name=\"dev.mantistv.home.MainActivity\"').replace('android:label=\"MantisTV\"','android:label=\"MantisTV Debug\"')",
+              "Path('out/debug-manifest.xml').write_text(s)",
+              "PY",
+              "\"$BT/aapt2\" link -o out/debug-unsigned.apk -I \"$JAR\" --manifest out/debug-manifest.xml --min-sdk-version 25 --target-sdk-version 25 --debug-mode out/resources.zip",
+              "(cd out/dex && zip -q ../debug-unsigned.apk classes.dex)",
+              "\"$BT/zipalign\" -f 4 out/debug-unsigned.apk out/debug-aligned.apk",
+              "\"$BT/apksigner\" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.4.0-debug.apk out/debug-aligned.apk",
+              "\"$BT/apksigner\" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.4.0-debug.apk > releases/debug-signature.txt",
+              "\"$BT/aapt\" dump badging releases/MantisTV-0.4.0-debug.apk > releases/debug-manifest.txt",
+              "\"$BT/zipalign\" -c 4 releases/MantisTV-0.4.0-debug.apk",
+              "python3 scripts/inspect-apk.py",
+              "cp out/unit-tests.txt out/javac-diagnostics.txt releases/",
+              "{ echo \"Source commit: $(git rev-parse HEAD)\"; echo 'Package: dev.mantistv.home'; echo 'Debug package: dev.mantistv.home.debug (debuggable; side-by-side test variant)'; echo 'Version: 0.4.0-preview'; echo 'Min SDK: 25; Target SDK: 25; compile SDK: 25'; echo 'No native libraries: DEX-only, compatible in principle with armeabi-v7a'; echo 'Compilation, host unit tests, manifest policy, zip alignment and signature verification: passed'; echo 'Compiled directly against official Android API25 platform; lint is a separate pipeline stage'; echo 'Installed or physically tested: NO'; echo 'Signing key: ephemeral development key. Future builds may require uninstall/reinstall; back up local lists first.'; } > releases/BUILD-REPORT.txt",
+              "python3 scripts/check-resources.py",
+              ""
+            ],
+            "scripts/inspect-apk.py": [
+              "import zipfile, xml.etree.ElementTree as ET",
+              "from pathlib import Path",
+              "ns='{http://schemas.android.com/apk/res/android}'",
+              "r=ET.parse('app/AndroidManifest.xml').getroot()",
+              "assert r.attrib['package']=='dev.mantistv.home'",
+              "assert r.find('uses-sdk').attrib[ns+'minSdkVersion']=='25'",
+              "assert {x.attrib[ns+'name'] for x in r.findall('uses-permission')}=={'android.permission.ACCESS_NETWORK_STATE'}",
+              "assert not r.findall('.//service') and not r.findall('.//receiver')",
+              "assert not any(x.attrib.get(ns+'name')== 'android.intent.category.HOME' for x in r.findall('.//category'))",
+              "p=Path('releases/MantisTV-0.4.0-preview.apk')",
+              "with zipfile.ZipFile(p) as z:",
+              " assert 'classes.dex' in z.namelist()",
+              " assert not any(n.startswith('lib/') for n in z.namelist()), 'Unexpected native ABI dependency'",
+              " assert not any(n.endswith(('.keystore','.jks')) for n in z.namelist())",
+              " assert z.testzip() is None",
+              "badging=Path('releases/manifest.txt').read_text()",
+              "assert \"sdkVersion:'25'\" in badging and \"targetSdkVersion:'25'\" in badging",
+              "assert \"package: name='dev.mantistv.home'\" in badging",
+              "print('PASS: permission policy, non-HOME manifest, no services/receivers, SDK 25 metadata, DEX-only ABI, ZIP integrity')",
+              "",
+              "with zipfile.ZipFile('releases/MantisTV-0.4.0-debug.apk') as z:",
+              " assert 'classes.dex' in z.namelist() and z.testzip() is None",
+              " assert not any(n.startswith('lib/') or n.endswith(('.keystore','.jks')) for n in z.namelist())",
+              "debug=Path('releases/debug-manifest.txt').read_text()",
+              "assert \"package: name='dev.mantistv.home.debug'\" in debug and \"sdkVersion:'25'\" in debug",
+              "assert 'application-debuggable' in debug",
+              "assert 'application-debuggable' not in badging",
+              "print('PASS: debug/release package separation and debuggable flag policy')",
+              ""
+            ],
+            "tests/lint-pom.xml": [
+              "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"><modelVersion>4.0.0</modelVersion><groupId>dev.mantistv</groupId><artifactId>lint-audit</artifactId><version>1</version><repositories><repository><id>google</id><url>https://dl.google.com/dl/android/maven2/</url></repository><repository><id>central</id><url>https://repo.maven.apache.org/maven2/</url></repository></repositories><dependencies><dependency><groupId>com.android.tools.lint</groupId><artifactId>lint</artifactId><version>31.5.2</version></dependency></dependencies></project>",
+              ""
+            ],
+            "scripts/lint.sh": [
+              "#!/usr/bin/env bash",
+              "set -euo pipefail",
+              "cd \"$(dirname \"$0\")/..\"",
+              "python3 scripts/check-resources.py",
+              ": \"${RUNNER_TEMP:?Cloud runner required}\"",
+              "SDK=\"${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}\"",
+              "mkdir -p out/lint releases",
+              "mvn -B -q -f tests/lint-pom.xml -Dmaven.repo.local=\"$RUNNER_TEMP/mantistv-maven\" org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy-dependencies -DincludeScope=runtime -DoutputDirectory=\"$PWD/out/lint\"",
+              "java -cp 'out/lint/*' com.android.tools.lint.Main --version",
+              "java -cp 'out/lint/*' com.android.tools.lint.Main --sdk-home \"$SDK\" --compile-sdk-version 25 --java-language-level 8 --sources app/src --resources app/res --classpath \"$SDK/platforms/android-25/android.jar\" --check NewApi,InlinedApi,MissingPermission,WrongThread,HandlerLeak,DrawAllocation,StaticFieldLeak -Werror --xml releases/lint.xml --text releases/lint.txt --exitcode app",
+              "python3 - <<'PY'",
+              "from pathlib import Path",
+              "import xml.etree.ElementTree as ET",
+              "issues=ET.parse('releases/lint.xml').getroot().findall('issue')",
+              "assert not issues, 'Selected Android lint checks must be warning/error free'",
+              "with Path('releases/BUILD-REPORT.txt').open('a') as report:",
+              " report.write('Android lint 31.5.2: NewApi, InlinedApi, MissingPermission, WrongThread, HandlerLeak, DrawAllocation, StaticFieldLeak: 0 errors, 0 warnings. Other lint checks and hardware instrumentation not run.\\n')",
+              "print('PASS: selected Android lint gate has zero issues')",
+              "PY",
+              ""
+            ],
+            "documentation/PERFORMANCE-BUDGET.md": [
+              "# Performance budget",
+              "",
+              "These are design constraints and future acceptance targets, not measured results: no always-on service; one icon worker; 2 MiB icon cache; normalized 96px icons; no remote artwork cache; no background networking; 140ms focus animation with reduced-motion fallback; screensaver invalidation limited to 10Hz and foreground operation; no full-screen blur; no native dependencies or emulators.",
+              "",
+              "Hardware targets: 1.5 GiB RAM / IMG GE8300 / 32-bit ARM / API 25. Measure actual startup, PSS, GC, focus/frame times and return-from-streaming behavior on AFTMM before changing these budgets. 4K output does not imply that every visual should be rendered into a 4K bitmap.",
+              "",
+              "Use a separately authorized supervised session to capture dumpsys meminfo dev.mantistv.home, gfxinfo and launch timing, avoiding credentials or private viewing history in shared logs. No benchmark numbers are claimed.",
+              "",
+              "## Measured static finding and source correction",
+              "",
+              "Android lint 31.5.2 reported six DrawAllocation warnings in the 0.3 renderer, with zero errors in the selected API/permission/thread/lifecycle checks (run 42747404342). The 0.4 renderer prebuilds its gradient and four mountain paths on size changes, reuses a formatter and Date, and updates clock text only when its minute changes. Static checks are rerun with warnings promoted to errors. These are source-level allocation improvements, not measured frame-rate or RAM benchmarks.",
+              ""
+            ],
+            "documentation/QA-REPORT.md": [
+              "# QA report",
+              "",
+              "The native build script runs host-JVM tests for bounded/deduplicated recent history, immutable inputs and normalized search. It compiles Java, builds DEX/resources, aligns/signs the APK, verifies its signature for SDK25, inspects SDK/package badging, and checks manifest permission policy and absence of native libraries. Successful result files are published only when these checks pass.",
+              "",
+              "Not performed: Android instrumentation, complete Android lint/API-surface analysis, screenshots from the running app, emulator or physical AFTMM installation/testing, firmware-specific service/package validation and measured performance. Code review is not equivalent to those tests.",
+              "",
+              "The upstream baseline cloud run succeeded: https://github.com/lanaxpgg-boop/MantisTV/actions/runs/42744518215 . Native results must be read from the actual native workflow and its release BUILD-REPORT.txt, signature.txt, manifest.txt, unit-tests.txt and javac-diagnostics.txt; source preparation alone is not a passed build.",
+              "",
+              "Version 0.2 compiled directly against official API25 and passed tests/signature/manifest checks in run 42746145356. That run also parsed 76 full/incremental firmware catalog records, all classified C. Version 0.3 adds profile bounds tests and a separately debuggable package; inspect its actual release reports for outcomes. Module extraction and Java formatting must preserve compilation; no visual or device QA is inferred.",
+              "",
+              "## Android lint gate",
+              "",
+              "The independent 0.3 audit completed with 0 errors and 6 DrawAllocation warnings. This was not a clean lint result. Its actual report is in release lint-42747404342.",
+              "",
+              "Version 0.4 fixes those findings and runs the same seven selected checks with warnings treated as errors. The gate requires an empty issue list in lint.xml before publishing its APKs. Actual successful outcomes appear in LATEST-VERIFIED-BUILD.md and the release reports; this does not claim every available lint rule or Android instrumentation ran.",
+              "",
+              "Reproduce in the cloud: bash scripts/build.sh followed by bash scripts/lint.sh. Lint resolves pinned tooling from official Google Maven and Maven Central into temporary cloud directories only. No lint jars are bundled in the APK or source archive.",
+              ""
+            ],
+            "README.md": [
+              "# MantisTV",
+              "",
+              "An independent native Android TV home experience for Amazon Fire TV Stick 4K (2018 / AFTMM). This is an early application preview, not a replacement operating system. No physical Fire TV installation or testing has been performed.",
+              "",
+              "## Preview functionality",
+              "",
+              "Home with original procedural landscape artwork; a favorites dock; local recent-launch Top Shelf; app library; package/name search; guarded Control Center shortcuts; local profiles and title watchlists; two appearance palettes; reduce-motion preference; five-minute idle landscape screensaver.",
+              "",
+              "Use the D-pad and OK. Hold OK on an app for favorites and app information. Menu opens Controls. Back returns Home; press Back twice from Home to exit. Profiles store favorites, recent launches and watchlists separately. Profiles are not parental controls.",
+              "",
+              "## Build and download",
+              "",
+              "Cloud workflows use standard Ubuntu GitHub Actions runners in this public repository. No Actions caches or metered artifact uploads are used. Outputs are published as development prerelease assets under Releases. All SDK tools stay in the cloud. Run scripts/build.sh only in a suitably provisioned cloud checkout; it expects existing Android build-tools 34.0.0, platform 25 and a JDK.",
+              "",
+              "The APK has package dev.mantistv.home, minimum/target SDK 25 and no native libraries. Its source uses native Android APIs and no runtime third-party dependencies. It is development-signed with an ephemeral key; repeated cloud builds are not guaranteed to update an existing installation. It does not register as a HOME replacement or start at boot.",
+              "",
+              "Read documentation/INSTALLATION-GUIDE.md and documentation/ROLLBACK-GUIDE.md before any supervised test. No automatic installation, ADB connection, system-package changes or firmware changes are part of the build.",
+              "",
+              "Version 0.4 retains library filters and tagged focus restoration, separates app discovery and scene rendering, and adds a separately packaged debug APK. Appearance and reduce-motion preferences are local to each profile. The quality workflow compiles against official Android API25; its actual result is recorded in release reports.",
+              "",
+              "## Evidence",
+              "",
+              "The untouched upstream reference techgenius1/tvOS-Launcher built at commit 463fa6c2a9b7322c4407f1d00db935ef09d20f4f in a separate baseline run. MantisTV app source is original; no upstream Java, artwork, fonts or third-party libraries are incorporated. The upstream reference keeps its own Apache-2.0 and component license notices in the baseline source release.",
+              "",
+              "Tests cover local history/search logic and manifest/APK policy. Compilation or SDK metadata is not proof of firmware compatibility or acceptable hardware performance. AirPlay, Apple Remote pairing, provider Continue Watching and Apple certification are not implemented.",
+              "",
+              "The 0.4 quality pipeline also gates seven Android lint checks at zero warnings/errors and preallocates landscape geometry. See release lint.xml/lint.txt for actual scope and outcomes. This is not physical performance validation.",
+              ""
+            ],
+            "documentation/INSTALLATION-GUIDE.md": [
+              "# Supervised installation",
+              "",
+              "Do not install unattended. This project has not been physically tested on AFTMM. The baseline reference APK is not the customized MantisTV preview; choose MantisTV-0.4.0-preview.apk from a successful native release.",
+              "",
+              "1. Verify release checksums against SHA256SUMS.txt on a machine with adequate free storage. Review BUILD-REPORT.txt, signature.txt and manifest.txt.",
+              "2. Confirm the device is your AFTMM / Fire OS 6 API 25. Preserve normal Amazon launcher access and record the installed firmware.",
+              "3. When you explicitly authorize a supervised device session, enable developer installation/debugging through normal Fire OS controls and use a trusted local network only. Do not expose ADB publicly.",
+              "4. From an already provisioned authorized test machine, manually run: adb install MantisTV-0.4.0-preview.apk. No -g, package disabling, HOME remapping or system grants are needed.",
+              "5. Launch the MantisTV icon from Amazon Apps, or manually use adb shell am start -n dev.mantistv.home/.MainActivity.",
+              "6. Test D-pad reachability and scrolling, app launching/return, favorites, Back exit, Menu controls, profile isolation, search keyboard, unavailable shortcuts and screensaver. Keep the Amazon remote Home button working normally.",
+              "7. Observe memory, focus frame consistency, long-session stability and thermal behavior. Stop if the device becomes unstable. Record exact firmware and evidence before classifying compatibility A.",
+              "",
+              "The preview uses an ephemeral signing key. A later cloud build may not install over it. Never automatically uninstall to fix a signature mismatch: local profiles, favorites and watchlists would be lost.",
+              "",
+              "For debugging only, MantisTV-0.4.0-debug.apk is a separately packaged debuggable variant (dev.mantistv.home.debug). It can coexist with the preview and keeps separate local data. Its explicit activity is dev.mantistv.home.MainActivity. Use the preview for initial ordinary testing; do not confuse debug and preview packages when launching or uninstalling.",
+              ""
+            ],
+            "device/draw-allocation-refinement.marker": [
+              "Original 0.4 draw allocation refinement seeded once. Edit committed source directly for later changes.",
+              ""
+            ]
+          }''')
+          if not Path('device/draw-allocation-refinement.marker').exists():
+              for name,lines in files.items():
+                  p=Path(name)
+                  p.parent.mkdir(parents=True,exist_ok=True)
+                  p.write_text('\n'.join(lines))
+          PY
+      - name: Catalog public firmware metadata only (no firmware downloads)
+        continue-on-error: true
+        working-directory: project
+        run: python3 scripts/catalog-firmware.py
+      - name: Format Java using existing cloud tool when available
+        working-directory: project
+        run: |
+          if command -v clang-format >/dev/null; then
+            find app/src tests -name '*.java' -exec clang-format --style=Google -i {} +
+          fi
+      - name: Checkpoint source and audit evidence
+        working-directory: project
+        run: |
+          git config user.name 'MantisTV cloud build'
+          git config user.email 'mantistv@users.noreply.github.com'
+          git add app scripts tests documentation device README.md
+          if ! git diff --cached --quiet; then
+            git commit -m 'Preallocate scene geometry and enforce API25 Android lint gate'
+            gh auth setup-git
+            git push origin HEAD:main
+          fi
+      - name: Ensure official API25 platform in cloud (no automatic license acceptance)
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          if [ ! -f "$SDK/platforms/android-25/android.jar" ]; then
+            MANAGER=$(find "$SDK/cmdline-tools" -type f -name sdkmanager | sort | tail -1)
+            test -n "$MANAGER"
+            "$MANAGER" --sdk_root="$SDK" 'platforms;android-25' < /dev/null
+          fi
+          test -f "$SDK/platforms/android-25/android.jar"
+      - name: Build against Android API25 and verify APK
+        working-directory: project
+        run: |
+          if ! bash scripts/build.sh; then
+            test ! -f out/javac-diagnostics.txt || cat out/javac-diagnostics.txt
+            exit 1
+          fi
+      - name: Enforce zero-warning API, permission, threading, lifecycle and drawing lint gate
+        working-directory: project
+        run: bash scripts/lint.sh
+      - name: Save actual successful build evidence
+        working-directory: project
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import os
+          report=Path('releases/BUILD-REPORT.txt').read_text()
+          url='https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']
+          Path('documentation/LATEST-VERIFIED-BUILD.md').write_text('# Latest verified build\n\n'+report+'\nCloud run: '+url+'\n\nNo physical device testing. Development signing only.\n')
+          Path('STATUS.md').write_text('# MantisTV status\n\nNative API25 development build passed compilation, host tests, manifest/ABI/ZIP policy, signing and alignment checks. The source commit actually compiled is recorded below; this subsequent checkpoint changes only documentation.\n\n'+report+'\nCloud run: '+url+'\n\n76 catalog records were captured previously; all remain C without hardware evidence. No firmware binaries were downloaded. No physical device was connected or changed. All SDKs/build caches remained in the cloud, with no paid runners or metered Actions artifact uploads.\n\nNot complete: physical QA, real performance measurements, Android lint, persistent private release signing, provider Continue Watching, AirPlay/Apple Remote and other ecosystem integrations. See documentation/IMPLEMENTATION-BACKLOG.md and KNOWN-ISSUES.md.\n')
+          PY
+          git add documentation/LATEST-VERIFIED-BUILD.md STATUS.md
+          git commit -m 'Record actual successful native build evidence'
+          gh auth setup-git
+          git push origin HEAD:main
+      - name: Release verified API25 development preview
+        working-directory: project
+        run: |
+          set -euo pipefail
+          git archive --format=zip --output=releases/MantisTV-source.zip HEAD
+          cp LICENSE documentation/INSTALLATION-GUIDE.md documentation/ROLLBACK-GUIDE.md releases/
+          (cd releases && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt)
+          gh release create "quality-$GITHUB_RUN_ID" releases/* --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title 'MantisTV 0.4.0 API25 lint-checked development preview' --notes-file releases/BUILD-REPORT.txt
+          cat releases/BUILD-REPORT.txt >> "$GITHUB_STEP_SUMMARY"
