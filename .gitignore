@@ -1,0 +1,6 @@
+out/
+releases/
+*.jks
+*.keystore
+local.properties
+.gradle/
