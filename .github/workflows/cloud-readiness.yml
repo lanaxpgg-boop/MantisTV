@@ -1,0 +1,31 @@
+name: Cloud readiness
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mantistv-cloud
+  cancel-in-progress: false
+jobs:
+  readiness:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check storage and installed tools without downloads
+        shell: bash
+        run: |
+          python3 - <<'PYTHON'
+          import json, os, shutil
+          s = os.statvfs(os.environ['GITHUB_WORKSPACE'])
+          capacity = s.f_blocks * s.f_frsize
+          available = s.f_bavail * s.f_frsize
+          reserve = max(5 * 1024**3, capacity * 0.15)
+          estimate = 4 * 1024**3
+          report = {'capacity_bytes': capacity, 'available_bytes': available, 'reserve_bytes': reserve, 'estimated_build_headroom_bytes': estimate, 'storage_gate_passed': available >= reserve + estimate, 'tools': {n: shutil.which(n) for n in ['java', 'javac', 'sdkmanager', 'adb', 'git', 'zip']}, 'android_sdk_present': bool(os.environ.get('ANDROID_HOME') or os.environ.get('ANDROID_SDK_ROOT'))}
+          print(json.dumps(report, indent=2))
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f:
+              f.write('## Cloud readiness\n```json\n' + json.dumps(report, indent=2) + '\n```\n')
+          if not report['storage_gate_passed']:
+              raise SystemExit('STOP: insufficient reserve and estimated build headroom')
+          PYTHON
