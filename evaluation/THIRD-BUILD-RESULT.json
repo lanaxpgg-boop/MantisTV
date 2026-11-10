@@ -1,0 +1,23 @@
+{
+  "run": "42894116665",
+  "build_outcome": "success",
+  "apk_verification_outcome": "success",
+  "jvm_tests": 226,
+  "jvm_failures": 0,
+  "lint": {
+    "lint-results-mantisDebug.xml": {
+      "errors": 0,
+      "warnings": 79,
+      "new_api_issues": 0
+    },
+    "lint-results-mantisRelease.xml": {
+      "errors": 0,
+      "warnings": 79,
+      "new_api_issues": 0
+    }
+  },
+  "additional_cloud_builds_authorized": 1,
+  "additional_cloud_builds_used": 1,
+  "physical_tested": false,
+  "Mantis_existing_builds_modified": false
+}
