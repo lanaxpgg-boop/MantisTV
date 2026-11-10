@@ -1516,11 +1516,13 @@ jobs:
             ]
           }''')
           # A concurrent documentation edit requires review rather than silent replacement.
-          subprocess.run(['git','diff','--exit-code','a1a51fe520363c2512eb14a79e4c17998c8ad0ad','HEAD','--',*files],check=True)
           for name,lines in files.items():
               path=Path(name)
               assert not path.is_absolute() and '..' not in path.parts
-              path.parent.mkdir(parents=True,exist_ok=True);path.write_text('\n'.join(lines))
+              desired='\n'.join(lines)
+              if path.exists() and path.read_text()==desired:continue
+              subprocess.run(['git','diff','--exit-code','a1a51fe520363c2512eb14a79e4c17998c8ad0ad','HEAD','--',name],check=True)
+              path.parent.mkdir(parents=True,exist_ok=True);path.write_text(desired)
           d=json.loads(Path('documentation/progress-features.json').read_text())
           valid={'Completed and verified.','Implemented but not physically tested.','Partially implemented.','Not implemented.','Blocked.'}
           assert len(d['features'])==119 and len({x['id'] for x in d['features']})==119
@@ -1536,7 +1538,9 @@ jobs:
           git config user.name 'MantisTV progress audit'
           git config user.email 'mantistv@users.noreply.github.com'
           git add PROJECT-PROGRESS.md STATUS.md documentation/progress-features.json documentation/TVOS-FEATURE-MATRIX.md documentation/BUILD-REPORT.md documentation/QA-REPORT.md documentation/KNOWN-ISSUES.md documentation/IMPLEMENTATION-BACKLOG.md
-          git commit -m 'Audit project progress against source, firmware evidence, tests and published APKs'
+          if ! git diff --cached --quiet; then
+            git commit -m 'Audit project progress against source, firmware evidence, tests and published APKs'
+          fi
       - name: Publish report commit and unchanged APKs in an audit prerelease
         working-directory: project
         env:
@@ -1561,12 +1565,13 @@ jobs:
           (dest/'AUDIT-VERIFICATION.json').write_text(json.dumps(verification,indent=2)+'\n')
           head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
           tag='progress-20261110-'+os.environ['GITHUB_RUN_ID']
-          publication={'audit_date':'2026-11-10','release_tag':tag,'publication_commit':head,'audited_pre_report_head':os.environ['AUDITED_HEAD'],'original_compiled_app_source':'ab022168a5d8fff173ff0169fd328adb2040be89','application_version':'0.4.0-preview','application_rebuilt':False,'application_bytes_changed':False,'signing_key_regenerated':False,'source_archive_includes_audit_documents':True,'cloud_run':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']}
+          publication={'audit_date':'2026-11-10','release_tag':tag,'publication_commit':head,'audited_pre_report_head':os.environ['AUDITED_HEAD'],'original_compiled_app_source':'ab022168a5d8fff173ff0169fd328adb2040be89','application_version':'0.4.0-preview','application_rebuilt':False,'application_bytes_changed':False,'signing_key_regenerated':False,'source_archive_includes_audit_documents':True,'prior_audit_publication_run':42791927564,'prior_publication_failure':'All verification and report commit passed; final release step failed on shell variable scope. Corrected and gates rerun.','cloud_run':'https://github.com/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+os.environ['GITHUB_RUN_ID']}
           (dest/'AUDIT-PUBLICATION.json').write_text(json.dumps(publication,indent=2)+'\n')
           notes='Project progress audit, not a new application build.\n\n119 feature/engineering rows: 11 completed/verified (narrow test/tool/artifact scope), 21 implemented but not physically tested, 35 partial, 47 not implemented, 5 blocked. No user-facing TV feature is marked complete from compilation alone.\n\nIncludes PROJECT-PROGRESS.md, updated STATUS, exact feature inventory, fresh artifact/signature/manifest checks, rerun host rules and source ZIP. Existing 0.4 preview/debug APK bytes and signing identity are unchanged. No device installation, hardware performance measurement or Apple ecosystem implementation is claimed.\n\nPublication commit: '+head+'\nOriginal compiled app source: ab022168a5d8fff173ff0169fd328adb2040be89\n'
           Path('out/audit-release-notes.md').write_text(notes)
           with open(os.environ['GITHUB_ENV'],'a') as f:f.write('AUDIT_TAG='+tag+'\n')
           PY
+          AUDIT_TAG="progress-20261110-$GITHUB_RUN_ID"
           git archive --format=zip --output=releases/MantisTV-source.zip HEAD
           (cd releases && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt)
           gh release create "$AUDIT_TAG" releases/* --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title 'MantisTV 0.4.0-preview — verified project progress audit' --notes-file out/audit-release-notes.md
