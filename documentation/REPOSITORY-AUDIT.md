@@ -17,3 +17,11 @@ https://github.com/techgenius1/tvOS-Launcher at 463fa6c2a9b7322c4407f1d00db935ef
 - LOSMantis/android_device_amazon_mantis: device tree research candidate, not a ready verified safe firmware replacement. Flashing and bootloader modification are prohibited here.
 
 Maintenance claims and comparative RAM benchmarks have not been established. This preliminary assessment must be expanded before selecting any additional reuse.
+
+## Additional source checks (November 10, 2026)
+
+The public dumbtv root license is MIT and explicitly covers its launcher. Hume's root license is Apache-2.0. tvhome's app/build.gradle.kts declares minSdk 26 and therefore needs real adaptation before API25 use. This is a specific current incompatibility, not a general claim about Kotlin/Compose.
+
+PhairPlay's app/build.gradle.kts declares a Fire TV minSdk25 flavor and armeabi-v7a among its native targets. Its root license is Apache-2.0, but its CMake path and comments explicitly include a native playfair component. That protected-protocol path is not included in MantisTV and must not be used to bypass content protection. Native dependency and individual component license review remains incomplete. No certification, interoperability or functional receiver claim follows from the manifest/ABI settings.
+
+Sources: https://raw.githubusercontent.com/humblemuzzu/dumbtv/main/LICENSE ; https://raw.githubusercontent.com/petrobot-admin/hume-launcher/main/LICENSE ; https://raw.githubusercontent.com/hamdalaa/tvhome/main/app/build.gradle.kts ; https://raw.githubusercontent.com/mazer666/PhairPlay/main/app/build.gradle.kts ; https://raw.githubusercontent.com/mazer666/PhairPlay/main/LICENSE . These are execution-time references, not pinned reuse: no code from these projects is embedded.

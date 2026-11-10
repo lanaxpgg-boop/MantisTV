@@ -16,7 +16,7 @@ The APK has package dev.mantistv.home, minimum/target SDK 25 and no native libra
 
 Read documentation/INSTALLATION-GUIDE.md and documentation/ROLLBACK-GUIDE.md before any supervised test. No automatic installation, ADB connection, system-package changes or firmware changes are part of the build.
 
-Version 0.2 adds library filters and tagged focus restoration. The quality workflow compiles against official Android API25; its actual result is recorded in release reports.
+Version 0.3 retains library filters and tagged focus restoration, separates app discovery and scene rendering, and adds a separately packaged debug APK. Appearance and reduce-motion preferences are local to each profile. The quality workflow compiles against official Android API25; its actual result is recorded in release reports.
 
 ## Evidence
 
