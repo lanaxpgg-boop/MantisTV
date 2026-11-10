@@ -24,6 +24,6 @@ public class StoreRulesTest {
     check(StoreRules.profileId("999").equals("0"));
     check(StoreRules.profileId("3").equals("3"));
     System.out.println("PASS: profile bounds, history ordering, deduplication, bounds, "
-                       + "immutability and search normalization");
+        + "immutability and search normalization");
   }
 }

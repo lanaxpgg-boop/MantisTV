@@ -491,7 +491,7 @@ public class MainActivity extends Activity {
     body.addView(text("Device · " + Build.MODEL + " / " + Build.DEVICE + "\nAndroid API "
             + Build.VERSION.SDK_INT + " · " + Arrays.toString(Build.SUPPORTED_ABIS)
             + "\nFirmware · " + Build.DISPLAY
-            + ("\nMantisTV 0.3.0 preview · dev.mantistv.home\nOriginal native implementation. Not "
+            + ("\nMantisTV 0.4.0 preview · dev.mantistv.home\nOriginal native implementation. Not "
                + "affiliated with Apple or Amazon.\nFavorites, recent launches and watchlist are "
                + "local to each profile. Profile switching is not parental access control."),
         15));

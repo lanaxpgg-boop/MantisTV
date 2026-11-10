@@ -5,49 +5,76 @@ import android.os.SystemClock;
 import android.view.View;
 import java.text.SimpleDateFormat;
 import java.util.*;
+/** Original landscape renderer. Paths and gradient are rebuilt only when size changes. */
 public final class LandscapeView extends View {
-  final Paint paint = new Paint(3);
-  final boolean fullscreen;
-  final boolean reduced;
-  public LandscapeView(Context c, boolean full, boolean motionReduced) {
-    super(c);
+  private static final int[] SKY = {0xff163f50, 0xff54747e, 0xff141e36};
+  private static final int[] LAYERS = {0xff4c7479, 0xff305565, 0xff203b50, 0xff16283b};
+  private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+  private final Path[] mountains = {new Path(), new Path(), new Path(), new Path()};
+  private final SimpleDateFormat clockFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+  private final Date clockDate = new Date();
+  private final boolean fullscreen, reduced;
+  private final float density;
+  private Shader sky;
+  private long minute = Long.MIN_VALUE;
+  private String clock = "";
+  public LandscapeView(Context context, boolean full, boolean motionReduced) {
+    super(context);
     fullscreen = full;
     reduced = motionReduced;
+    density = getResources().getDisplayMetrics().density;
+  }
+  private float dp(float n) {
+    return n * density;
   }
   @Override
-  protected void onDraw(Canvas c) {
-    super.onDraw(c);
-    float w = getWidth(), h = getHeight();
-    paint.setShader(new LinearGradient(
-        0, 0, w, h, new int[] {0xff163f50, 0xff54747e, 0xff141e36}, null, Shader.TileMode.CLAMP));
-    c.drawRect(0, 0, w, h, paint);
-    paint.setShader(null);
-    for (int i = 0; i < 4; i++) {
-      Path p = new Path();
-      float offset =
-          reduced ? 0 : (float) Math.sin(SystemClock.uptimeMillis() / 18000d + i) * w * .008f;
-      p.moveTo(-w * .1f, h);
-      p.lineTo(-w * .1f, h * (.62f + i * .09f));
+  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    super.onSizeChanged(w, h, oldw, oldh);
+    if (w <= 0 || h <= 0)
+      return;
+    sky = new LinearGradient(0, 0, w, h, SKY, null, Shader.TileMode.CLAMP);
+    for (int i = 0; i < mountains.length; i++) {
+      Path path = mountains[i];
+      path.reset();
+      path.moveTo(-w * .1f, h);
+      path.lineTo(-w * .1f, h * (.62f + i * .09f));
       for (int x = 0; x < 9; x++)
-        p.lineTo(
-            x * w / 7f + offset, h * (.36f + i * .12f) + (float) Math.sin(x * 1.8 + i) * h * .1f);
-      p.lineTo(w * 1.2f, h);
-      p.close();
-      paint.setColor(new int[] {0xff4c7479, 0xff305565, 0xff203b50, 0xff16283b}[i]);
-      c.drawPath(p, paint);
+        path.lineTo(x * w / 7f, h * (.36f + i * .12f) + (float) Math.sin(x * 1.8 + i) * h * .1f);
+      path.lineTo(w * 1.2f, h);
+      path.close();
+    }
+  }
+  @Override
+  protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
+    float w = getWidth(), h = getHeight();
+    paint.setShader(sky);
+    canvas.drawRect(0, 0, w, h, paint);
+    paint.setShader(null);
+    long uptime = SystemClock.uptimeMillis();
+    for (int i = 0; i < mountains.length; i++) {
+      float offset = reduced ? 0 : (float) Math.sin(uptime / 18000d + i) * w * .008f;
+      int saved = canvas.save();
+      canvas.translate(offset, 0);
+      paint.setColor(LAYERS[i]);
+      canvas.drawPath(mountains[i], paint);
+      canvas.restoreToCount(saved);
     }
     if (fullscreen) {
+      long now = System.currentTimeMillis();
+      long current = now / 60000;
+      if (current != minute) {
+        minute = current;
+        clockDate.setTime(now);
+        clock = clockFormat.format(clockDate);
+      }
       paint.setColor(0xddffffff);
       paint.setTextSize(dp(40));
-      c.drawText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()), dp(50),
-          h - dp(70), paint);
+      canvas.drawText(clock, dp(50), h - dp(70), paint);
       paint.setTextSize(dp(16));
-      c.drawText("MANTIS  /  Quiet horizons", dp(52), h - dp(40), paint);
+      canvas.drawText("MANTIS  /  Quiet horizons", dp(52), h - dp(40), paint);
       if (!reduced)
         postInvalidateDelayed(100);
     }
-  }
-  private int dp(float n) {
-    return (int) (n * getResources().getDisplayMetrics().density + .5f);
   }
 }
