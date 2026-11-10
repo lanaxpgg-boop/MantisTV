@@ -1,23 +1,9 @@
-# tvOS feature matrix
+# tvOS feature matrix — audited November 10, 2026
 
-Reference checked November 10, 2026: Apple's software-update page lists tvOS 27.2; its security-content page records release October 26, 2026. Sources: https://support.apple.com/en-us/106336 and https://support.apple.com/en-us/149524 . MantisTV is an original approximation, not Apple software.
+The authoritative expanded matrix is [PROJECT-PROGRESS.md](../PROJECT-PROGRESS.md#3-feature-inventory), with [machine-readable inventory](progress-features.json). It covers all original mission feature groups plus documented tvOS27/27.2 and relevant inherited design/ecosystem features. Each of 119 distinct rows has exactly one of the five requested statuses. Shared features across screens are counted once.
 
-| Feature | Preview implementation | Verification / limitation |
-|---|---|---|
-| Home / artwork | Native home and procedural landscape | Requires physical visual QA |
-| Dock / favorites | Profile-local app favorites; six default apps when empty | Source implemented |
-| Top Shelf | Local recent launches | No provider feed |
-| Focus / animation | Android D-pad focus, scale/elevation, reduce motion | Hardware navigation untested |
-| Library / launch | Public launcher intents, sorted app grid | Firmware package visibility untested |
-| Search | App label/package filtering | Pure matching logic host-tested by build |
-| Recent switcher | MantisTV-launched apps | No OS task snapshots or task killing |
-| Controls | Network/display information, guarded settings/audio | Depends on firmware and HDMI |
-| Settings | Appearance, profiles, device info, shortcuts | No protected system writes |
-| Screensaver | Foreground five-minute idle procedural landscape | No aerial video or system replacement |
-| Profiles / watchlist | Four local profiles, manual title lists | No provider account switching |
-| Apple TV app | Generic installed-app discovery and launch | No special integration / DRM claims |
-| Continue Watching | Not implemented | Provider permissions/contracts unknown |
-| AirPlay / iPhone Remote / Siri | Not implemented | No Apple certification or private services |
-| Photos / Music / smart home | Architecture backlog | Not implemented |
+No user-facing TV feature is marked Completed and verified from compilation or documentation. Current totals: 11 narrow engineering/test/artifact rows completed and verified; 21 implemented but not physically tested; 35 partial; 47 not implemented; 5 blocked. These are row counts, not effort-weighted progress percentages.
 
-Compilation and automated evidence are attached to each actual successful release. No feature is physically tested yet.
+Original app remains 0.4.0-preview. There is no physical AFTMM acceptance, verified per-firmware compatibility, hardware benchmark, Apple protocol implementation or full OS replacement. See the report for source methods, test scope, exact artifact hashes and next ten tasks.
+
+Apple reference: https://support.apple.com/en-us/106336 and https://support.apple.com/en-us/149524 . Earlier November 10 retrieval identified tvOS27.2, released October26,2026; an audit refresh was throttled, so no newer undocumented claims are inferred.

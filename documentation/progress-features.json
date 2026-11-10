@@ -1,0 +1,965 @@
+{
+  "audit_date": "2026-11-10",
+  "audited_head": "a1a51fe520363c2512eb14a79e4c17998c8ad0ad",
+  "counts": {
+    "Implemented but not physically tested.": 21,
+    "Partially implemented.": 35,
+    "Not implemented.": 47,
+    "Completed and verified.": 11,
+    "Blocked.": 5
+  },
+  "features": [
+    {
+      "group": "Home and navigation",
+      "id": "H01",
+      "feature": "Foreground Home screen",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.home, M.show",
+      "finding": "Native Activity and original landscape/caption are present; no rendered or remote-driven device evidence."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H02",
+      "feature": "Cinematic hero artwork and poster presentation",
+      "status": "Partially implemented.",
+      "evidence": "M.home; app/res",
+      "finding": "Procedural mountains and static text only; no cinematic title posters, licensed hero feed or video artwork."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H03",
+      "feature": "Top Shelf",
+      "status": "Partially implemented.",
+      "evidence": "M.home:240-245",
+      "finding": "At most six local recent app launches; no provider content shelf, previews or recommendations."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H04",
+      "feature": "Application dock",
+      "status": "Partially implemented.",
+      "evidence": "M.home, M.section",
+      "finding": "A six-column app grid inside the scrolling page, not a persistent tvOS-style dock."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H05",
+      "feature": "Favorites throughout Home and Library",
+      "status": "Partially implemented.",
+      "evidence": "M.home:236-239; M.appActions",
+      "finding": "Add/remove and per-profile storage exist, but an empty saved list repopulates Home with default apps."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H06",
+      "feature": "Recent applications opened through MantisTV",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.launch; R.recent",
+      "finding": "Local bounded launch history; does not observe launches from other applications or Fire OS."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H07",
+      "feature": "Continue Watching",
+      "status": "Not implemented.",
+      "evidence": "M.home:243-245; source tree",
+      "finding": "Only an explicit unavailable message; no provider/session/progress implementation."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H08",
+      "feature": "Dynamic Home backgrounds",
+      "status": "Partially implemented.",
+      "evidence": "M.show; L.onDraw",
+      "finding": "Two selected palettes and static Home landscape; periodic landscape motion is fullscreen-screensaver-only."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H09",
+      "feature": "Focus transitions and reduced motion",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.focus:118-130",
+      "finding": "140 ms scale/elevation and reduced-motion branch; smoothness and remote reachability untested."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H10",
+      "feature": "tvOS-like focus engine and restoration",
+      "status": "Partially implemented.",
+      "evidence": "M.show:144-222; M.section",
+      "finding": "Android focus plus string tags; duplicate app tags and rebuilt pages limit restoration fidelity."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H11",
+      "feature": "Parallax animations",
+      "status": "Partially implemented.",
+      "evidence": "L.onDraw:54-61; M.focus",
+      "finding": "Small horizontal landscape layer drift in screensaver; no app-card tilt/depth or Home parallax engine."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H12",
+      "feature": "Liquid Glass-inspired rendering",
+      "status": "Partially implemented.",
+      "evidence": "M.glass:103-108",
+      "finding": "Rounded translucent backgrounds; no blur, optical refraction or material sampling."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H13",
+      "feature": "D-pad and OK navigation",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.focus; M.section; M.dispatchKeyEvent",
+      "finding": "Focusable native controls/click handlers exist; no Android navigation or physical remote test."
+    },
+    {
+      "group": "Home and navigation",
+      "id": "H14",
+      "feature": "Back and Menu behavior",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.dispatchKeyEvent:570-580; M.onBackPressed:583-595",
+      "finding": "Menu switches foreground Controls; Back returns Home then requires two presses to finish."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A01",
+      "feature": "Installed application discovery",
+      "status": "Implemented but not physically tested.",
+      "evidence": "A.discover:17-51",
+      "finding": "Queries exported/enabled Leanback and ordinary launcher activities and deduplicates by package."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A02",
+      "feature": "Application categories",
+      "status": "Partially implemented.",
+      "evidence": "M.library:355-369",
+      "finding": "All/Favorites/Recently opened filters; no semantic media/game categories or editable taxonomy."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A03",
+      "feature": "Application icons",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.loadIcon:299-322",
+      "finding": "One worker, normalized 96 px bitmaps and LruCache; actual icon coverage/appearance untested."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A04",
+      "feature": "Application metadata",
+      "status": "Partially implemented.",
+      "evidence": "A.AppItem; M.search",
+      "finding": "Package, label and launch intent only; no descriptions, ratings, content metadata or rich catalog."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A05",
+      "feature": "Application launching",
+      "status": "Implemented but not physically tested.",
+      "evidence": "A.discover; M.launch:323-333",
+      "finding": "Explicit public launch intents with exception handling; no launch/return hardware evidence."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A06",
+      "feature": "Application management",
+      "status": "Partially implemented.",
+      "evidence": "M.appActions; M.settings",
+      "finding": "Favorites, refresh and guarded external app-info link; no install/update/uninstall manager or package lifecycle integration."
+    },
+    {
+      "group": "App Library and management",
+      "id": "A07",
+      "feature": "Application list refresh",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.settings:482-486",
+      "finding": "Manual rediscovery and icon-cache eviction; no package-change receiver or background subscription."
+    },
+    {
+      "group": "Control Center",
+      "id": "C01",
+      "feature": "Control Center interface",
+      "status": "Partially implemented.",
+      "evidence": "M.controls:402-426",
+      "finding": "A foreground app page; no global overlay over streaming applications."
+    },
+    {
+      "group": "Control Center",
+      "id": "C02",
+      "feature": "Audio controls",
+      "status": "Partially implemented.",
+      "evidence": "M.volume:427-437",
+      "finding": "Music stream +/- with fixed-volume/security fallback; HDMI/receiver behavior and route control unverified."
+    },
+    {
+      "group": "Control Center",
+      "id": "C03",
+      "feature": "Network status and information",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.controls:404-408",
+      "finding": "Connected/disconnected and type only; no detailed network diagnostic suite."
+    },
+    {
+      "group": "Control Center",
+      "id": "C04",
+      "feature": "Display information",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.controls:409-413",
+      "finding": "Real display metrics and refresh rate getters; not a tested HDMI/HDCP/capability audit."
+    },
+    {
+      "group": "Control Center",
+      "id": "C05",
+      "feature": "Compatible network/audio/display/system shortcuts",
+      "status": "Partially implemented.",
+      "evidence": "M.controls; M.safe:438-448",
+      "finding": "ResolveActivity and exceptions provide fallback; actual exported targets on each firmware are unknown."
+    },
+    {
+      "group": "Control Center",
+      "id": "C06",
+      "feature": "Sleep control",
+      "status": "Not implemented.",
+      "evidence": "M.controls:423-425",
+      "finding": "Text delegates sleep to the physical Fire TV remote; no app sleep action."
+    },
+    {
+      "group": "Control Center",
+      "id": "C07",
+      "feature": "Manual screensaver shortcut",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.controls:422; M.screensaver",
+      "finding": "Opens the app's own foreground landscape view."
+    },
+    {
+      "group": "Control Center",
+      "id": "C08",
+      "feature": "Control Center application shortcuts",
+      "status": "Not implemented.",
+      "evidence": "M.controls",
+      "finding": "No dedicated app shortcut controls; generic launching lives in Library/Home."
+    },
+    {
+      "group": "Control Center",
+      "id": "C09",
+      "feature": "System-wide Control Center access",
+      "status": "Not implemented.",
+      "evidence": "Manifest; M.dispatchKeyEvent",
+      "finding": "No accessibility service, overlay, global remote listener or background service."
+    },
+    {
+      "group": "App Switcher",
+      "id": "S01",
+      "feature": "App Switcher overview",
+      "status": "Partially implemented.",
+      "evidence": "M.show:193-198",
+      "finding": "A local recent-launch list; no OS task snapshots, live cards or complete task enumeration."
+    },
+    {
+      "group": "App Switcher",
+      "id": "S02",
+      "feature": "Switch existing application tasks",
+      "status": "Partially implemented.",
+      "evidence": "M.launch; A.discover",
+      "finding": "Starts public launch intents; does not explicitly select/resume a task by task ID."
+    },
+    {
+      "group": "App Switcher",
+      "id": "S03",
+      "feature": "Recent-list remote navigation",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.show; M.section",
+      "finding": "Native focusable cards exist; end-to-end navigation not tested."
+    },
+    {
+      "group": "App Switcher",
+      "id": "S04",
+      "feature": "Application lifecycle management",
+      "status": "Partially implemented.",
+      "evidence": "M.onPause/onDestroy; source tree",
+      "finding": "Own handler/executor cleanup exists; no lifecycle control, force-stop or task management for other apps."
+    },
+    {
+      "group": "Settings",
+      "id": "SE01",
+      "feature": "Appearance settings",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.settings:472-481",
+      "finding": "Two palettes and reduced motion, scoped to the selected local profile."
+    },
+    {
+      "group": "Settings",
+      "id": "SE02",
+      "feature": "Wallpaper selection and management",
+      "status": "Not implemented.",
+      "evidence": "M.settings; source tree",
+      "finding": "No wallpaper picker, import, persistent custom media or wallpaper library."
+    },
+    {
+      "group": "Settings",
+      "id": "SE03",
+      "feature": "Applications settings",
+      "status": "Partially implemented.",
+      "evidence": "M.settings:482-486; M.appActions",
+      "finding": "Refresh and external information links only; no dedicated comprehensive application settings module."
+    },
+    {
+      "group": "Settings",
+      "id": "SE04",
+      "feature": "Device information",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.settings:491-497",
+      "finding": "Model/device/display build/API/ABIs are shown from runtime getters; no device snapshot was collected."
+    },
+    {
+      "group": "Settings",
+      "id": "SE05",
+      "feature": "Audio format, route and capability information",
+      "status": "Not implemented.",
+      "evidence": "M.controls; M.settings",
+      "finding": "No codec, passthrough, HDMI sink, supported format or active audio route inspection."
+    },
+    {
+      "group": "Settings",
+      "id": "SE06",
+      "feature": "Accessibility settings",
+      "status": "Partially implemented.",
+      "evidence": "M.focus; M.settings:477-489",
+      "finding": "Reduce motion, basic descriptions and external accessibility shortcut; no full text/contrast/screen-reader/focus audit."
+    },
+    {
+      "group": "Settings",
+      "id": "SE07",
+      "feature": "Recovery settings",
+      "status": "Partially implemented.",
+      "evidence": "M.settings:490; rollback guide",
+      "finding": "Finish/return-to-Fire-OS and documented uninstall; no tested recovery, backup or restore module."
+    },
+    {
+      "group": "Screensaver",
+      "id": "SC01",
+      "feature": "Original landscape screensaver",
+      "status": "Implemented but not physically tested.",
+      "evidence": "L; M.screensaver:558-568",
+      "finding": "Procedural vector landscape and clock, not an aerial image/video library."
+    },
+    {
+      "group": "Screensaver",
+      "id": "SC02",
+      "feature": "High-quality licensed aerial images/video",
+      "status": "Not implemented.",
+      "evidence": "app/res; source tree",
+      "finding": "Only two vector icon/banner resources and procedural artwork; no aerial media assets or player."
+    },
+    {
+      "group": "Screensaver",
+      "id": "SC03",
+      "feature": "Automatic idle behavior",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.armIdle:76-80; lifecycle methods",
+      "finding": "Five-minute foreground timer; pauses when the app loses foreground."
+    },
+    {
+      "group": "Screensaver",
+      "id": "SC04",
+      "feature": "Smooth transitions and scene sequencing",
+      "status": "Partially implemented.",
+      "evidence": "L.onDraw",
+      "finding": "Layer translation at nominal 100 ms invalidations; no scene crossfades, media sequencing or hardware smoothness evidence."
+    },
+    {
+      "group": "Screensaver",
+      "id": "SC05",
+      "feature": "System screensaver replacement",
+      "status": "Not implemented.",
+      "evidence": "Manifest",
+      "finding": "No DreamService or system idle integration; does not replace Fire OS screensaver/sleep."
+    },
+    {
+      "group": "Search",
+      "id": "Q01",
+      "feature": "Installed application search UI",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.search:370-401",
+      "finding": "Text input filters app label/package and launches matching apps; keyboard/remote usability untested."
+    },
+    {
+      "group": "Search",
+      "id": "Q02",
+      "feature": "Content discovery",
+      "status": "Not implemented.",
+      "evidence": "M.search; source tree",
+      "finding": "No film/show index, metadata provider or provider search integration."
+    },
+    {
+      "group": "Search",
+      "id": "Q03",
+      "feature": "Local metadata search beyond app label/package",
+      "status": "Partially implemented.",
+      "evidence": "R.matches; A.AppItem",
+      "finding": "Only installed application names and package strings; no local media index or richer fields."
+    },
+    {
+      "group": "Search",
+      "id": "Q04",
+      "feature": "Compatible legal remote content sources",
+      "status": "Not implemented.",
+      "evidence": "Manifest; source tree",
+      "finding": "No source adapters, HTTP client or network permission for remote discovery."
+    },
+    {
+      "group": "Search",
+      "id": "Q05",
+      "feature": "Voice or Siri search",
+      "status": "Not implemented.",
+      "evidence": "Manifest; source tree",
+      "finding": "No microphone, speech recognition or Siri integration."
+    },
+    {
+      "group": "Profiles",
+      "id": "P01",
+      "feature": "Multiple local profiles",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.profiles:499-514",
+      "finding": "Four fixed local profiles with rename/select; no Android persistence or switching tests."
+    },
+    {
+      "group": "Profiles",
+      "id": "P02",
+      "feature": "Per-profile preferences",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.key/list/save/settings",
+      "finding": "Appearance/reduced motion and lists are keyed by profile; isolation is source-reviewed, not integration-tested."
+    },
+    {
+      "group": "Profiles",
+      "id": "P03",
+      "feature": "Local watchlist",
+      "status": "Implemented but not physically tested.",
+      "evidence": "M.watchlist:515-557",
+      "finding": "Manual title add/remove, up to 100 entries; no streaming/provider synchronization."
+    },
+    {
+      "group": "Profiles",
+      "id": "P04",
+      "feature": "Personalized Home experience",
+      "status": "Partially implemented.",
+      "evidence": "M.home; M.profiles",
+      "finding": "Profile name, favorites and recent launches only; no content recommendations, viewing progress or account personalization."
+    },
+    {
+      "group": "Profiles",
+      "id": "P05",
+      "feature": "Streaming/Apple account profile switching",
+      "status": "Not implemented.",
+      "evidence": "M.profiles; ecosystem doc",
+      "finding": "Local profile selection does not switch accounts inside streaming apps."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E01",
+      "feature": "Official Apple TV application integration",
+      "status": "Not implemented.",
+      "evidence": "A.discover; M.launch",
+      "finding": "No Apple-specific adapter or verified Apple TV compatibility/playback. Generic installed-app launching is covered by A05 and earns no Apple-integration completion credit."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E02",
+      "feature": "AirPlay-compatible receiver",
+      "status": "Not implemented.",
+      "evidence": "Manifest; complete source tree",
+      "finding": "No receiver, protocol stack, discovery, pairing or media transport."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E03",
+      "feature": "iPhone Remote control",
+      "status": "Not implemented.",
+      "evidence": "Manifest; complete source tree",
+      "finding": "No Apple Remote pairing/protocol or authenticated custom remote endpoint."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E04",
+      "feature": "Mac connectivity",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; ecosystem doc",
+      "finding": "Proposed only; no implemented Mac sharing/control/continuity module."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E05",
+      "feature": "Photos sharing",
+      "status": "Not implemented.",
+      "evidence": "Manifest; complete source tree",
+      "finding": "No share receiver/importer, photo protocol or Apple Photos integration."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E06",
+      "feature": "Music integration",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree",
+      "finding": "No player, library, audio streaming or Apple Music integration."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E07",
+      "feature": "Siri Shortcuts integration",
+      "status": "Not implemented.",
+      "evidence": "Ecosystem doc; complete source tree",
+      "finding": "Architecture prose only; no implemented authenticated API, actions or shortcut bridge."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E08",
+      "feature": "Home Assistant integration",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree",
+      "finding": "No adapter, pairing, discovery or automation endpoint."
+    },
+    {
+      "group": "Apple ecosystem",
+      "id": "E09",
+      "feature": "Homebridge / HomeKit integration",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree",
+      "finding": "No bridge, accessory service, pairing or certification."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T01",
+      "feature": "Apple Music Hi-Res Lossless",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No MantisTV music pipeline; launching another app does not implement this feature."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T02",
+      "feature": "Apple Music AutoMix",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No track analysis, mixing, transitions or Apple Music service integration."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T03",
+      "feature": "Video podcasts and redesigned Podcasts experience",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No podcast catalog/player or redesigned media UI."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T04",
+      "feature": "AirPlay performance enhancements",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No AirPlay implementation exists to optimize or test."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T05",
+      "feature": "Transcribed audio captions",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No media player, transcription or caption renderer."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T06",
+      "feature": "Dynamic Text accessibility behavior",
+      "status": "Not implemented.",
+      "evidence": "M.text; Apple reference",
+      "finding": "Fixed app-selected text sizes using Android TextViews; no tvOS Dynamic Text feature implementation/validation."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T07",
+      "feature": "Blocking individual apps / parental access controls",
+      "status": "Not implemented.",
+      "evidence": "M.profiles; complete source tree",
+      "finding": "Profiles explicitly are not access controls; no app restriction policy or authentication."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T08",
+      "feature": "FaceTime links",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No FaceTime, calling client, links or continuity integration."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T09",
+      "feature": "FaceTime third-party interpreter/caption services",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No video-calling/caption-service implementation."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T10",
+      "feature": "iPhone-selected specific Photos for screensaver",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No iPhone pairing or photo selection/import pipeline."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T11",
+      "feature": "Screensaver category shuffle",
+      "status": "Not implemented.",
+      "evidence": "L; Apple reference",
+      "finding": "One procedural scene; no selectable categories or shuffle scheduler."
+    },
+    {
+      "group": "Apple tvOS 27 / 27.2 features",
+      "id": "T12",
+      "feature": "Find My for supported Siri Remotes",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No Find My network, remote accessory or Apple entitlement integration."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T13",
+      "feature": "Apple Music Sing using iPhone microphone",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No microphone transport, karaoke player or Apple Music Sing integration."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T14",
+      "feature": "Collaborative music queue and reactions",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No shared sessions, queue or reaction service."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T15",
+      "feature": "Lyrics Translation",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No lyric data, translation or synchronized lyric UI."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T16",
+      "feature": "Lyrics Pronunciation",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No pronunciation/transliteration pipeline or lyric UI."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T17",
+      "feature": "FaceTime Contact Posters",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No call/contact integration."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T18",
+      "feature": "FaceTime Live Captions",
+      "status": "Not implemented.",
+      "evidence": "Complete source tree; Apple reference",
+      "finding": "No calling, caption processing or language support."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T19",
+      "feature": "Incoming call notifications via compatible HomePods",
+      "status": "Not implemented.",
+      "evidence": "Manifest; complete source tree",
+      "finding": "No notification listener, call continuity or HomePod service."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T20",
+      "feature": "Profile chooser when waking",
+      "status": "Not implemented.",
+      "evidence": "M.onCreate/onResume/profiles",
+      "finding": "Restores last local profile; no device-wake profile picker or wake integration."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T21",
+      "feature": "Aerial landscape category selection / India library",
+      "status": "Not implemented.",
+      "evidence": "app/res; L",
+      "finding": "No aerial assets, geographic library or category browser."
+    },
+    {
+      "group": "Inherited tvOS design/ecosystem scope",
+      "id": "T22",
+      "feature": "Default AirPlay speaker selection",
+      "status": "Not implemented.",
+      "evidence": "M.volume; complete source tree",
+      "finding": "Local music-stream volume only; no AirPlay audio routing or speaker discovery."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F01",
+      "feature": "Stock Fire OS foundation preserving hardware media support",
+      "status": "Partially implemented.",
+      "evidence": "Manifest; architecture doc",
+      "finding": "Ordinary app leaves vendor foundation in place; decoding, DRM, HDCP and audio preservation not physically tested."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F02",
+      "feature": "Direct API 25 compilation",
+      "status": "Completed and verified.",
+      "evidence": "B:7-17; successful run 42747779541",
+      "finding": "Official platform-25 android.jar used for compile/link/DEX; verifies source API surface, not Fire OS behavior."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F03",
+      "feature": "32-bit-compatible packaging inspection",
+      "status": "Completed and verified.",
+      "evidence": "I:10-27; APK ZIP inspection",
+      "finding": "No native libraries and DEX version 037; packaging evidence only, not an ARM32 execution test."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F04",
+      "feature": "Complete AFTMM firmware inventory/matrix",
+      "status": "Partially implemented.",
+      "evidence": "device/firmware-catalog.json",
+      "finding": "41 full plus 35 incremental catalog records, all C; not 76 distinct proven compatible releases or exhaustive official history."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F05",
+      "feature": "Per-firmware package/permission/service/launcher analysis",
+      "status": "Not implemented.",
+      "evidence": "firmware-catalog.json",
+      "finding": "Fields explicitly unknown/unverified; no package extraction, firmware binary diff or device evidence."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F06",
+      "feature": "Runtime capability detection across firmware",
+      "status": "Partially implemented.",
+      "evidence": "M.safe; M.volume; M.settings",
+      "finding": "Some intent resolution, fixed-volume and exception handling; not a complete service/permission/capability abstraction."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F07",
+      "feature": "All-firmware AFTMM compatibility validation",
+      "status": "Partially implemented.",
+      "evidence": "Device audit; no hardware run",
+      "finding": "Device-family API25 compilation/catalog evidence exists, but no per-build B/API-source verification or A/physical acceptance. Catalog records all remain C."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F08",
+      "feature": "Physical AFTMM installation and functional acceptance",
+      "status": "Blocked.",
+      "evidence": "Build report: Installed or physically tested NO",
+      "finding": "No authorized supervised device session; no device was connected or modified."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F09",
+      "feature": "Hardware startup, RAM, GPU, 4K and storage benchmarks",
+      "status": "Blocked.",
+      "evidence": "Performance budget; no measurements",
+      "finding": "AFTMM test access is missing; source constraints and APK size do not establish performance."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F10",
+      "feature": "Long-term stability, thermal and soak validation",
+      "status": "Blocked.",
+      "evidence": "QA report; no soak artifacts",
+      "finding": "Requires supervised hardware; no session duration, crash/thermal trace or soak results."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F11",
+      "feature": "Full OS replacement / protected system UI",
+      "status": "Blocked.",
+      "evidence": "Manifest; original mission safety constraints",
+      "finding": "Not implemented; current authorized stock-app strategy and no-root/no-flash/no-system-modification constraints prevent claiming this milestone."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F12",
+      "feature": "Custom ROM / stock OS foundation comparison",
+      "status": "Partially implemented.",
+      "evidence": "OS-FOUNDATION-COMPARISON.md",
+      "finding": "Preliminary documentary comparison; no ROM build, vendor-blob/DRM/audio audit or installed comparison."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F13",
+      "feature": "Bootloader research",
+      "status": "Not implemented.",
+      "evidence": "Complete tree; repository audit",
+      "finding": "Device-tree reference is not a completed bootloader analysis; no exploitation or unlock performed."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F14",
+      "feature": "Deeper Fire OS/system service integration",
+      "status": "Not implemented.",
+      "evidence": "Manifest; complete source tree",
+      "finding": "No privileged/system UI integration, HOME replacement, boot start or global event service."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F15",
+      "feature": "Modular maintainable implementation",
+      "status": "Partially implemented.",
+      "evidence": "Four Java classes; M:602 lines",
+      "finding": "Catalog/scene/rules separated, but most screens, profile persistence and control logic remain in one Activity."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F16",
+      "feature": "Complete candidate repository/source/license comparison",
+      "status": "Partially implemented.",
+      "evidence": "REPOSITORY-AUDIT.md; LICENSE-AUDIT.md",
+      "finding": "One baseline built; other candidates reviewed preliminarily, without complete maintenance/RAM/reproducibility/asset provenance audits."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F17",
+      "feature": "MantisTV license and runtime dependency declaration",
+      "status": "Completed and verified.",
+      "evidence": "LICENSE; source/tree/APK",
+      "finding": "MIT license present; four native Java classes use framework APIs; no third-party runtime jars/fonts/native assets in this source tree."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F18",
+      "feature": "Untouched upstream baseline build/artifact delivery",
+      "status": "Completed and verified.",
+      "evidence": "Run 42744518215; baseline release",
+      "finding": "Existing baseline APK/source/license/NOTICE assets and successful build record verified; not a device compatibility claim."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F19",
+      "feature": "Cloud preview/debug compilation and packaging",
+      "status": "Completed and verified.",
+      "evidence": "B; successful release/run",
+      "finding": "Two separately packaged APKs were built; debug flag/package policy checked. Completion applies only to build outputs."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F20",
+      "feature": "Development APK signature verification",
+      "status": "Completed and verified.",
+      "evidence": "signature.txt; debug-signature.txt; B",
+      "finding": "Existing CI verification passed with SDK25 floor; ephemeral development certificate, not production signing."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F21",
+      "feature": "Source ZIP and SHA-256 deliverables",
+      "status": "Completed and verified.",
+      "evidence": "Actual release bytes and checksum file",
+      "finding": "Preview/debug/source hashes and ZIP integrity independently rechecked in memory; selected source ZIP files match audited source."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F22",
+      "feature": "Pure history/search/profile-ID rule tests",
+      "status": "Completed and verified.",
+      "evidence": "T:8-27; unit-tests.txt",
+      "finding": "One host-JVM main with nine check calls and one expected-exception scenario; only these narrow rules are verified."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F23",
+      "feature": "Seven selected Android lint checks",
+      "status": "Completed and verified.",
+      "evidence": "G:10-18; lint.txt/xml",
+      "finding": "Zero findings for NewApi, InlinedApi, MissingPermission, WrongThread, HandlerLeak, DrawAllocation, StaticFieldLeak."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F24",
+      "feature": "Comprehensive static/dependency analysis",
+      "status": "Partially implemented.",
+      "evidence": "G; B; lint-pom.xml",
+      "finding": "Selected lint and native source compile exist; not a full lint sweep, dependency vulnerability/license/SBOM or vendor API audit."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F25",
+      "feature": "Android UI/instrumentation/persistence tests",
+      "status": "Not implemented.",
+      "evidence": "tests tree",
+      "finding": "Only StoreRulesTest.java and lint tooling POM; no UI, lifecycle, profile-isolation or persistence instrumentation suite."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F26",
+      "feature": "Installation, rollback and recovery validation",
+      "status": "Partially implemented.",
+      "evidence": "Installation/rollback guides",
+      "finding": "Written procedures exist; installation, return-to-Amazon and uninstall/recovery paths not rehearsed on hardware."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F27",
+      "feature": "Update-stable production signing/release",
+      "status": "Blocked.",
+      "evidence": "B:20-23; release notes",
+      "finding": "No persistent protected keystore is provisioned; each clean build generates an ephemeral key. Needs secure signing setup."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F28",
+      "feature": "Free cloud workflow route",
+      "status": "Completed and verified.",
+      "evidence": "Public CI workflow/run records",
+      "finding": "Standard ubuntu-24.04 public jobs and GitHub Releases; no Actions cache/upload-artifact or paid service configured in the inspected workflows."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F29",
+      "feature": "Resource monitoring and low-impact builds",
+      "status": "Partially implemented.",
+      "evidence": "Resource script; CI; JAVA_TOOL_OPTIONS",
+      "finding": "Disk reserve gates and JVM cap exist; not continuous memory-pressure/usage/device-resource monitoring."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F30",
+      "feature": "Measured performance optimization",
+      "status": "Partially implemented.",
+      "evidence": "M.icon cache; L; prior/final lint reports",
+      "finding": "Bounded icon cache and draw preallocation exist; source-level warning reduction is verified, actual hardware improvement is unmeasured."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F31",
+      "feature": "Public-API, no-DRM-bypass app design",
+      "status": "Completed and verified.",
+      "evidence": "Complete original source and manifest",
+      "finding": "No private API calls, receiver/DRM implementation, root/flash/device-control code in MantisTV runtime; not Apple certification."
+    },
+    {
+      "group": "Foundation, compatibility and delivery",
+      "id": "F32",
+      "feature": "Complete accurate project documentation",
+      "status": "Partially implemented.",
+      "evidence": "Audited documentation/history",
+      "finding": "Substantial docs exist, but prior version/lint/backlog claims drifted and firmware/hardware sections remain incomplete."
+    }
+  ]
+}

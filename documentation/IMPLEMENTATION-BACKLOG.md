@@ -1,13 +1,17 @@
-# Remaining implementation backlog
+# Prioritized implementation backlog — audited November 10, 2026
 
-- Supervised AFTMM install, full D-pad reachability/focus restoration, Back/OK/Menu and app-return QA.
-- Android API25 compilation or full lint/API-signature gate, beyond manifest min SDK checks.
-- Persistent signing strategy without publishing private keys, before an update-stable release.
-- Real on-device startup/PSS/frame/thermal measurements and long-session soak.
-- Split Activity screens, profile store and package discovery into maintainable modules.
-- App categories, richer metadata, bounded background package refresh and accessibility refinement.
-- Provider Continue Watching and remote content search only where legally supported.
-- Exhaustive launch-era/current firmware inventory, package/service/permission/launcher diffs, evidence upgrades from C.
-- License and exact-commit source audits of additional candidates before reuse.
-- API25 ARMv7 receiver feasibility; secure custom iPhone/browser remote pairing; explicit Photos/Music/Shortcuts sharing; optional Home Assistant/Homebridge.
-- Optional ROM/device-tree research only. No physical rooting/flashing/downgrading or system-package disabling.
+Current source already compiles against API25 and has seven selected zero-warning lint checks; these are not still-unstarted tasks. App catalog/scene/rules are separated, while UI/profile persistence needs further modularization. No physical or Apple ecosystem completion is inferred. See ../PROJECT-PROGRESS.md for every feature status.
+
+
+1. **Authorize and run supervised AFTMM smoke acceptance:** record exact hardware/firmware; install the preview manually; test launch, D-pad/OK/Menu/Back, Home-button escape, app return and removal. Preserve Amazon defaults and user data. This stays blocked until a separately authorized device session.
+2. **Add Android functional/persistence/lifecycle tests:** exercise profile isolation, JSON persistence, favorites/watchlist, focus/scroll/query restoration, idle/pause/resume and unavailable settings targets. Use separately authorized hardware automation; no local emulator or unattended device changes.
+3. **Fix the source-level UX/lifecycle defects with regression evidence:** intentionally empty favorites, reduced-motion clock scheduling, unique focus keys and preserved library/search state; avoid duplicate startup discovery and unbounded stale icon work. Keep this audit release documentation-only.
+4. **Provision persistent private signing and safe upgrade/data recovery:** use a secure authorized secret store, document certificate continuity, add user-controlled profile export/import, and test upgrade/rollback without automatic destructive uninstall. Do not publish a private keystore or call an ephemeral-key build production-ready.
+5. **Establish an AFTMM performance/soak baseline:** startup, PSS/peak RAM, frame consistency, 4K behavior, GPU/GC, app-return latency, temperature/storage and long-session reliability. Set acceptance budgets from observations, not fabricated figures.
+6. **Complete firmware-family evidence:** reconcile launch-era/official history and incremental identifiers; inspect package/permission/service/launcher differences; add real capability probes and per-build source tests. Upgrade C to B/A only with linked evidence.
+7. **Finish the core TV experience:** semantic categories/rich metadata, proper persistent dock and shelf behaviors, focused remote interaction, accessible typography/contrast, full settings/recovery UX and licensed/original media with bounded decoding/caching. Validate each increment on hardware.
+8. **Design lawful content and Continue Watching adapters:** first establish which provider/public APIs actually work on API25/Fire OS6; add explicit permissions/data contracts, mockable adapters and user-consented data flows. No private Apple APIs, scraping credentials or DRM bypass.
+9. **Run an API25/ARMv7 ecosystem feasibility spike:** audit receiver candidates and all native/component licenses and protected-protocol paths; assess a secure opt-in custom iPhone/Mac/Shortcuts bridge separately from Apple's Remote certification; then optional Photos/Music/Home Assistant/Homebridge adapters. Proposals alone are not implemented features.
+10. **Define the permitted system-integration boundary and release acceptance:** finish stock-versus-ROM/vendor support research without rooting/flashing or disabling packages; document unattainable/private-service features and a realistic milestone contract. Consolidate CI/docs so old bootstrap workflows and stale static summaries cannot imply broader OS completion.
+
+The next product milestone is a reproducible, safely updatable, physically accepted AFTMM native-app release with measured performance. Full tvOS/Apple ecosystem parity and full OS replacement remain separate, much larger goals; this audit does not mark them complete.
