@@ -141,6 +141,8 @@ internal class MovingGlass(
         colorFilter: ColorMatrixColorFilter? = null,
         chromatic: Boolean = true,
     ) {
+        // API25 keeps the single-pass lens and tint; channel decomposition needs26.
+        val useChromatic = chromatic && android.os.Build.VERSION.SDK_INT >= 26
         ownerToRoot.reset()
         var current = owner
         while (current !== root) {
@@ -153,12 +155,12 @@ internal class MovingGlass(
         val fitScale = if (fit) max(root.width.toFloat() / imageWidth, root.height.toFloat() / imageHeight) else 1f
         val cropX = if (fit) (root.width - imageWidth * fitScale) / 2 else 0f
         val cropY = if (fit) (root.height - imageHeight * fitScale) / 2 else 0f
-        val first = if (chromatic) 0 else 1
-        val last = if (chromatic) 2 else 1
+        val first = if (useChromatic) 0 else 1
+        val last = if (useChromatic) 2 else 1
         ownerToRoot.getValues(transformValues)
         val changed = !transformValues.contentEquals(mesh.lastTransform) || mesh.lastImageWidth != imageWidth ||
             mesh.lastImageHeight != imageHeight || mesh.lastRootWidth != root.width || mesh.lastRootHeight != root.height ||
-            mesh.lastMapping != mapping || mesh.lastChromatic != chromatic
+            mesh.lastMapping != mapping || mesh.lastChromatic != useChromatic
         if (changed) {
         transformValues.copyInto(mesh.lastTransform)
         mesh.lastImageWidth = imageWidth
@@ -166,7 +168,7 @@ internal class MovingGlass(
         mesh.lastRootWidth = root.width
         mesh.lastRootHeight = root.height
         mesh.lastMapping = mapping
-        mesh.lastChromatic = chromatic
+        mesh.lastChromatic = useChromatic
         for (channel in first..last) {
             val shift = when (channel) { 0 -> 1f; 2 -> -1f; else -> 0f }
             val texture = mesh.textures[channel]
@@ -191,7 +193,7 @@ internal class MovingGlass(
         }
         }
 
-        if (!chromatic) {
+        if (!useChromatic) {
             // The ordinary path stays single-pass and avoids an offscreen layer.
             paint.alpha = alpha
             paint.colorFilter = colorFilter
@@ -257,7 +259,7 @@ internal class MovingGlass(
 
     /** The tone folded into each channel's isolation: channel k of (tone · sample). */
     private fun channelsFor(tone: ColorMatrixColorFilter?): Array<ColorMatrixColorFilter> {
-        if (tone == null) return channelFilters
+        if (tone == null || android.os.Build.VERSION.SDK_INT < 26) return channelFilters
         toned[tone]?.let { return it }
         val matrix = ColorMatrix().also(tone::getColorMatrix)
         val made = Array(3) { channel ->

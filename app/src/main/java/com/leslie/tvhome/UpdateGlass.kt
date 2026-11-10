@@ -64,7 +64,11 @@ internal class UpdateGlass(private val root: View, private val moving: Boolean =
                 path.reset()
                 val radius = surface.radius.coerceAtMost(minOf(owner.width, owner.height) / 2f)
                 path.addRoundRect(0f, 0f, owner.width.toFloat(), owner.height.toFloat(), radius, radius, Path.Direction.CW)
-                canvas.clipOutPath(path)
+                if (android.os.Build.VERSION.SDK_INT >= 26) canvas.clipOutPath(path)
+                else {
+                    @Suppress("DEPRECATION")
+                    canvas.clipPath(path, Region.Op.DIFFERENCE)
+                }
                 val pad = owner.dp(12).toFloat()
                 canvas.drawBitmap(shadow, -pad, -pad + owner.dp(3), shadowPaint)
                 canvas.restoreToCount(saved)
