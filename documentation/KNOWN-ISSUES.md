@@ -1,7 +1,7 @@
 # Known issues and limits
 
 - No physical installation, D-pad usability test, rendering screenshot, memory benchmark or AFTMM performance validation yet.
-- Source compilation targets the installed SDK 34 with manifest minimum/target 25. Complete Android lint/API-surface verification remains outstanding; SDK declarations alone are not compatibility evidence.
+- Version 0.2 uses the official API25 platform for direct source compilation when its quality workflow succeeds. Android lint, vendor API behavior and physical testing remain outstanding.
 - Fire OS HOME interception is absent. MantisTV is launched as an ordinary TV app; Amazon remains the system foundation.
 - Recent applications reflect MantisTV launches, not privileged OS task enumeration. No task killing or lifecycle control over other applications.
 - Top Shelf contains local app history, not protected provider recommendations. Continue Watching is not implemented.

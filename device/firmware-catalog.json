@@ -1,0 +1,1332 @@
+{
+  "retrieved_at": "2026-11-10T02:56:41.394402+00:00",
+  "records": [
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "Build code 11644900484",
+        "Recorded Mar 23, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5866)",
+        "Build code 11644889732",
+        "Recorded May 7, 2025"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.0 (NS6710/5786)",
+        "Build code 11577760388",
+        "Recorded Apr 3, 2025"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.0 (NS6710/5784)",
+        "Build code 11577759876",
+        "Recorded Mar 6, 2025"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.9 (NS6709/5669)",
+        "Build code 11443512708",
+        "Recorded Jan 10, 2025"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.8 (NS6708/5570)",
+        "Build code 11242160772",
+        "Recorded Oct 28, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.6 (NS6706/5471)",
+        "Build code 10906591108",
+        "Recorded Sep 21, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.5 (NS6705/5380)",
+        "Build code 10772350084",
+        "Recorded Jul 8, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.4 (NS6704/5281)",
+        "Build code 10436780420",
+        "Recorded May 9, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.3 (NS6703/5183)",
+        "Build code 10235428740",
+        "Recorded Mar 28, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.2 (NS6702/5093)",
+        "Build code 10034079108",
+        "Recorded Feb 1, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.1 (NS6701/4985)",
+        "Build code 9832724868",
+        "Recorded Dec 26, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.0 (NS6700/4872)",
+        "Build code 9631369348",
+        "Recorded Sep 25, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.8 (NS6298/4758)",
+        "Build code 9362904708",
+        "Recorded Aug 26, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.7 (NS6297/4655)",
+        "Build code 9161551748",
+        "Recorded Jun 1, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.6 (NS6296/4555)",
+        "Build code 8893090692",
+        "Recorded Apr 23, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.6 (NS6296/4554)",
+        "Build code 8893090436",
+        "Recorded Mar 24, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.5 (NS6295/4448)",
+        "Build code 8557518980",
+        "Recorded Jan 19, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.4 (NS6294/4339)",
+        "Build code 8356164484",
+        "Recorded Nov 19, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.3 (NS6293/4731)",
+        "Build code 8222047108",
+        "Recorded Oct 13, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.2 (NS6292/4226)",
+        "Build code 8020591236",
+        "Recorded Sep 19, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.1 (NS6291/4110)",
+        "Build code 7550799492",
+        "Recorded Jul 28, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.0 (NS6290/4022)",
+        "Build code 7282341508",
+        "Recorded Jun 28, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.0 (NS6290/4021)",
+        "Build code 7282341252",
+        "Recorded Jun 22, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.9 (NS6289/3905)",
+        "Build code 7013876100",
+        "Recorded Jun 1, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.7 (NS6287/3770)",
+        "Build code 6544079492",
+        "Recorded Mar 24, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.7 (NS6287/3768)",
+        "Build code 6544078980",
+        "Recorded Feb 8, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/4812)",
+        "Build code 5940366468",
+        "Recorded Dec 11, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/4061)",
+        "Build code 5940174212",
+        "Recorded Oct 15, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/4054)",
+        "Build code 5940172420",
+        "Recorded Sep 16, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/3385)",
+        "Build code 5604456836",
+        "Recorded Jun 14, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.0 (NS6280/3236)",
+        "Build code 5067547780",
+        "Recorded May 22, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.7 (NS6277/3033)",
+        "Build code 4597733764",
+        "Recorded Jan 23, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.7 (NS6277/3025)",
+        "Build code 4597731716",
+        "Recorded Nov 20, 2020"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.6 (NS6276/2933)",
+        "Build code 4396381572",
+        "Recorded Sep 30, 2020"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.3 (NS6273/2773)",
+        "Build code 3993687428",
+        "Recorded Jul 18, 2020"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.1 (NS6271/2495)",
+        "Build code 3590963076",
+        "Recorded Mar 21, 2020"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.6.8 (NS6268/2315)",
+        "Build code 3255372676",
+        "Recorded Nov 2, 2019"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.6.6 (NS6266/2292)",
+        "Build code 3054040196",
+        "Recorded Oct 9, 2019"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.6.5 (NS6265/2157)",
+        "Build code 2852679044",
+        "Recorded Aug 20, 2019"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "full",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.6.4 (NS6264/1995)",
+        "Build code 2449984388",
+        "Recorded May 25, 2019"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 11644889732",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 11577760388",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 11577759876",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 11443512708",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 11242160772",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 10906591108",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 10772350084",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 10436780420",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 10235428740",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 10034079108",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.1.1 (NS6711/5908)",
+        "From build 9631369348",
+        "Target build 11644900484",
+        "Recorded Mar 25, 2026"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.6 (NS6706/5471)",
+        "From build 9362905220",
+        "Target build 10906591108",
+        "Recorded Sep 24, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.6 (NS6706/5471)",
+        "From build 8557518980",
+        "Target build 10906591108",
+        "Recorded Sep 23, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.3 (NS6703/5183)",
+        "From build 10034079108",
+        "Target build 10235428740",
+        "Recorded Mar 29, 2024"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.1 (NS6701/4985)",
+        "From build 9631369348",
+        "Target build 9832724868",
+        "Recorded Dec 29, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.7.0.0 (NS6700/4872)",
+        "From build 9161551748",
+        "Target build 9631369348",
+        "Recorded Oct 5, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.7 (NS6297/4655)",
+        "From build 8893090692",
+        "Target build 9161551748",
+        "Recorded Jun 19, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.7 (NS6297/4655)",
+        "From build 8557518980",
+        "Target build 9161551748",
+        "Recorded Jun 2, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.6 (NS6296/4555)",
+        "From build 8893090436",
+        "Target build 8893090692",
+        "Recorded Apr 24, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.6 (NS6296/4554)",
+        "From build 8557518980",
+        "Target build 8893090436",
+        "Recorded Mar 27, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.5 (NS6295/4448)",
+        "From build 8020591236",
+        "Target build 8557518980",
+        "Recorded Jan 27, 2023"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.4 (NS6294/4339)",
+        "From build 8020591236",
+        "Target build 8356164484",
+        "Recorded Nov 21, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.3 (NS6293/4731)",
+        "From build 8020591236",
+        "Target build 8222047108",
+        "Recorded Oct 18, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.1 (NS6291/4113)",
+        "From build 7550799492",
+        "Target build 7550800260",
+        "Recorded Aug 29, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.1 (NS6291/4110)",
+        "From build 7282341508",
+        "Target build 7550799492",
+        "Recorded Jul 28, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.9.0 (NS6290/4022)",
+        "From build 7013876100",
+        "Target build 7282341508",
+        "Recorded Jul 5, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.9 (NS6289/3905)",
+        "From build 5940366468",
+        "Target build 7013876100",
+        "Recorded Apr 12, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.7 (NS6287/3770)",
+        "From build 6544078980",
+        "Target build 6544079492",
+        "Recorded Mar 24, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.7 (NS6287/3768)",
+        "From build 5940366468",
+        "Target build 6544078980",
+        "Recorded Mar 3, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/4812)",
+        "From build 5940174212",
+        "Target build 5940366468",
+        "Recorded Jan 13, 2022"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/4054)",
+        "From build 5604456836",
+        "Target build 5940172420",
+        "Recorded Sep 30, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.1 (NS6281/3385)",
+        "From build 5067547780",
+        "Target build 5604456836",
+        "Recorded Jul 1, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.8.0 (NS6280/3236)",
+        "From build 5067547012",
+        "Target build 5067547780",
+        "Recorded May 28, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.7.7 (NS6277/3033)",
+        "From build 4597732228",
+        "Target build 4597733764",
+        "Recorded Feb 2, 2021"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    },
+    {
+      "kind": "diff",
+      "source": "https://ftvdb.com/firetv/firmware/com.amazon.mantis.android.os/diff/",
+      "catalog_cells": [
+        "Version Fire OS 6.2.6.8 (NS6268/2315)",
+        "From build 3054040196",
+        "Target build 3255372676",
+        "Recorded Nov 14, 2019"
+      ],
+      "evidence": "C",
+      "api": "25 (device-family specification; per-build unverified)",
+      "abi": "32-bit ARM (device-family specification; per-build unverified)",
+      "system_packages": "unknown",
+      "launcher": "ordinary app approach; per-build untested",
+      "permissions": "manifest only ACCESS_NETWORK_STATE; per-build behavior unknown",
+      "services": "public Android services; per-build availability unverified",
+      "testing": "no physical tests or firmware package extraction"
+    }
+  ]
+}

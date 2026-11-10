@@ -10,11 +10,13 @@ Use the D-pad and OK. Hold OK on an app for favorites and app information. Menu 
 
 ## Build and download
 
-Cloud workflows use standard Ubuntu GitHub Actions runners in this public repository. No Actions caches or metered artifact uploads are used. Outputs are published as development prerelease assets under Releases. All SDK tools stay in the cloud. Run scripts/build.sh only in a suitably provisioned cloud checkout; it expects existing Android build-tools 34.0.0, platform 34 and a JDK.
+Cloud workflows use standard Ubuntu GitHub Actions runners in this public repository. No Actions caches or metered artifact uploads are used. Outputs are published as development prerelease assets under Releases. All SDK tools stay in the cloud. Run scripts/build.sh only in a suitably provisioned cloud checkout; it expects existing Android build-tools 34.0.0, platform 25 and a JDK.
 
 The APK has package dev.mantistv.home, minimum/target SDK 25 and no native libraries. Its source uses native Android APIs and no runtime third-party dependencies. It is development-signed with an ephemeral key; repeated cloud builds are not guaranteed to update an existing installation. It does not register as a HOME replacement or start at boot.
 
 Read documentation/INSTALLATION-GUIDE.md and documentation/ROLLBACK-GUIDE.md before any supervised test. No automatic installation, ADB connection, system-package changes or firmware changes are part of the build.
+
+Version 0.2 adds library filters and tagged focus restoration. The quality workflow compiles against official Android API25; its actual result is recorded in release reports.
 
 ## Evidence
 
