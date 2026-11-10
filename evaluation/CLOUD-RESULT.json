@@ -1,0 +1,8 @@
+{
+  "build_outcome": "failure",
+  "jvm_tests": 226,
+  "jvm_failures": 0,
+  "physical_tested": false,
+  "upstream": "c6d258f467e0a8f68f5a112bb5aef9710e81392d",
+  "run": "42888758342"
+}
