@@ -53,3 +53,24 @@ Preserve `LICENSE` (MIT, copyright2026lesnolie), `THIRD_PARTY_NOTICES.md`, Inter
 The notices retain a historical bundled-assets section. **At this tag and in the inspected release APK the Apple startup video/default settings artwork are absent.** `OptionalAssets.kt` downloads them only after explicit selection from an older immutable revision. The experimental download is blocked. Earlier commentary describing current bundled assets was corrected. Website footage/comparison artwork is not republished with the experimental distribution. No Apple videos are downloaded for the audit.
 
 The full source tree was cloned; Android modules, manifests, build/dependency definitions, notices, installation boundaries, relevant tests and current release were inspected. This is not a formal security proof or exhaustive protocol review. API lint/runtime gaps remain explicit in the compatibility report.
+
+## Report index and optional Apple-sharing lead
+
+- [API25 compatibility](TIGRIS-API25-COMPATIBILITY.md)
+- [Feature comparison](TIGRIS-VS-MANTISTV.md)
+- [AFTMM rendering/performance](TIGRIS-AFTMM-PERFORMANCE.md)
+- [Roadmap, ten priorities and promotion gates](TIGRIS-PORTING-ROADMAP.md)
+
+Tigris's optional receiver lead deserves a separate bounded evaluation: [weekdayjast/MiracastReceiver](https://github.com/weekdayjast/MiracastReceiver) currently publishesv1.2.15, including a21,337,755-byte ARMv7 APK and a native-source archive. Its repository root is MIT, while its README attributes UxPlay/android-airplay-server and their own licenses; root MIT alone is insufficient to approve all native reuse. The current-version README describes an Android6+ UxPlay build (older generic API21 badges are not authoritative). These metadata facts make it a plausible separate-app AirPlay-compatible sharing candidate, not implemented or verified Mantis integration. No receiver APK/source archive was downloaded or installed, and no root/WFD operations are proposed. Evidence: evaluation/optional-receiver.
+
+## Final bounded cloud result — 2026-11-10
+
+[Run42888758342](https://github.com/lanaxpgg-boop/MantisTV/actions/runs/42888758342) compiled and assembled the min25 Mantis variant. **226 JVM tests passed, zero failures;75 Python tests and the mocked shell installation contracts passed. Full lint failed:9errors/79warnings.** The failed result is preserved, not replaced with a green compilation claim.
+
+Cloud runtime source: `06f9a10afc5df45971c7d4a49ad547be4c7bdcd9`. Evidence/checksum commit: `cf5f4072f44be19b979b9fc412828b61ffb7b57f`. [Separate source branch](https://github.com/lanaxpgg-boop/MantisTV/tree/experiment/tigris-api25-42888758342). [Diagnostic prerelease](https://github.com/lanaxpgg-boop/MantisTV/releases/tag/tigris-api25-42888758342). The release deliberately contains **no experimental APK** because the full gate failed; its signing/integrity and actual ARMv7 execution have not been verified.
+
+The21 resolved AAR manifests all declare minSDK14–21 and contain zero `jni/*.so` entries; no AndroidX downgrade was needed. The complete runtime dependency graph is saved. Kotlin resolves2.2.10, collection1.4.2, core/core-ktx1.13.0, lifecycle2.6.2, coroutines1.6.4, profileinstaller1.3.1, annotation1.8.1, Guava33.3.1-android and Okio2.10.0 alongside the pinned direct dependencies. JVM-only artifacts have no Android minSdk declaration; desugaring/DEX compilation passed, but reflection/vendor linkage still needs runtime tests.
+
+Three API findings remained: MovingGlass's ColorMatrixColorFilter.getColorMatrix(API26), UpdateGlass's Canvas.clipOutPath(API26), and the unversioned defaultFocusHighlightEnabled theme item(API26). Six manifest lint findings concern explicit TV banner/features/exported metadata and protected-permission **removal markers**. Fixes for all nine are saved locally and in `TIGRIS-POST-BUILD-FIXES.patch`, **not rebuilt or verified**. The API25 lens fallback retains tint/single-pass geometry while disabling chromatic channel decomposition; clipping uses the old difference-path operation; the theme item moves to values-v26. ProtectedPermissions ignores apply only to removal markers, never NewApi.
+
+Two actual cloud attempts were used; one earlier recipe validation rejection did not start a runner. No further cloud build is started in this bounded experiment. Preserve the checkpoint and resume verification in a later resource window. No device install, remote input, grant, root, firmware, bootloader or default-HOME operation occurred. No local Gradle/SDK/cache build was performed. Exact tvOS27 fidelity, physical performance, Apple ecosystem integration and all-firmware compatibility remain unverified or unimplemented as specified in the comparison.

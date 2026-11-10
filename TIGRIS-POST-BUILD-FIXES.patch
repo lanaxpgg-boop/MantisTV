@@ -1,0 +1,120 @@
+diff --git a/app/src/main/java/com/leslie/tvhome/MovingGlass.kt b/app/src/main/java/com/leslie/tvhome/MovingGlass.kt
+index bedb770..8a7bc4d 100644
+--- a/app/src/main/java/com/leslie/tvhome/MovingGlass.kt
++++ b/app/src/main/java/com/leslie/tvhome/MovingGlass.kt
+@@ -141,6 +141,8 @@ internal class MovingGlass(
+         colorFilter: ColorMatrixColorFilter? = null,
+         chromatic: Boolean = true,
+     ) {
++        // API25 keeps the single-pass lens and tint; channel decomposition needs26.
++        val useChromatic = chromatic && android.os.Build.VERSION.SDK_INT >= 26
+         ownerToRoot.reset()
+         var current = owner
+         while (current !== root) {
+@@ -153,12 +155,12 @@ internal class MovingGlass(
+         val fitScale = if (fit) max(root.width.toFloat() / imageWidth, root.height.toFloat() / imageHeight) else 1f
+         val cropX = if (fit) (root.width - imageWidth * fitScale) / 2 else 0f
+         val cropY = if (fit) (root.height - imageHeight * fitScale) / 2 else 0f
+-        val first = if (chromatic) 0 else 1
+-        val last = if (chromatic) 2 else 1
++        val first = if (useChromatic) 0 else 1
++        val last = if (useChromatic) 2 else 1
+         ownerToRoot.getValues(transformValues)
+         val changed = !transformValues.contentEquals(mesh.lastTransform) || mesh.lastImageWidth != imageWidth ||
+             mesh.lastImageHeight != imageHeight || mesh.lastRootWidth != root.width || mesh.lastRootHeight != root.height ||
+-            mesh.lastMapping != mapping || mesh.lastChromatic != chromatic
++            mesh.lastMapping != mapping || mesh.lastChromatic != useChromatic
+         if (changed) {
+         transformValues.copyInto(mesh.lastTransform)
+         mesh.lastImageWidth = imageWidth
+@@ -166,7 +168,7 @@ internal class MovingGlass(
+         mesh.lastRootWidth = root.width
+         mesh.lastRootHeight = root.height
+         mesh.lastMapping = mapping
+-        mesh.lastChromatic = chromatic
++        mesh.lastChromatic = useChromatic
+         for (channel in first..last) {
+             val shift = when (channel) { 0 -> 1f; 2 -> -1f; else -> 0f }
+             val texture = mesh.textures[channel]
+@@ -191,7 +193,7 @@ internal class MovingGlass(
+         }
+         }
+ 
+-        if (!chromatic) {
++        if (!useChromatic) {
+             // The ordinary path stays single-pass and avoids an offscreen layer.
+             paint.alpha = alpha
+             paint.colorFilter = colorFilter
+@@ -257,7 +259,7 @@ internal class MovingGlass(
+ 
+     /** The tone folded into each channel's isolation: channel k of (tone · sample). */
+     private fun channelsFor(tone: ColorMatrixColorFilter?): Array<ColorMatrixColorFilter> {
+-        if (tone == null) return channelFilters
++        if (tone == null || android.os.Build.VERSION.SDK_INT < 26) return channelFilters
+         toned[tone]?.let { return it }
+         val matrix = ColorMatrix().also(tone::getColorMatrix)
+         val made = Array(3) { channel ->
+diff --git a/app/src/main/java/com/leslie/tvhome/UpdateGlass.kt b/app/src/main/java/com/leslie/tvhome/UpdateGlass.kt
+index 1c97442..3549282 100644
+--- a/app/src/main/java/com/leslie/tvhome/UpdateGlass.kt
++++ b/app/src/main/java/com/leslie/tvhome/UpdateGlass.kt
+@@ -64,7 +64,11 @@ internal class UpdateGlass(private val root: View, private val moving: Boolean =
+                 path.reset()
+                 val radius = surface.radius.coerceAtMost(minOf(owner.width, owner.height) / 2f)
+                 path.addRoundRect(0f, 0f, owner.width.toFloat(), owner.height.toFloat(), radius, radius, Path.Direction.CW)
+-                canvas.clipOutPath(path)
++                if (android.os.Build.VERSION.SDK_INT >= 26) canvas.clipOutPath(path)
++                else {
++                    @Suppress("DEPRECATION")
++                    canvas.clipPath(path, Region.Op.DIFFERENCE)
++                }
+                 val pad = owner.dp(12).toFloat()
+                 canvas.drawBitmap(shadow, -pad, -pad + owner.dp(3), shadowPaint)
+                 canvas.restoreToCount(saved)
+diff --git a/app/src/main/res/values/themes.xml b/app/src/main/res/values/themes.xml
+index 53593ec..9f76aee 100644
+--- a/app/src/main/res/values/themes.xml
++++ b/app/src/main/res/values/themes.xml
+@@ -7,7 +7,6 @@
+         <item name="android:windowContentOverlay">@null</item>
+         <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
+         <item name="android:colorAccent">#FFFFFFFF</item>
+-        <item name="android:defaultFocusHighlightEnabled">false</item>
+         <item name="android:windowDisablePreview">false</item>
+     </style>
+ 
+diff --git a/app/src/mantis/AndroidManifest.xml b/app/src/mantis/AndroidManifest.xml
+index ef8501a..00a4910 100644
+--- a/app/src/mantis/AndroidManifest.xml
++++ b/app/src/mantis/AndroidManifest.xml
+@@ -1,7 +1,8 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+-  <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:node="remove"/>
++  <!-- Lint inspects removal markers as grants; these permissions are REMOVED, not requested. -->
++  <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:node="remove" tools:ignore="ProtectedPermissions"/>
+   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" tools:node="remove"/>
+-  <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:node="remove"/>
++  <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:node="remove" tools:ignore="ProtectedPermissions"/>
+   <uses-permission android:name="android.permission.WRITE_SETTINGS" tools:node="remove"/>
+   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove"/>
+   <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" tools:node="remove"/>
+@@ -9,7 +10,9 @@
+   <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" tools:node="remove"/>
+   <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" tools:node="remove"/>
+   <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove"/>
+-  <application android:label="MantisTV Tigris Experiment" tools:replace="android:label">
++  <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
++  <uses-feature android:name="android.software.leanback" android:required="false"/>
++  <application android:banner="@drawable/banner" android:label="MantisTV Tigris Experiment" tools:replace="android:label">
+     <service android:name=".KeeperService" tools:node="remove"/>
+     <service android:name=".HomeGuardService" tools:node="remove"/>
+     <service android:name=".RevivalListener" tools:node="remove"/>
+@@ -20,7 +23,7 @@
+     <receiver android:name=".BootReceiver" tools:node="remove"/>
+     <receiver android:name=".ConfigReceiver" tools:node="remove"/>
+     <receiver android:name=".UpdateResult" tools:node="remove"/>
+-    <activity android:name=".HomeActivity"><intent-filter>
++    <activity android:name=".HomeActivity" android:exported="true"><intent-filter>
+       <action android:name="android.intent.action.MAIN"/>
+       <category android:name="android.intent.category.LAUNCHER"/>
+       <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
