@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      GRADLE_USER_HOME: ${{ runner.temp }}/tigris-gradle
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Fetch pinned upstream and apply isolated port
         run: |
+          echo "GRADLE_USER_HOME=$RUNNER_TEMP/tigris-gradle" >> "$GITHUB_ENV"
           git clone https://github.com/lesnolie/Tigris.git experiment
           cd experiment
           git checkout -b mantis/api25-experiment c6d258f467e0a8f68f5a112bb5aef9710e81392d
@@ -34,6 +34,10 @@ jobs:
           git add app settings.gradle.kts gradle.properties evaluation
           git commit -m 'Experiment: isolate Tigris 2.0.27 and backport API25 runtime gates'
           git rev-parse HEAD > ../SOURCE-COMMIT.txt
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
       - name: Prepare cloud-only build tools
         run: |
           SDKMANAGER=$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f -print -quit)
