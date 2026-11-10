@@ -67,7 +67,7 @@ class UpdateActivity : Activity() {
         Updates.prefs(this).registerOnSharedPreferenceChangeListener(listener)
         if (::autoButton.isInitialized) render()
         if (::permissionButton.isInitialized) {
-            permissionButton.visibility = if (packageManager.canRequestPackageInstalls()) View.GONE else View.VISIBLE
+            permissionButton.visibility = if (Api25Compat.canRequestInstalls(packageManager)) View.GONE else View.VISIBLE
         }
         if (::glass.isInitialized) glass.refresh()
     }
@@ -459,14 +459,14 @@ class UpdateActivity : Activity() {
         }
         column.addView(permissions, LinearLayout.LayoutParams(-1, -2))
         permissionButton = button(I18n.text(R.string.i18n_updateactivity_011), permissions, 44) {
-            runCatching { startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName"))) }
+            runCatching { startActivity(if (android.os.Build.VERSION.SDK_INT >= 26) Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:$packageName")) else Intent(Settings.ACTION_SECURITY_SETTINGS)) }
                 .onFailure { Toast.makeText(this, I18n.text(R.string.i18n_updateactivity_012), Toast.LENGTH_LONG).show() }
         }
         permissionButton.setOnFocusChangeListener { _, on ->
             focus(permissionButton, on)
             if (on) reveal(permissions)
         }
-        permissionButton.visibility = if (packageManager.canRequestPackageInstalls()) View.GONE else View.VISIBLE
+        permissionButton.visibility = if (Api25Compat.canRequestInstalls(packageManager)) View.GONE else View.VISIBLE
         setContentView(root)
         root.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> glass.refresh() }
         render()

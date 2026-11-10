@@ -19,6 +19,7 @@ internal object OptionalAssets {
 
     @Synchronized
     fun download(ctx: Context, asset: Asset) {
+        check(!MantisExperiment.enabled) { "Apple artwork downloads excluded from this experiment" }
         if (file(ctx, asset) != null) return
         val temp = File.createTempFile("default-", ".part", ctx.filesDir)
         val connection = URL(BASE + asset.path).openConnection() as HttpURLConnection

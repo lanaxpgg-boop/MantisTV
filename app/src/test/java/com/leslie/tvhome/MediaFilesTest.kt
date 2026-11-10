@@ -24,6 +24,17 @@ class MediaFilesTest {
         }
     }
 
+    @Test fun failedRenameNeverDeletesPreviousFile() {
+        val directory = Files.createTempDirectory("tigris-rename-test").toFile()
+        val old = directory.resolve("video.mp4").apply { writeText("previous") }
+        try {
+            assertThrows(IllegalStateException::class.java) {
+                MediaFiles.replace(directory.resolve("missing"), old)
+            }
+            assertEquals("previous", old.readText())
+        } finally { directory.listFiles()?.forEach { it.delete() }; directory.delete() }
+    }
+
     @Test fun failedTransferKeepsPreviousVideoAndSuccessfulTransferReplacesIt() {
         val directory = Files.createTempDirectory("tigris-video-test").toFile()
         val old = directory.resolve("video.mp4").apply { writeText("previous") }

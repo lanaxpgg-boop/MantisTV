@@ -51,7 +51,7 @@ object Updates {
         for (p in products) {
             val sp = prefs(c)
             val target = sp.getLong(p.pkg + ".target_code", -1).takeIf { it >= 0 }
-            val installed = runCatching { c.packageManager.getPackageInfo(p.pkg, 0).longVersionCode }.getOrNull()
+            val installed = runCatching { Api25Compat.version(c.packageManager.getPackageInfo(p.pkg, 0)) }.getOrNull()
             when (UpdateRecovery.action(sp.getString(p.pkg + ".phase", "idle").orEmpty(), p.pkg in transferring,
                 installed, target, sp.getInt(p.pkg + ".session", -1), trackedSession(c, p)?.sessionId)) {
                 UpdateRecovery.Action.COMPLETE -> {
@@ -137,6 +137,7 @@ object Updates {
             p.repo, installed(c, p))
     }
     fun schedule(c: Context) {
+        if (MantisExperiment.enabled) return
         val scheduler = c.getSystemService(JobScheduler::class.java)
         if (scheduler.getPendingJob(24001) != null) return
         scheduler.schedule(JobInfo.Builder(24001, ComponentName(c, UpdateJob::class.java))
@@ -202,6 +203,7 @@ object Updates {
     }
     private fun hex(bytes: ByteArray) = bytes.joinToString("") { "%02x".format(it) }
     fun install(c: Context, p: Product) {
+        check(!MantisExperiment.enabled) { "Software installation disabled in the Mantis experiment" }
         check(transferring.add(p.pkg)) { I18n.text(R.string.update_transfer_busy) }
         try { performInstall(c, p) }
         catch (e: Exception) {
@@ -218,7 +220,7 @@ object Updates {
         val sp = prefs(c)
         // Synthetic resolver probes can return false while the OS can open its confirmation.
         // Always let PackageInstaller return the real system confirmation Intent.
-        check(c.packageManager.canRequestPackageInstalls()) { I18n.text(R.string.i18n_updates_008) }
+        check(Api25Compat.canRequestInstalls(c.packageManager)) { I18n.text(R.string.i18n_updates_008) }
         if (pending(c, p)) {
             if (UpdateActivity.visible && confirm(c, p)) return
             error(I18n.text(R.string.update_pending_recovery))
@@ -258,18 +260,18 @@ object Updates {
                 check(sha256(file) == digest.removePrefix("sha256:")) { I18n.text(R.string.i18n_updates_014) }
             }
             val pm = c.packageManager
-            val archive = pm.getPackageArchiveInfo(file.path, PackageManager.GET_SIGNING_CERTIFICATES) ?: error(I18n.text(R.string.i18n_updates_015))
+            val archive = pm.getPackageArchiveInfo(file.path, Api25Compat.signatureFlags) ?: error(I18n.text(R.string.i18n_updates_015))
             check(archive.packageName == p.pkg) { I18n.text(R.string.i18n_updates_016) }
             check((archive.applicationInfo?.minSdkVersion ?: Int.MAX_VALUE) <= Build.VERSION.SDK_INT) { I18n.text(R.string.i18n_updates_017) }
-            val old = runCatching { pm.getPackageInfo(p.pkg, PackageManager.GET_SIGNING_CERTIFICATES) }.getOrNull()
-            if (old != null) check(archive.longVersionCode > old.longVersionCode) { I18n.text(R.string.i18n_updates_018) }
+            val old = runCatching { pm.getPackageInfo(p.pkg, Api25Compat.signatureFlags) }.getOrNull()
+            if (old != null) check(Api25Compat.version(archive) > Api25Compat.version(old)) { I18n.text(R.string.i18n_updates_018) }
 
             // Android 9 / 10 can return PackageInfo for an APK on disk without populating
             // signingInfo. On those releases, explicitly reparse with GET_SIGNATURES; merely
             // checking archive.signatures without that second query leaves the same bug.
             // Newer Android must not silently downgrade to legacy certificate extraction.
             fun certs(info: android.content.pm.PackageInfo?): Set<String> {
-                val signers = info?.signingInfo?.apkContentsSigners?.takeIf { it.isNotEmpty() }
+                val signers = Api25Compat.signers(info)?.takeIf { it.isNotEmpty() }
                     ?: info?.signatures?.takeIf { it.isNotEmpty() }
                 return signers?.map { hex(MessageDigest.getInstance("SHA-256").digest(it.toByteArray())) }?.toSet().orEmpty()
             }
@@ -303,7 +305,7 @@ object Updates {
             stage(c, p, "stage", I18n.text(R.string.update_staging))
             val id = installer.createSession(params)
             sp.edit().putInt(p.pkg + ".session", id)
-                .putLong(p.pkg + ".target_code", archive.longVersionCode).commit()
+                .putLong(p.pkg + ".target_code", Api25Compat.version(archive)).commit()
             try {
                 installer.openSession(id).use { session ->
                     session.openWrite("base.apk", 0, file.length()).use { out -> file.inputStream().use { it.copyTo(out) }; session.fsync(out) }
@@ -318,10 +320,9 @@ object Updates {
     }
     fun notify(c: Context, p: Product, message: String, action: Intent? = null) {
         val nm = c.getSystemService(NotificationManager::class.java)
-        nm.createNotificationChannel(NotificationChannel(CHANNEL, I18n.text(R.string.i18n_updates_023), NotificationManager.IMPORTANCE_DEFAULT))
         val intent = action ?: Intent(c, UpdateActivity::class.java)
         val pending = PendingIntent.getActivity(c, p.pkg.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
-        val builder = Notification.Builder(c, CHANNEL).setSmallIcon(R.drawable.ic_toggles)
+        val builder = Api25Compat.notification(c, CHANNEL, I18n.text(R.string.i18n_updates_023), NotificationManager.IMPORTANCE_DEFAULT).setSmallIcon(R.drawable.ic_toggles)
             .setContentTitle(p.name).setContentText(message).setContentIntent(pending).setAutoCancel(true)
         if (message.contains("adb install -r")) builder.setStyle(Notification.BigTextStyle().bigText(message))
         nm.notify(p.pkg.hashCode(), builder.build())

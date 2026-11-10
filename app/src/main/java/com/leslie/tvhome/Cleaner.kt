@@ -47,6 +47,7 @@ object LocalAdb {
     private data class ShellResult(val response: dadb.AdbShellResponse? = null, val failure: AdbFailure? = null)
 
     private fun execute(ctx: Context, cmd: String, waitAuthMs: Int, beforeCommand: ((Dadb) -> Boolean)? = null): ShellResult {
+        if (MantisExperiment.enabled) return ShellResult(failure = AdbFailure.SHELL)
         val prefs = Prefs(ctx)
         var stage = AdbStage.KEYS
         return try {
@@ -114,6 +115,7 @@ object Cleaner {
      * Blocking; call off the main thread.
      */
     fun clean(ctx: Context, spare: String? = null, automatic: Boolean = false): Result {
+        if (MantisExperiment.enabled) return Result(0, 0, 0, false, skipped = true)
         val prefs = Prefs(ctx)
         val before = availMb(ctx)
         val foreground = spare ?: foregroundPackage(ctx)

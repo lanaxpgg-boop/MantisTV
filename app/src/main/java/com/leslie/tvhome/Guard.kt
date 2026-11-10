@@ -118,6 +118,7 @@ object Guard {
 
     /** Turns the guard on or off for good. Returns false when the permission to do so is missing. */
     fun setEnabled(ctx: Context, on: Boolean): Boolean {
+        if (MantisExperiment.enabled) return false
         if (!isUserUnlocked(ctx)) return false
         recovery?.cancel()
         Prefs(ctx).guard = on
@@ -137,6 +138,7 @@ object Guard {
 
     /** Puts back whatever the firmware switched off: ADB, the photo-frame screensaver, the guard. */
     fun ensure(ctx: Context): Boolean {
+        if (MantisExperiment.enabled) return false
         if (!isUserUnlocked(ctx)) return false
         ensureAdb(ctx)
         if (!hasSecureSettings(ctx)) return false
@@ -186,6 +188,7 @@ object Guard {
      * From Android 7, toggling the global accessibility switch does not rebind services.
      */
     fun restartAccessibility(ctx: Context) {
+        if (MantisExperiment.enabled) return
         if (!hasSecureSettings(ctx)) return
         val me = service(ctx)
         val resolver = ctx.contentResolver
@@ -211,6 +214,7 @@ object Guard {
     }
 
     fun ensureAdb(ctx: Context) {
+        if (MantisExperiment.enabled) return
         if (!isUserUnlocked(ctx) || !Prefs(ctx).keepAdb || !hasSecureSettings(ctx)) return
         val r = ctx.contentResolver
         if (Settings.Global.getInt(r, Settings.Global.ADB_ENABLED, 0) == 1) return
@@ -241,6 +245,7 @@ object Guard {
      * makes Android bind it. Two writes in a row are coalesced, hence the pause.
      */
     fun rebindIfStalled(ctx: Context) {
+        if (MantisExperiment.enabled) return
         if (HomeGuardService.isRunning || !Prefs(ctx).guard || !hasSecureSettings(ctx)) return
         val app = ctx.applicationContext
         val repair = recovery ?: ServiceRecovery(

@@ -67,8 +67,8 @@ class KeeperService : Service() {
         super.onCreate()
         prefs = Prefs(this)
         val nm = getSystemService(NotificationManager::class.java)
-        nm.createNotificationChannel(NotificationChannel(CH, I18n.text(R.string.i18n_keeperservice_001), NotificationManager.IMPORTANCE_MIN))
-        startForeground(1, Notification.Builder(this, CH)
+        startForeground(1, Api25Compat.notification(this, CH,
+            I18n.text(R.string.i18n_keeperservice_001), NotificationManager.IMPORTANCE_MIN)
             .setSmallIcon(R.drawable.ic_memory)
             .setContentTitle(I18n.text(R.string.i18n_keeperservice_002))
             .setContentText(I18n.text(R.string.i18n_keeperservice_003))
@@ -125,7 +125,10 @@ class KeeperService : Service() {
         const val ACTION_RESCHEDULE = "reschedule"
 
         fun start(ctx: Context, action: String? = null) {
-            ctx.startForegroundService(Intent(ctx, KeeperService::class.java).setAction(action))
+            if (MantisExperiment.enabled) return
+            val intent = Intent(ctx, KeeperService::class.java).setAction(action)
+            if (android.os.Build.VERSION.SDK_INT >= 26) ctx.startForegroundService(intent)
+            else ctx.startService(intent)
         }
     }
 }
