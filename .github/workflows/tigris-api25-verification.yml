@@ -27,11 +27,12 @@ jobs:
           test "$(git rev-parse HEAD)" = 2b1945bd5feda749278160e711f96e0ffb18554e
           python3 - <<'PYCODE'
           from pathlib import Path
-          import hashlib
-          assert hashlib.sha256(Path('TIGRIS-POST-BUILD-FIXES.patch').read_bytes()).hexdigest() == 'f712df658126481c1026a10a39dc68d10a94ecc547505dbc4ff6ad51fc7c6504'
+          import hashlib,base64,zlib
+          Path('TIGRIS-NINE-FIXES-COMPLETE.patch').write_bytes(zlib.decompress(base64.b64decode('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')))
+          assert hashlib.sha256(Path('TIGRIS-NINE-FIXES-COMPLETE.patch').read_bytes()).hexdigest() == '258ae5aa454460590e425357e5a600fd7127b1584bf19fc197d9902d0ce79cf4'
           PYCODE
-          git apply --check TIGRIS-POST-BUILD-FIXES.patch
-          git apply TIGRIS-POST-BUILD-FIXES.patch
+          git apply --check TIGRIS-NINE-FIXES-COMPLETE.patch
+          git apply TIGRIS-NINE-FIXES-COMPLETE.patch
           python3 - <<'PYCODE'
           from pathlib import Path
           import json,hashlib
@@ -43,7 +44,7 @@ jobs:
           PYCODE
           git config user.name 'MantisTV Cloud'
           git config user.email 'mantistv-cloud@users.noreply.github.com'
-          git add app evaluation
+          git add app evaluation TIGRIS-NINE-FIXES-COMPLETE.patch
           git commit -m 'Verify saved nine lint fixes under one additional authorized build'
           git rev-parse HEAD > ../SOURCE-COMMIT.txt
       - uses: actions/setup-java@v4
