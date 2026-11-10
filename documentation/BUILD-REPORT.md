@@ -2,7 +2,7 @@
 
 Latest actual application build is 0.4.0-preview, code4, package dev.mantistv.home plus separate debuggable dev.mantistv.home.debug. Minimum/target/compile SDK25; DEX-only and no native library payload. Compiled source: ab022168a5d8fff173ff0169fd328adb2040be89. Original release target/source archive: 54619013a18b723559520e6d32241dc56909d7c7, a subsequent documentation checkpoint. Successful original build/lint run: 42747779541. Audited pre-report HEAD: a1a51fe520363c2512eb14a79e4c17998c8ad0ad; its app source is unchanged.
 
-Compilation, narrow host data-rule tests, manifest/package/ZIP/ABI policy, alignment and development signatures passed. Seven selected Android lint checks had zero errors/warnings; no full lint sweep or Android/hardware instrumentation ran. Physical installation/testing and performance measurements remain absent.
+Compilation, narrow host data-rule tests, manifest/package/ZIP/ABI policy, alignment and development signatures passed. Seven selected Android lint checks had zero errors/warnings; no full lint sweep or Android/hardware instrumentation ran. Subsequent physical installation/basic smoke and bounded performance observations now exist for one exact AFTMM/Fire OS 6.7.1.1(NS6711/5908); see device-test reports. No app rebuild occurred in that evidence/specification update.
 
 The progress audit release is documentation-only: it republishes the identical, reverified 0.4 APKs and includes PROJECT-PROGRESS, STATUS, source ZIP and machine-readable provenance/verification. It does not build a new version, generate a new signing key or alter old release assets. Fresh signatures/manifests and rerun host rules are separate audit evidence; original build reports are retained unchanged.
 

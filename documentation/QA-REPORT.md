@@ -1,9 +1,5 @@
-# QA report — audited November 10, 2026
+# QA report — physical update
 
-Actual source test suite: tests/StoreRulesTest.java is one host-JVM main with nine direct check calls and one expected-invalid-limit exception scenario. It covers recent ordering/deduplication/bounds, input immutability, normalized label/package search and profile-ID fallback. It does not test Android profiles/persistence/isolation, UI navigation, app launch, controls, idle timing, playback or lifecycle behavior.
+See ../device-test/2026-11-10/DEVICE-TEST-REPORT.md, PERFORMANCE-REPORT.md and FINAL-SAFETY-CHECK.json for executed checks and limits. Exact unchanged0.4 preview installed on AFTMM/API 25/NS6711/5908. Basic smoke behaviors passed; two clock defects confirmed; long-press simulated path failed; full tvOS fidelity, media, firmware-family and long-soak acceptance outstanding.
 
-Original 0.4 cloud run 42747779541 passed API25 compilation, manifest/ZIP/ABI policy, separate debug package/flag policy, zip alignment and development signature verification. Actual lint.txt says No issues found; lint.xml has no issue entries. Scope is exactly NewApi, InlinedApi, MissingPermission, WrongThread, HandlerLeak, DrawAllocation and StaticFieldLeak, from Maven lint31.5.2 (reported CLI lint8.5.2). The earlier 0.3 audit had six drawing-allocation warnings; it was not a clean lint result. No claim of all available lint rules is made.
-
-The progress audit independently read current source/history and original artifact bytes, verified APK/source ZIP hashes and CRCs, and checked selected source ZIP files against current code. Its cloud publication gate additionally checks all old asset hashes, runtime input provenance, actual packaged manifests, SDK25-floor signatures/alignment and reruns the host rule suite. Outcomes and scope are in AUDIT-VERIFICATION.json and audit-prefixed release reports; old results remain labeled as old results.
-
-There is no installed package/device log, screenshot, Android instrumentation, measured AFTMM performance, long-session soak, firmware-specific API/service/package proof or DRM/playback acceptance. All firmware catalog rows are C. Source-review UX issues are recorded in ../PROJECT-PROGRESS.md, with no claim they have been reproduced physically. Device remains untouched; supervised testing requires separate authorization.
+Prior cloud evidence remains unchanged:host data-rule test main, packaging/manifest/ZIP/alignment/signature and seven selected lint checks. No new local build or comprehensive instrumentation suite.

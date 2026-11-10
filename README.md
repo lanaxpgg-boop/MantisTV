@@ -1,6 +1,6 @@
 # MantisTV
 
-An independent native Android TV home experience for Amazon Fire TV Stick 4K (2018 / AFTMM). This is an early application preview, not a replacement operating system. No physical Fire TV installation or testing has been performed.
+An independent native Android TV home experience for Amazon Fire TV Stick 4K (2018 / AFTMM). This is an early application preview, not a replacement operating system. The0.4 preview has passed bounded physical smoke checks on one AFTMM/Fire OS 6.7.1.1(NS6711/5908); full product acceptance remains incomplete.
 
 ## Preview functionality
 
@@ -16,7 +16,7 @@ The APK has package dev.mantistv.home, minimum/target SDK 25 and no native libra
 
 Read documentation/INSTALLATION-GUIDE.md and documentation/ROLLBACK-GUIDE.md before any supervised test. No automatic installation, ADB connection, system-package changes or firmware changes are part of the build.
 
-Version 0.4 retains library filters and tagged focus restoration, separates app discovery and scene rendering, and adds a separately packaged debug APK. Appearance and reduce-motion preferences are local to each profile. The quality workflow compiles against official Android API25; its actual result is recorded in release reports.
+Version 0.4 retains library filters and tagged focus restoration, separates app discovery and scene rendering, and adds a separately packaged debug APK. Appearance and reduce-motion preferences are local to each profile. The quality workflow compiles against official Android API 25; its actual result is recorded in release reports.
 
 ## Evidence
 
@@ -25,3 +25,7 @@ The untouched upstream reference techgenius1/tvOS-Launcher built at commit 463fa
 Tests cover local history/search logic and manifest/APK policy. Compilation or SDK metadata is not proof of firmware compatibility or acceptable hardware performance. AirPlay, Apple Remote pairing, provider Continue Watching and Apple certification are not implemented.
 
 The 0.4 quality pipeline also gates seven Android lint checks at zero warnings/errors and preallocates landscape geometry. See release lint.xml/lint.txt for actual scope and outcomes. This is not physical performance validation.
+
+## Definitive product acceptance
+
+Maximum feasible1:1 latest tvOS is the target. Current 0.4 is a tested development scaffold whose layouts and integrations fail final fidelity acceptance. See documentation/TVOS-DESIGN-SPEC.md and PROJECT-PROGRESS.md for actual evidence, gaps and the next ten tasks. Existing installed APK/artifacts are preserved.

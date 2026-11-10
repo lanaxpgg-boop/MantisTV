@@ -2,20 +2,20 @@
   "audit_date": "2026-11-10",
   "audited_head": "a1a51fe520363c2512eb14a79e4c17998c8ad0ad",
   "counts": {
-    "Implemented but not physically tested.": 21,
-    "Partially implemented.": 35,
-    "Not implemented.": 47,
-    "Completed and verified.": 11,
-    "Blocked.": 5
+    "Completed and verified.": 22,
+    "Partially implemented.": 45,
+    "Not implemented.": 46,
+    "Implemented but not physically tested.": 4,
+    "Blocked.": 2
   },
   "features": [
     {
       "group": "Home and navigation",
       "id": "H01",
       "feature": "Foreground Home screen",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.home, M.show",
-      "finding": "Native Activity and original landscape/caption are present; no rendered or remote-driven device evidence."
+      "status": "Completed and verified.",
+      "evidence": "M.home, M.show; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical Home rendering and explicit launch/reopen verified on exact NS6711/5908; screenshot001/018 and LAUNCH-RESULT. Basic foreground Home acceptance only; fidelity separately fails."
     },
     {
       "group": "Home and navigation",
@@ -53,9 +53,9 @@
       "group": "Home and navigation",
       "id": "H06",
       "feature": "Recent applications opened through MantisTV",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.launch; R.recent",
-      "finding": "Local bounded launch history; does not observe launches from other applications or Fire OS."
+      "status": "Completed and verified.",
+      "evidence": "M.launch; R.recent; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Official Appstore launch appeared in Recent after own-app process restart; recent-after-restart XML. Only launches through MantisTV are observed."
     },
     {
       "group": "Home and navigation",
@@ -77,9 +77,9 @@
       "group": "Home and navigation",
       "id": "H09",
       "feature": "Focus transitions and reduced motion",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.focus:118-130",
-      "finding": "140 ms scale/elevation and reduced-motion branch; smoothness and remote reachability untested."
+      "status": "Partially implemented.",
+      "evidence": "M.focus:118-130; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "D-pad focus changes and Reduce motion toggle exercised; reduced-motion clock defect reproduced, parallax/timing/fidelity not accepted."
     },
     {
       "group": "Home and navigation",
@@ -109,25 +109,25 @@
       "group": "Home and navigation",
       "id": "H13",
       "feature": "D-pad and OK navigation",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.focus; M.section; M.dispatchKeyEvent",
-      "finding": "Focusable native controls/click handlers exist; no Android navigation or physical remote test."
+      "status": "Completed and verified.",
+      "evidence": "M.focus; M.section; M.dispatchKeyEvent; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical D-pad four directions and OK moved actual focus/opened pages; QA-EVENTS and library/search/watchlist XML. Held OK is a separate unverified path."
     },
     {
       "group": "Home and navigation",
       "id": "H14",
       "feature": "Back and Menu behavior",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.dispatchKeyEvent:570-580; M.onBackPressed:583-595",
-      "finding": "Menu switches foreground Controls; Back returns Home then requires two presses to finish."
+      "status": "Completed and verified.",
+      "evidence": "M.dispatchKeyEvent:570-580; M.onBackPressed:583-595; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Back dismissed screensaver/returned Home; Menu opened Controls; double Back exited to original Amazon Home; QA-EVENTS and foreground observations."
     },
     {
       "group": "App Library and management",
       "id": "A01",
       "feature": "Installed application discovery",
-      "status": "Implemented but not physically tested.",
-      "evidence": "A.discover:17-51",
-      "finding": "Queries exported/enabled Leanback and ordinary launcher activities and deduplicates by package."
+      "status": "Completed and verified.",
+      "evidence": "A.discover:17-51; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Installed launch targets displayed in physical Library and official Appstore launched. Discovery uses public APIs; not all package metadata or firmware variants accepted."
     },
     {
       "group": "App Library and management",
@@ -141,9 +141,9 @@
       "group": "App Library and management",
       "id": "A03",
       "feature": "Application icons",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.loadIcon:299-322",
-      "finding": "One worker, normalized 96 px bitmaps and LruCache; actual icon coverage/appearance untested."
+      "status": "Partially implemented.",
+      "evidence": "M.loadIcon:299-322; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical icon grid rendered but Amazon miniTV resource warning/default-icon fallback observed. All-app icon correctness not verified."
     },
     {
       "group": "App Library and management",
@@ -157,9 +157,9 @@
       "group": "App Library and management",
       "id": "A05",
       "feature": "Application launching",
-      "status": "Implemented but not physically tested.",
-      "evidence": "A.discover; M.launch:323-333",
-      "finding": "Explicit public launch intents with exception handling; no launch/return hardware evidence."
+      "status": "Completed and verified.",
+      "evidence": "A.discover; M.launch:323-333; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Focused Appstore card launched com.amazon.venezia/.grid.AppsGridLauncherActivity and Back returned MantisTV. General launch-intent behavior only, not media integration."
     },
     {
       "group": "App Library and management",
@@ -197,17 +197,17 @@
       "group": "Control Center",
       "id": "C03",
       "feature": "Network status and information",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.controls:404-408",
-      "finding": "Connected/disconnected and type only; no detailed network diagnostic suite."
+      "status": "Completed and verified.",
+      "evidence": "M.controls:404-408; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical Menu Controls displayed Network \u00b7 WIFI using active network API. Network configuration and disconnection transitions not covered."
     },
     {
       "group": "Control Center",
       "id": "C04",
       "feature": "Display information",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.controls:409-413",
-      "finding": "Real display metrics and refresh rate getters; not a tested HDMI/HDCP/capability audit."
+      "status": "Completed and verified.",
+      "evidence": "M.controls:409-413; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical Controls displayed1920\u00d71080/59.94Hz matching logical baseline. Native4K quality/HDR/audio mode validation not covered."
     },
     {
       "group": "Control Center",
@@ -229,9 +229,9 @@
       "group": "Control Center",
       "id": "C07",
       "feature": "Manual screensaver shortcut",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.controls:422; M.screensaver",
-      "finding": "Opens the app's own foreground landscape view."
+      "status": "Completed and verified.",
+      "evidence": "M.controls:422; M.screensaver; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Controls \u2192 Screensaver selected with D-pad/OK; screenshot014 rendered landscape; Back dismissed."
     },
     {
       "group": "Control Center",
@@ -341,9 +341,9 @@
       "group": "Screensaver",
       "id": "SC01",
       "feature": "Original landscape screensaver",
-      "status": "Implemented but not physically tested.",
-      "evidence": "L; M.screensaver:558-568",
-      "finding": "Procedural vector landscape and clock, not an aerial image/video library."
+      "status": "Partially implemented.",
+      "evidence": "L; M.screensaver:558-568; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Landscape rendered under real idle/manual activation, but reduced-motion clock freezes; original procedural scenery remains unlike licensed aerial tvOS screensaver."
     },
     {
       "group": "Screensaver",
@@ -357,9 +357,9 @@
       "group": "Screensaver",
       "id": "SC03",
       "feature": "Automatic idle behavior",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.armIdle:76-80; lifecycle methods",
-      "finding": "Five-minute foreground timer; pauses when the app loses foreground."
+      "status": "Completed and verified.",
+      "evidence": "M.armIdle:76-80; lifecycle methods; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Real no-input idle: Home at~295.6s, screensaver at~327.5s; screenshots002/003. Back dismissal verified; exact trigger instant and all lifecycle cases not measured."
     },
     {
       "group": "Screensaver",
@@ -381,9 +381,9 @@
       "group": "Search",
       "id": "Q01",
       "feature": "Installed application search UI",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.search:370-401",
-      "finding": "Text input filters app label/package and launches matching apps; keyboard/remote usability untested."
+      "status": "Completed and verified.",
+      "evidence": "M.search:370-401; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Physical Settings query no-match then Appstore matching result; search XML/screenshots008/009. Installed-app search only, no content/Siri search."
     },
     {
       "group": "Search",
@@ -421,25 +421,25 @@
       "group": "Profiles",
       "id": "P01",
       "feature": "Multiple local profiles",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.profiles:499-514",
-      "finding": "Four fixed local profiles with rename/select; no Android persistence or switching tests."
+      "status": "Partially implemented.",
+      "evidence": "M.profiles:499-514; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Profile1\u21922\u21921 switching and watchlist isolation verified physically. Profiles3/4, rename and all data classes not yet accepted."
     },
     {
       "group": "Profiles",
       "id": "P02",
       "feature": "Per-profile preferences",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.key/list/save/settings",
-      "finding": "Appearance/reduced motion and lists are keyed by profile; isolation is source-reviewed, not integration-tested."
+      "status": "Partially implemented.",
+      "evidence": "M.key/list/save/settings; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Watchlist isolation/persistence and Reduce motion toggle verified on device; all preference/favorite/recent cross-profile cases unverified."
     },
     {
       "group": "Profiles",
       "id": "P03",
       "feature": "Local watchlist",
-      "status": "Implemented but not physically tested.",
-      "evidence": "M.watchlist:515-557",
-      "finding": "Manual title add/remove, up to 100 entries; no streaming/provider synchronization."
+      "status": "Partially implemented.",
+      "evidence": "M.watchlist:515-557; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "QA title save, rendering, profile isolation and process-restart persistence verified. Deletion and all edge/limit cases not exercised physically."
     },
     {
       "group": "Profiles",
@@ -765,25 +765,25 @@
       "group": "Foundation, compatibility and delivery",
       "id": "F08",
       "feature": "Physical AFTMM installation and functional acceptance",
-      "status": "Blocked.",
-      "evidence": "Build report: Installed or physically tested NO",
-      "finding": "No authorized supervised device session; no device was connected or modified."
+      "status": "Partially implemented.",
+      "evidence": "Build report: Installed or physically tested NO; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Verified normal install, launch and bounded physical smoke suite on exact AFTMM NS6711/5908. Two clock defects; full functional/fidelity/media/rollback acceptance incomplete."
     },
     {
       "group": "Foundation, compatibility and delivery",
       "id": "F09",
       "feature": "Hardware startup, RAM, GPU, 4K and storage benchmarks",
-      "status": "Blocked.",
-      "evidence": "Performance budget; no measurements",
-      "finding": "AFTMM test access is missing; source constraints and APK size do not establish performance."
+      "status": "Partially implemented.",
+      "evidence": "Performance budget; no measurements; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Actual launch timings, PSS snapshots, cumulative gfxinfo and cpuinfo collected; PERFORMANCE-REPORT. No repeated distributions, GPU/thermal/native4K or peak validation."
     },
     {
       "group": "Foundation, compatibility and delivery",
       "id": "F10",
       "feature": "Long-term stability, thermal and soak validation",
-      "status": "Blocked.",
-      "evidence": "QA report; no soak artifacts",
-      "finding": "Requires supervised hardware; no session duration, crash/thermal trace or soak results."
+      "status": "Partially implemented.",
+      "evidence": "QA report; no soak artifacts; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "About24min bounded mixed QA, real idle and one deliberate restart; no observed captured fatal/ANR/OOM. Long/thermal soak remains unperformed."
     },
     {
       "group": "Foundation, compatibility and delivery",
@@ -901,17 +901,17 @@
       "group": "Foundation, compatibility and delivery",
       "id": "F25",
       "feature": "Android UI/instrumentation/persistence tests",
-      "status": "Not implemented.",
-      "evidence": "tests tree",
-      "finding": "Only StoreRulesTest.java and lint tooling POM; no UI, lifecycle, profile-isolation or persistence instrumentation suite."
+      "status": "Partially implemented.",
+      "evidence": "tests tree; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Existing ADB physical UI/persistence checks with XML/screenshots and assertions now exist; no comprehensive Android instrumentation or regression suite."
     },
     {
       "group": "Foundation, compatibility and delivery",
       "id": "F26",
       "feature": "Installation, rollback and recovery validation",
       "status": "Partially implemented.",
-      "evidence": "Installation/rollback guides",
-      "finding": "Written procedures exist; installation, return-to-Amazon and uninstall/recovery paths not rehearsed on hardware."
+      "evidence": "Installation/rollback guides; physical 2026-11-10 DEVICE-TEST-REPORT",
+      "finding": "Verified artifact checks, normal installation and safe Amazon Home exit performed. Guides preserved; update/removal/rollback/recovery not exercised."
     },
     {
       "group": "Foundation, compatibility and delivery",
@@ -961,5 +961,7 @@
       "evidence": "Audited documentation/history",
       "finding": "Substantial docs exist, but prior version/lint/backlog claims drifted and firmware/hardware sections remain incomplete."
     }
-  ]
+  ],
+  "physical_evidence": "device-test/2026-11-10/DEVICE-TEST-REPORT.md",
+  "product_acceptance": "Maximum feasible1:1 latest tvOS; basic smoke completion is not screen fidelity or integration completion."
 }

@@ -1,0 +1,426 @@
+{
+  "captured_at_utc": "2026-11-10T14:49:52.026617+00:00",
+  "private_evidence_retained_locally": true,
+  "files": [
+    {
+      "file": "SCREENSHOTS/001-home-first-launch.png",
+      "bytes": 1302388,
+      "sha256": "c591ad2c1793b5085cc6307f39e964c34f654292a54f58525cbde9dd0e11fd5a"
+    },
+    {
+      "file": "SCREENSHOTS/002-initial-idle-check.png",
+      "bytes": 1302388,
+      "sha256": "c591ad2c1793b5085cc6307f39e964c34f654292a54f58525cbde9dd0e11fd5a"
+    },
+    {
+      "file": "SCREENSHOTS/003-after-five-minute-idle.png",
+      "bytes": 514399,
+      "sha256": "caede476925d83c9ef6f710d1224f47d08e0d596464bb0b19a54e93db333a0db"
+    },
+    {
+      "file": "SCREENSHOTS/004-home-after-idle-back.png",
+      "bytes": 1341206,
+      "sha256": "d64ddb1c7924ea024eff9129589d72f28d27392d2a85e11c230d2f9810986bbc"
+    },
+    {
+      "file": "SCREENSHOTS/005-library-first-open.png",
+      "bytes": 1452437,
+      "sha256": "b6a014abfda0832a099506b9ed3b42cfc0e8db8c246f741fccea03f8a2591430"
+    },
+    {
+      "file": "SCREENSHOTS/006-library-dpad-navigation.png",
+      "bytes": 1423144,
+      "sha256": "2f3a4e22edc428c8d6b5bce821328d9c70ddcc4ed5322665f282c129e92cd687"
+    },
+    {
+      "file": "SCREENSHOTS/007-search-screen.png",
+      "bytes": 1066456,
+      "sha256": "95a5a9e62a0dafbfc3ed50834e4e58f6f36f952983dc2a64d559ad32e2cd91b5"
+    },
+    {
+      "file": "SCREENSHOTS/008-search-settings-results.png",
+      "bytes": 932403,
+      "sha256": "ecf53cc16fdd98a6472255a392a2aa088c2ca63c994462b339eba6a7882d2a3d"
+    },
+    {
+      "file": "SCREENSHOTS/009-search-appstore-match.png",
+      "bytes": 919042,
+      "sha256": "bdcb431e98122db7460e888288faed9231ce91086685fd46cf40ca148582506b"
+    },
+    {
+      "file": "SCREENSHOTS/010-library-appstore-selected.png",
+      "bytes": 1429897,
+      "sha256": "a6786a8dca3ce52cb585991b1e5f93bb75e819352087b059206c0a678046ab72"
+    },
+    {
+      "file": "SCREENSHOTS/011-appstore-return.png",
+      "bytes": 1448446,
+      "sha256": "70bbfcc0a1082fb46fd7796faf99f1dda6ead57307573745f676bc48a25ee6b0"
+    },
+    {
+      "file": "SCREENSHOTS/012-watchlist-saved.png",
+      "bytes": 1030288,
+      "sha256": "f160384cd3cd9da60dda235de90f92455ece3192b06f434f25b98ae59586fa85"
+    },
+    {
+      "file": "SCREENSHOTS/013-profile-two-isolation.png",
+      "bytes": 990769,
+      "sha256": "2694de4aea5871fb9ea9bf2ef024380036466d04640d24c8df075df0cda94f41"
+    },
+    {
+      "file": "SCREENSHOTS/014-manual-screensaver.png",
+      "bytes": 505544,
+      "sha256": "a5ff6eb70f4eb521e6a6a0cfc3249dbab030c6cc45791252f86408843c4b4c0a"
+    },
+    {
+      "file": "SCREENSHOTS/015-post-restart-watchlist.png",
+      "bytes": 1029486,
+      "sha256": "733ddcd8772e59eb336d50a5b6bd0efb99fb00101abb4da5363bdc6f7d03a07a"
+    },
+    {
+      "file": "SCREENSHOTS/016-reduced-screensaver-before.png",
+      "bytes": 510096,
+      "sha256": "450db0817c7c99e5ad58d8454bae5c45da8fce355a4f5be9fda17555bbebd5a9"
+    },
+    {
+      "file": "SCREENSHOTS/017-reduced-screensaver-after.png",
+      "bytes": 510096,
+      "sha256": "450db0817c7c99e5ad58d8454bae5c45da8fce355a4f5be9fda17555bbebd5a9"
+    },
+    {
+      "file": "SCREENSHOTS/018-final-home.png",
+      "bytes": 1199169,
+      "sha256": "dc4ffef23d3d7332706335a803781bf2cf4626bbab15dc21ddeca3c0dc3b3a46"
+    },
+    {
+      "file": "LOGS/apk-local-alignment.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/apk-local-badging.txt",
+      "bytes": 984,
+      "sha256": "4775d7fe6bafe6b7713b202f8d0b60600b92ba6bacf1f8af61dc41cc5c9f2e52"
+    },
+    {
+      "file": "LOGS/apk-local-manifest-tree.txt",
+      "bytes": 2066,
+      "sha256": "563dd6b449ec1832759ab76a352399e6c8b6b87a2a45c1e1734e0d16f0e20bb3"
+    },
+    {
+      "file": "LOGS/apk-local-signature.txt",
+      "bytes": 991,
+      "sha256": "4040b25990723e5d42d2cfcfb642ef3da76f004c40df1f95830bf5b881f1dc77"
+    },
+    {
+      "file": "LOGS/baseline-data-storage.txt",
+      "bytes": 191,
+      "sha256": "0fdd8fd29d5815977ae70f60d51a9c4cc214843f7ea9db031a4d5556c7edc569"
+    },
+    {
+      "file": "LOGS/baseline-default-home.txt",
+      "bytes": 123,
+      "sha256": "72a2bad9633bf28b3526567ab046eb621e406d4121d7d9b0595ee83eea21bd36"
+    },
+    {
+      "file": "LOGS/baseline-disabled-packages.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/baseline-foreground.txt",
+      "bytes": 194,
+      "sha256": "6510ba0a83cf1282080bd1c3571ecf365eaf090380df5ed3a2e90dd4948d2b1f"
+    },
+    {
+      "file": "LOGS/baseline-mantistv-package.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/baseline-meminfo.txt",
+      "bytes": 1064,
+      "sha256": "3d890352e152ff42b7a88f1dd24e803fb5b330e87a270f7138baf3273c15d26b"
+    },
+    {
+      "file": "LOGS/baseline-packages.txt",
+      "bytes": 8071,
+      "sha256": "3d7c433da82580c3d4b9022eb088553d1c4d9875a7148067a48436df7db2e301"
+    },
+    {
+      "file": "LOGS/current-uiautomator-stdout.txt",
+      "bytes": 41,
+      "sha256": "9019a653c2f3700c2cd3ae1b7d7498e72428914280cb1738ff4f2a87fecb22d3"
+    },
+    {
+      "file": "LOGS/final-app-logcat.txt",
+      "bytes": 2037,
+      "sha256": "80ba7265a386d8a9abbc996c67ad631b6c25a4f4461b71f8adbb8094de1a8416"
+    },
+    {
+      "file": "LOGS/final-cpuinfo.txt",
+      "bytes": 2760,
+      "sha256": "40d1d156db5cf975f3223aef5b0986c6074c805d774e90b7ca38d92508e363c2"
+    },
+    {
+      "file": "LOGS/final-crash-buffer.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/final-disabled-packages.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "file": "LOGS/final-gfxinfo.txt",
+      "bytes": 2865,
+      "sha256": "d209b6929c618cefdd54bd1e17e08b767644a0a42147872ff51f2013994aab12"
+    },
+    {
+      "file": "LOGS/final-home-resolution.txt",
+      "bytes": 124,
+      "sha256": "1df7be55bd48feb470867117a1bcfa732ebca46b83e8a9dce2e526ca5076fd59"
+    },
+    {
+      "file": "LOGS/final-kernel-memory.txt",
+      "bytes": 1065,
+      "sha256": "74f820312584aefec32514dfca3f915af7ba710d27b3f8fdad6b3155727dd2f8"
+    },
+    {
+      "file": "LOGS/final-meminfo.txt",
+      "bytes": 2463,
+      "sha256": "c68c8d478bc158e8cc97f747b236d82bd236254918a6846ad7165443a8f26338"
+    },
+    {
+      "file": "LOGS/final-package-inventory.txt",
+      "bytes": 8098,
+      "sha256": "3714f6f3c6560fd91977db2dc962b065028615b00635a712925b4de13dedcb45"
+    },
+    {
+      "file": "LOGS/final-pid.txt",
+      "bytes": 6,
+      "sha256": "6c0fea70c4afc75eb23778054b721afdae08dd6e883bac722b84eed8c01c66e1"
+    },
+    {
+      "file": "LOGS/final-storage.txt",
+      "bytes": 192,
+      "sha256": "0c112a82dbda4568dfe38f000ceb1b444a29105f43f115dfe371755fe4bd53b8"
+    },
+    {
+      "file": "LOGS/home-uiautomator.txt",
+      "bytes": 34,
+      "sha256": "072ad5c3b831ca79f7f198e9a077eba67b7d1177c35d87ad990443ed10ee3bd4"
+    },
+    {
+      "file": "LOGS/initial-mantistv-logcat.txt",
+      "bytes": 1892,
+      "sha256": "cecac3ae6ef5b7b9bef22f652caf61afc721fb60838fcd99d3ed063cb15da815"
+    },
+    {
+      "file": "LOGS/installation-output.txt",
+      "bytes": 37,
+      "sha256": "f7ee166b0d114f86761e380697054613a21e343437e15b4042b7861cce5b6968"
+    },
+    {
+      "file": "LOGS/installed-mantistv-package.txt",
+      "bytes": 2076,
+      "sha256": "ffd43ae78ef35ada140535cd55f9f7f083b0cad5c12b2a96a682e63efda83e9f"
+    },
+    {
+      "file": "LOGS/interactive-cpuinfo.txt",
+      "bytes": 2449,
+      "sha256": "2b237112fa88e3684fbcdfe5dec0b6c053a8a3f6d5b44c45828c33cd12e80938"
+    },
+    {
+      "file": "LOGS/interactive-gfxinfo.txt",
+      "bytes": 2859,
+      "sha256": "45e5fd4997144817403fac79485e86d071db6d97cf9faf4ebfeda1bced81e433"
+    },
+    {
+      "file": "LOGS/interactive-kernel-memory.txt",
+      "bytes": 1065,
+      "sha256": "2e14ab361e836246718cfbe21ccbdddb42644b0d6a04d54815c01c9b0bd5d2bf"
+    },
+    {
+      "file": "LOGS/interactive-meminfo.txt",
+      "bytes": 2611,
+      "sha256": "0a9331b795cd5f8375b87e95565b7c3cc5b1dfaf92d8d5d77d21ead557d4de01"
+    },
+    {
+      "file": "LOGS/interactive-storage.txt",
+      "bytes": 192,
+      "sha256": "915b1907ef14445f206890a8b39841736555fd9da607a723d878ffa3a60ea642"
+    },
+    {
+      "file": "LOGS/launch-am-start-W.txt",
+      "bytes": 163,
+      "sha256": "8e69da5a4fd935a7e5ac6affb8c310b371d6f3708ab7fa353b37db309bf7d9b8"
+    },
+    {
+      "file": "LOGS/post-launch-gfxinfo.txt",
+      "bytes": 2848,
+      "sha256": "aefc28d58d741a4dd1096d8ce5dd3fbeeb272a176791c8b670f503bb8550a77b"
+    },
+    {
+      "file": "LOGS/post-launch-kernel-memory.txt",
+      "bytes": 1065,
+      "sha256": "d0d519747eaa61ad77addaa2180e84bb828ffff52bb5b09faa3e25a98e61a464"
+    },
+    {
+      "file": "LOGS/post-launch-meminfo.txt",
+      "bytes": 2463,
+      "sha256": "9b186a19998bd1f9a66895c5958b5e124a7a6bb909bd89ae78382558a731870b"
+    },
+    {
+      "file": "LOGS/post-launch-storage.txt",
+      "bytes": 192,
+      "sha256": "4b5f778e37b1090804bfaa243f672503b997a3fa6933bf205a2e1504caa2aebe"
+    },
+    {
+      "file": "LOGS/ui-appstore-longpress.txt",
+      "bytes": 19778,
+      "sha256": "05b80a3dc9c70a3531e23bf1bd8289f1abe61d74ede57ab05e6213811f2d0df5"
+    },
+    {
+      "file": "LOGS/ui-down-to-library-content.txt",
+      "bytes": 26097,
+      "sha256": "97c1c35bd74692078b4f53c89f57fdd87830311fd627fe8666cce74cd752e1b7"
+    },
+    {
+      "file": "LOGS/ui-left-selection.txt",
+      "bytes": 26097,
+      "sha256": "a17f217db3e3f94f4aa6ee37a5383b386ed7f0c27255f6535992c84d7f4ca4ec"
+    },
+    {
+      "file": "LOGS/ui-library-appstore-focused.txt",
+      "bytes": 26097,
+      "sha256": "cf385d209ae6a7678df3749fc752e7fc780597d0d4bcb2daeab9b157f5b04db7"
+    },
+    {
+      "file": "LOGS/ui-library-first-open.txt",
+      "bytes": 26097,
+      "sha256": "2b2c7799ac6b64bfa497e3f473ec436e2240f4b0fcac6ca4eb4ce71478cd837a"
+    },
+    {
+      "file": "LOGS/ui-manual-screensaver-focus.txt",
+      "bytes": 9507,
+      "sha256": "1fa9074c36ca0303ac1610bb0d50d9d794f097840835d8bb7d7b745d0aacfe5c"
+    },
+    {
+      "file": "LOGS/ui-menu-controls.txt",
+      "bytes": 9509,
+      "sha256": "d180d5dfc86c6dc105c697ad281793e740236fc5cc7eb0401e9a93e137e5c623"
+    },
+    {
+      "file": "LOGS/ui-post-restart-watchlist.txt",
+      "bytes": 7950,
+      "sha256": "eb440aa4cd4808a3af078c3263b07b72cb1e6d32d4a3b9efc9f2799a5533891a"
+    },
+    {
+      "file": "LOGS/ui-profile-dialog.txt",
+      "bytes": 6434,
+      "sha256": "e85f82eb34a86dfe3766e57e1c106814ebc4ffa22efdf00ab3ed42005538f053"
+    },
+    {
+      "file": "LOGS/ui-profile-one-watchlist-restored.txt",
+      "bytes": 7950,
+      "sha256": "e0f3e8f1aed1aab834d012ef17651bd3fcbfeef2e5579b17e123f347366721d0"
+    },
+    {
+      "file": "LOGS/ui-profile-two-watchlist.txt",
+      "bytes": 7612,
+      "sha256": "7074e97bb32e7bdd87cf34e76a451cabfa2c124a4cabaef886c07fc208eb9726"
+    },
+    {
+      "file": "LOGS/ui-recent-after-restart.txt",
+      "bytes": 8609,
+      "sha256": "0f2c4221b227a8a275ee758a3493f59ebbcaf97cd4eb8ccc0cee9bf27f6cd909"
+    },
+    {
+      "file": "LOGS/ui-reduce-motion-off-focus.txt",
+      "bytes": 9153,
+      "sha256": "2c9d82b3151291c4dadb13dd6b8cbb7bafddf0041c43d27f2c7b44bda9ce94eb"
+    },
+    {
+      "file": "LOGS/ui-reduce-motion-on-focus.txt",
+      "bytes": 9152,
+      "sha256": "8903c215c1631754ed4fc740a68cf8322088045fd56c5fd7fae2e8358e0b31fd"
+    },
+    {
+      "file": "LOGS/ui-reduce-motion-on.txt",
+      "bytes": 9152,
+      "sha256": "fa520c62f8b778a116721f68bb0fe39ccaf4ae661fe7cdeb98f45add8a7358ee"
+    },
+    {
+      "file": "LOGS/ui-reduce-motion-restored.txt",
+      "bytes": 9153,
+      "sha256": "b32b71b0f086a8e28c45975b1d2d8c2298cc6b283c57f3093cb5354687927ce9"
+    },
+    {
+      "file": "LOGS/ui-resume-appstore-selection.txt",
+      "bytes": 26097,
+      "sha256": "73cb5d526e902690820c9e7b3d617a6d07c294635f6e115d09962fa8426002ef"
+    },
+    {
+      "file": "LOGS/ui-right-selection.txt",
+      "bytes": 26097,
+      "sha256": "a49421ea26faae750564bae48e237210d9b49b9f8dfdf207d8b68f5b1db7508e"
+    },
+    {
+      "file": "LOGS/ui-search-appstore-match.txt",
+      "bytes": 7860,
+      "sha256": "d21ebdb61a4c22f5f6a4e786d8f47be3cf9efb61d161484421ea1a2f367f2425"
+    },
+    {
+      "file": "LOGS/ui-search-input-focused.txt",
+      "bytes": 9468,
+      "sha256": "ea34ab9089044615f42b51d50728a5c8e3bc451bc3f083a3b896285c4ce3b776"
+    },
+    {
+      "file": "LOGS/ui-search-no-settings-match.txt",
+      "bytes": 7880,
+      "sha256": "d9f123ee80ae6d3dbf9070b884d5972ef32f69e746316e07ce4d004a49361646"
+    },
+    {
+      "file": "LOGS/ui-search-screen.txt",
+      "bytes": 9468,
+      "sha256": "1cd81a26b62f77b3b752265fc142017100a9b63959d40a39a5d1f15d6d72be8a"
+    },
+    {
+      "file": "LOGS/ui-search-settings-results.txt",
+      "bytes": 7880,
+      "sha256": "2e5a9e13ca8318355e3520fd2bcb6d28a03adb4a49b82e038fdb2f723057222a"
+    },
+    {
+      "file": "LOGS/ui-settings-initial.txt",
+      "bytes": 9153,
+      "sha256": "608d83d8b2b30b1506badab5c9db7ecafd16de42196cfe7e8c27da2fbbeb0f90"
+    },
+    {
+      "file": "LOGS/ui-up-selection.txt",
+      "bytes": 26097,
+      "sha256": "290f9560bf8f264c5c4022b98fe24fc33ef7018adf4adc6cd8ec20f1029c9572"
+    },
+    {
+      "file": "LOGS/ui-watchlist-add-dialog.txt",
+      "bytes": 5672,
+      "sha256": "a8d83dbd5af9d3c7f1373bad5d3adaef04129f40033b9253027882af57131487"
+    },
+    {
+      "file": "LOGS/ui-watchlist-initial.txt",
+      "bytes": 7612,
+      "sha256": "d53020c5f8fe1c065530d2712e455be7348c9b511d93d02ce0469264dea00be6"
+    },
+    {
+      "file": "LOGS/ui-watchlist-save-focus.txt",
+      "bytes": 5681,
+      "sha256": "bdeea6b689b126d40e428d6ca7adca93e0720b57729ac71f6aabdc87996b713e"
+    },
+    {
+      "file": "LOGS/ui-watchlist-saved.txt",
+      "bytes": 7950,
+      "sha256": "c3f4919515c3c13ae1cf1764d637dd6e8375e75a9ff5a05d79a298fc6fe964a7"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "completed_at_utc": "2026-11-10T14:49:52.026617+00:00",
+  "added_packages": [
+    "dev.mantistv.home"
+  ],
+  "removed_packages": [],
+  "disabled_package_count": 0,
+  "default_home": "com.amazon.tv.launcher/.ui.HomeActivity_vNext",
+  "qa_output_bytes": 19485555,
+  "host_free_bytes": 30408257536,
+  "no_sdk_downloads": true,
+  "no_local_builds": true,
+  "no_uninstall_or_data_clear": true,
+  "reduced_motion_restored_off": true,
+  "app_remains_installed": true
+}
