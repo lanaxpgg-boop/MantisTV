@@ -1,0 +1,61 @@
+name: Android lint audit
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: mantistv-cloud
+  cancel-in-progress: false
+jobs:
+  lint:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      JAVA_TOOL_OPTIONS: -Xmx768m
+    steps:
+      - name: Check resource reserve and Maven availability
+        run: |
+          command -v mvn
+          python3 - <<'PY'
+          import os
+          s=os.statvfs(os.environ['GITHUB_WORKSPACE'])
+          assert s.f_bavail*s.f_frsize > max(5*1024**3,s.f_blocks*s.f_frsize*.15)+2*1024**3, 'STOP: insufficient cloud storage'
+          PY
+      - name: Checkout public source
+        run: git clone --depth 1 "https://github.com/$GITHUB_REPOSITORY.git" project
+      - name: Ensure official API25 platform in cloud (no automatic license acceptance)
+        run: |
+          set -euo pipefail
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          if [ ! -f "$SDK/platforms/android-25/android.jar" ]; then
+            MANAGER=$(find "$SDK/cmdline-tools" -type f -name sdkmanager | sort | tail -1)
+            test -n "$MANAGER"
+            "$MANAGER" --sdk_root="$SDK" 'platforms;android-25' < /dev/null
+          fi
+          test -f "$SDK/platforms/android-25/android.jar"
+      - name: Resolve pinned official Android lint tooling in cloud only
+        working-directory: project
+        run: |
+          mkdir -p out/lint releases
+          cat > out/lint-pom.xml <<'POM'
+          <project xmlns="http://maven.apache.org/POM/4.0.0"><modelVersion>4.0.0</modelVersion><groupId>dev.mantistv</groupId><artifactId>lint-audit</artifactId><version>1</version><repositories><repository><id>google</id><url>https://dl.google.com/dl/android/maven2/</url></repository><repository><id>central</id><url>https://repo.maven.apache.org/maven2/</url></repository></repositories><dependencies><dependency><groupId>com.android.tools.lint</groupId><artifactId>lint</artifactId><version>31.5.2</version></dependency></dependencies></project>
+          POM
+          mvn -B -q -f out/lint-pom.xml -Dmaven.repo.local="$RUNNER_TEMP/mantistv-maven" org.apache.maven.plugins:maven-dependency-plugin:3.6.1:copy-dependencies -DincludeScope=runtime -DoutputDirectory="$PWD/out/lint"
+          java -cp 'out/lint/*' com.android.tools.lint.Main --version
+      - name: Analyze API, permissions, threading, lifecycle and drawing allocations
+        id: analyze
+        working-directory: project
+        run: |
+          SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
+          java -cp 'out/lint/*' com.android.tools.lint.Main --sdk-home "$SDK" --compile-sdk-version 25 --java-language-level 8 --sources app/src --resources app/res --classpath "$SDK/platforms/android-25/android.jar" --check NewApi,InlinedApi,MissingPermission,WrongThread,HandlerLeak,DrawAllocation,StaticFieldLeak --xml releases/lint.xml --text releases/lint.txt --exitcode app
+      - name: Publish actual lint evidence without metered Actions artifacts
+        if: always() && steps.analyze.outcome != 'skipped'
+        working-directory: project
+        run: |
+          test -f releases/lint.xml
+          printf '%s\n' "Source commit: $(git rev-parse HEAD)" 'Android lint: 31.5.2' 'Checks: NewApi, InlinedApi, MissingPermission, WrongThread, HandlerLeak, DrawAllocation, StaticFieldLeak' 'No physical testing or full instrumentation' > releases/LINT-SCOPE.txt
+          cat releases/lint.txt >> "$GITHUB_STEP_SUMMARY"
+          (cd releases && sha256sum lint.xml lint.txt LINT-SCOPE.txt > SHA256SUMS.txt)
+          gh release create "lint-$GITHUB_RUN_ID" releases/* --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title 'Android lint evidence (read report for results)' --notes-file releases/LINT-SCOPE.txt
