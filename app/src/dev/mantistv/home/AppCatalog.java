@@ -31,7 +31,8 @@ public final class AppCatalog {
         if (r.activityInfo == null || !r.activityInfo.exported || !r.activityInfo.enabled)
           continue;
         String pkg = r.activityInfo.packageName;
-        if (pkg.equals(context.getPackageName()) || !seen.add(pkg))
+        if (pkg.equals(context.getPackageName()) || pkg.equals("dev.mantistv.home")
+            || pkg.startsWith("dev.mantistv.home.") || !seen.add(pkg))
           continue;
         CharSequence label;
         try {

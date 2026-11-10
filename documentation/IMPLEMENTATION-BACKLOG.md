@@ -12,3 +12,7 @@ Maximum feasible1:1 latest tvOS is the acceptance target.0.4 is preserved as a t
 8. **Implement real media/shelf/screensaver adapters:** lawfully reusable artwork/media, bounded decoding/caching, working play/resume/seek/error states and categories. Investigate API 25/ARMv7 reusable candidates and licenses before integration.
 9. **Validate every documented firmware revision incrementally:** reconcile catalog IDs/history, test capability fallbacks and service/permission/launcher differences; exact-build evidence only, no family-wide promotion from one device.
 10. **Progress genuine Apple integration and release acceptance:** evaluate legally reusable AirPlay/companion/media/smart-home implementations, security and licenses; implement and test protocols independently from visuals. Maintain explicit OS-replacement/private-service limits, export/recovery and non-destructive upgrade acceptance.
+
+## Apple ecosystem investigation now specified
+
+Use APPLE-ECOSYSTEM-PLAN.md for the user-required MacBook/iPhone option. First audit/build the pinned free Android AirPlay candidate in cloud, then isolated receiver and actual sender tests. Plan secure companion remote/text separately; retain native Apple Remote/HomeKit/DRM as unverified targets. No SDK downloads, receiver installation, new credentials or feature completion claim occurred in this review.

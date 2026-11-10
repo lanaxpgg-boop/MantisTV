@@ -31,7 +31,8 @@ public class MainActivity extends Activity {
   private android.content.SharedPreferences prefs;
   private LinearLayout body, root;
   private String page = "Home", profile = "0", focusToken = "nav:Home";
-  private boolean resumed = false, reduced = false, destroyed = false;
+  private String homeFocusToken = "";
+  private boolean resumed = false, reduced = false, destroyed = false, firstResume = true;
   private long lastBack = 0;
   private int accent = 0xff86e9c6;
   private final Runnable idle = () -> screensaver();
@@ -48,9 +49,12 @@ public class MainActivity extends Activity {
   protected void onResume() {
     super.onResume();
     resumed = true;
-    discover();
-    if (root != null)
-      show(page);
+    if (!firstResume) {
+      discover();
+      if (root != null)
+        show(page);
+    }
+    firstResume = false;
     armIdle();
   }
   @Override
@@ -147,6 +151,24 @@ public class MainActivity extends Activity {
         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     root = new LinearLayout(this);
     root.setOrientation(LinearLayout.VERTICAL);
+    if (next.equals("Home")) {
+      HomeScene scene = new HomeScene(this, reduced, prefs.getBoolean(key("warm"), false),
+          prefs.getString("name" + profile, "Profile " + (Integer.parseInt(profile) + 1)),
+          homeApps(), new HomeScene.Actions() {
+            public void open(AppItem app) { launch(app); }
+            public void page(String name) { show(name); }
+            public void profile() { profiles(); }
+            public void focused(String tag) { focusToken = tag; homeFocusToken = tag; }
+            public void appActions(AppItem app) { MainActivity.this.appActions(app); }
+            public void icon(String pkg, ImageView image) { loadHomeTile(pkg, image); }
+            public void banner(String pkg, ImageView image) { loadHomeBanner(pkg, image); }
+          });
+      root.addView(scene, new LinearLayout.LayoutParams(-1, -1));
+      setContentView(root);
+      scene.restoreFocus(desired.startsWith("home:") ? desired : homeFocusToken);
+      armIdle();
+      return;
+    }
     root.setPadding(dp(32), dp(16), dp(32), dp(12));
     boolean warm = prefs.getBoolean(key("warm"), false);
     root.setBackground(new GradientDrawable(GradientDrawable.Orientation.TL_BR,
@@ -189,9 +211,6 @@ public class MainActivity extends Activity {
     scroll.addView(body);
     root.addView(scroll, new LinearLayout.LayoutParams(-1, 0, 1));
     switch (next) {
-      case "Home":
-        home();
-        break;
       case "Library":
         library("All apps");
         break;
@@ -214,8 +233,8 @@ public class MainActivity extends Activity {
         watchlist();
         break;
       default:
-        page = "Home";
-        home();
+        show("Home");
+        return;
     }
     body.addView(text(
         "Menu: controls    Hold OK on an app: favorites and app info    Back: Home / exit", 12));
@@ -226,28 +245,59 @@ public class MainActivity extends Activity {
       nav.getChildAt(0).requestFocus();
     armIdle();
   }
-  private void home() {
-    FrameLayout hero = new FrameLayout(this);
-    hero.setBackground(glass(0x44202d40));
-    hero.addView(new LandscapeView(this, false, reduced), new FrameLayout.LayoutParams(-1, -1));
-    LinearLayout caption = new LinearLayout(this);
-    caption.setOrientation(LinearLayout.VERTICAL);
-    caption.setPadding(dp(20), dp(18), dp(20), dp(16));
-    caption.addView(text("YOUR EVENING, REIMAGINED", 13));
-    caption.addView(text("Welcome home.", 34));
-    caption.addView(text("Your apps. A quieter place to watch.", 17));
-    hero.addView(caption);
-    body.addView(hero, new LinearLayout.LayoutParams(-1, dp(170)));
-    ArrayList<AppItem> fav = selected(list("favorites"));
-    if (fav.isEmpty())
-      fav.addAll(apps.subList(0, Math.min(6, apps.size())));
-    section("Dock", fav);
-    ArrayList<AppItem> recent = selected(list("recent"));
-    if (!recent.isEmpty())
-      section("Top Shelf · recently opened", recent.subList(0, Math.min(6, recent.size())));
-    body.addView(text("Continue Watching from streaming providers is not available in this "
-                      + "preview. Your local watchlist is in the navigation bar.",
-        14));
+  private ArrayList<AppItem> homeApps() {
+    ArrayList<String> installed = new ArrayList<>();
+    for (AppItem app : apps) installed.add(app.pkg);
+    return selected(StoreRules.homeOrder(installed, list("favorites"),
+        Arrays.asList("com.netflix.ninja", "com.amazon.avod.thirdpartyclient",
+            "com.amazon.firetv.youtube", "com.disney.disneyplus",
+            "com.amazon.bueller.music", "com.amazon.venezia"),
+        prefs.contains(key("favorites"))));
+  }
+  private void loadHomeBanner(String pkg, ImageView target) {
+    target.setTag(pkg);
+    target.setImageDrawable(null);
+    if (worker.isShutdown()) return;
+    worker.execute(() -> {
+      if (!target.isAttachedToWindow() || !pkg.equals(target.getTag())) return;
+      try {
+        Drawable banner = getPackageManager().getApplicationBanner(pkg);
+        if (banner == null) return;
+        Bitmap bitmap = Bitmap.createBitmap(768, 432, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        banner.setBounds(0, 0, 768, 432);
+        banner.draw(canvas);
+        handler.post(() -> {
+          if (!destroyed && target.isAttachedToWindow() && pkg.equals(target.getTag()))
+            target.setImageBitmap(bitmap);
+        });
+      } catch (PackageManager.NameNotFoundException | RuntimeException ignored) {
+      }
+    });
+  }
+  private void loadHomeTile(String pkg, ImageView target) {
+    String cacheKey = "home:" + pkg;
+    Bitmap cached = icons.get(cacheKey);
+    if (cached != null) { target.setImageBitmap(cached); return; }
+    if (worker.isShutdown()) return;
+    worker.execute(() -> {
+      if (!target.isAttachedToWindow()) return;
+      try {
+        Drawable image = getPackageManager().getApplicationBanner(pkg);
+        boolean banner = image != null;
+        if (!banner) image = getPackageManager().getApplicationIcon(pkg);
+        Bitmap bitmap = Bitmap.createBitmap(256, 144, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        image.setBounds(banner ? 0 : 68, banner ? 0 : 12, banner ? 256 : 188,
+            banner ? 144 : 132);
+        image.draw(canvas);
+        icons.put(cacheKey, bitmap);
+        handler.post(() -> {
+          if (!destroyed && target.isAttachedToWindow()) target.setImageBitmap(bitmap);
+        });
+      } catch (PackageManager.NameNotFoundException | RuntimeException ignored) {
+      }
+    });
   }
   private ArrayList<AppItem> selected(List<String> names) {
     ArrayList<AppItem> out = new ArrayList<>();
@@ -496,7 +546,7 @@ public class MainActivity extends Activity {
     body.addView(text("Device · " + Build.MODEL + " / " + Build.DEVICE + "\nAndroid API "
             + Build.VERSION.SDK_INT + " · " + Arrays.toString(Build.SUPPORTED_ABIS)
             + "\nFirmware · " + Build.DISPLAY
-            + ("\nMantisTV 0.4.1 preview · dev.mantistv.home\nOriginal native implementation. Not "
+            + ("\nMantisTV 0.5.0 preview · dev.mantistv.home\nOriginal native implementation. Not "
                + "affiliated with Apple or Amazon.\nFavorites, recent launches and watchlist are "
                + "local to each profile. Profile switching is not parental access control."),
         15));

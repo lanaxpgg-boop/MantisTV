@@ -2,6 +2,16 @@ package dev.mantistv.home;
 import java.util.*;
 public final class StoreRules {
   private StoreRules() {}
+  public static List<String> homeOrder(List<String> installed, List<String> favorites,
+      List<String> preferred, boolean favoritesSaved) {
+    LinkedHashSet<String> available = new LinkedHashSet<>(installed);
+    LinkedHashSet<String> ordered = new LinkedHashSet<>();
+    for (String pkg : favorites) if (available.contains(pkg)) ordered.add(pkg);
+    if (!favoritesSaved)
+      for (String pkg : preferred) if (available.contains(pkg)) ordered.add(pkg);
+    ordered.addAll(available);
+    return new ArrayList<>(ordered);
+  }
   public static String profileId(String id) {
     return "1".equals(id) || "2".equals(id) || "3".equals(id) ? id : "0";
   }

@@ -20,23 +20,23 @@ find out/classes -name '*.class' > out/classes.txt
 if [ ! -f out/development.keystore ]; then
  keytool -genkeypair -keystore out/development.keystore -storepass android -keypass android -alias mantistv -keyalg RSA -keysize 2048 -validity 365 -dname 'CN=MantisTV preview development'
 fi
-"$BT/apksigner" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.4.1-preview.apk out/aligned.apk
-"$BT/apksigner" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.4.1-preview.apk > releases/signature.txt
-"$BT/aapt" dump badging releases/MantisTV-0.4.1-preview.apk > releases/manifest.txt
-"$BT/zipalign" -c 4 releases/MantisTV-0.4.1-preview.apk
+"$BT/apksigner" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.5.0-preview.apk out/aligned.apk
+"$BT/apksigner" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.5.0-preview.apk > releases/signature.txt
+"$BT/aapt" dump badging releases/MantisTV-0.5.0-preview.apk > releases/manifest.txt
+"$BT/zipalign" -c 4 releases/MantisTV-0.5.0-preview.apk
 python3 - <<'PY'
 from pathlib import Path
-s=Path('app/AndroidManifest.xml').read_text().replace('package="dev.mantistv.home"','package="dev.mantistv.home.debug"').replace('android:name=".MainActivity"','android:name="dev.mantistv.home.MainActivity"').replace('android:label="MantisTV"','android:label="MantisTV Debug"')
+s=Path('app/AndroidManifest.xml').read_text().replace('package="dev.mantistv.home"','package="dev.mantistv.home.design"').replace('android:name=".MainActivity"','android:name="dev.mantistv.home.MainActivity"').replace('android:label="MantisTV"','android:label="MantisTV Home Preview"')
 Path('out/debug-manifest.xml').write_text(s)
 PY
 "$BT/aapt2" link -o out/debug-unsigned.apk -I "$JAR" --manifest out/debug-manifest.xml --min-sdk-version 25 --target-sdk-version 25 --debug-mode out/resources.zip
 (cd out/dex && zip -q ../debug-unsigned.apk classes.dex)
 "$BT/zipalign" -f 4 out/debug-unsigned.apk out/debug-aligned.apk
-"$BT/apksigner" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.4.1-debug.apk out/debug-aligned.apk
-"$BT/apksigner" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.4.1-debug.apk > releases/debug-signature.txt
-"$BT/aapt" dump badging releases/MantisTV-0.4.1-debug.apk > releases/debug-manifest.txt
-"$BT/zipalign" -c 4 releases/MantisTV-0.4.1-debug.apk
+"$BT/apksigner" sign --ks out/development.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias mantistv --out releases/MantisTV-0.5.0-design.apk out/debug-aligned.apk
+"$BT/apksigner" verify --min-sdk-version 25 --verbose --print-certs releases/MantisTV-0.5.0-design.apk > releases/debug-signature.txt
+"$BT/aapt" dump badging releases/MantisTV-0.5.0-design.apk > releases/debug-manifest.txt
+"$BT/zipalign" -c 4 releases/MantisTV-0.5.0-design.apk
 python3 scripts/inspect-apk.py
 cp out/unit-tests.txt out/javac-diagnostics.txt releases/
-{ echo "Source commit: $(git rev-parse HEAD)"; echo 'Package: dev.mantistv.home'; echo 'Debug package: dev.mantistv.home.debug (debuggable; side-by-side test variant)'; echo 'Version: 0.4.1-preview'; echo 'Min SDK: 25; Target SDK: 25; compile SDK: 25'; echo 'No native libraries: DEX-only, compatible in principle with armeabi-v7a'; echo 'Compilation, host unit tests, manifest policy, zip alignment and signature verification: passed'; echo 'Compiled directly against official Android API25 platform; lint is a separate pipeline stage'; echo 'Installed or physically tested: NO'; echo 'Signing key: ephemeral development key. Certificate continuity is not established. Preserve existing installations; never automatically uninstall to bypass a mismatch. Use the separate debug package for candidate QA.'; } > releases/BUILD-REPORT.txt
+{ echo "Source commit: $(git rev-parse HEAD)"; echo 'Package: dev.mantistv.home'; echo 'Debug package: dev.mantistv.home.design (debuggable; side-by-side test variant)'; echo 'Version: 0.5.0-preview'; echo 'Min SDK: 25; Target SDK: 25; compile SDK: 25'; echo 'No native libraries: DEX-only, compatible in principle with armeabi-v7a'; echo 'Compilation, host unit tests, manifest policy, zip alignment and signature verification: passed'; echo 'Compiled directly against official Android API25 platform; lint is a separate pipeline stage'; echo 'Installed or physically tested: NO'; echo 'Signing key: ephemeral development key. Certificate continuity is not established. Preserve existing installations; never automatically uninstall to bypass a mismatch. Use the separate design package for candidate QA.'; } > releases/BUILD-REPORT.txt
 python3 scripts/check-resources.py

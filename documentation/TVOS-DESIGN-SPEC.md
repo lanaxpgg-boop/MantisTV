@@ -50,3 +50,7 @@ Keep0.4 installed as the baseline. Publish only explicit development prereleases
 ## Subsequent physical evidence
 
 Both clock fixes passed real-minute AFTMM regressions in separate0.4.1 debug, source b6f7a673a01619aca100adbcc4abcf97cbf3ab80. Original0.4 is preserved and retains its known defects. See CLOCK-PHYSICAL-QA.md. These narrow passes do not accept the current UI as a faithful tvOS recreation or establish signing continuity.
+
+## Confirmed MacBook/iPhone acceptance
+
+The user explicitly requires an optional Apple ecosystem connection alongside the faithful latest-tvOS design. Implement genuine AirPlay-compatible sharing where feasible and distinguish a paired custom companion remote from native Apple Remote/HomeKit/Siri/account integration. Initial API25/ARMv7 receiver source candidate and separate physical gates are recorded in APPLE-ECOSYSTEM-PLAN.md; no ecosystem feature has been promoted on research alone.
