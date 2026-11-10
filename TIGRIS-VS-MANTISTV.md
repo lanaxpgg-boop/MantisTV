@@ -1,5 +1,9 @@
 # Tigris2.0.27 versus MantisTV0.4.0
 
+Latest checkpoint: **API25 build,226 JVM tests and both lint variants passed; APK checksum/signing/metadata verified. Hardware execution untested.** See the additional authorized verification section below. [Artifact](https://github.com/lanaxpgg-boop/MantisTV/releases/tag/tigris-verified-42894116665).
+
+Earlier audit and bounded-run evidence are retained below as history.
+
 Comparison pins: Tigris `c6d258f467e0a8f68f5a112bb5aef9710e81392d`; Mantis0.4 `ab022168a5d8fff173ff0169fd328adb2040be89`. Later0.4.1/0.5 progress is preserved but is not silently substituted into the requested baseline. Status evaluates the complete requested feature on AFTMM; a useful subset does not make the whole feature completed.
 
 A=reuse Tigris; B=retain Mantis; C=improve/rewrite the indicated seam; D=defer restricted capability. These letters are engineering decisions, not completion statuses.
@@ -42,3 +46,29 @@ The21 resolved AAR manifests all declare minSDK14–21 and contain zero `jni/*.s
 Three API findings remained: MovingGlass's ColorMatrixColorFilter.getColorMatrix(API26), UpdateGlass's Canvas.clipOutPath(API26), and the unversioned defaultFocusHighlightEnabled theme item(API26). Six manifest lint findings concern explicit TV banner/features/exported metadata and protected-permission **removal markers**. Fixes for all nine are saved locally and in `TIGRIS-POST-BUILD-FIXES.patch`, **not rebuilt or verified**. The API25 lens fallback retains tint/single-pass geometry while disabling chromatic channel decomposition; clipping uses the old difference-path operation; the theme item moves to values-v26. ProtectedPermissions ignores apply only to removal markers, never NewApi.
 
 Two actual cloud attempts were used; one earlier recipe validation rejection did not start a runner. No further cloud build is started in this bounded experiment. Preserve the checkpoint and resume verification in a later resource window. No device install, remote input, grant, root, firmware, bootloader or default-HOME operation occurred. No local Gradle/SDK/cache build was performed. Exact tvOS27 fidelity, physical performance, Apple ecosystem integration and all-firmware compatibility remain unverified or unimplemented as specified in the comparison.
+
+## Additional authorized verification — 2026-11-10
+
+**The nine lint fixes now pass.** [Free cloud run42894116665](https://github.com/lanaxpgg-boop/MantisTV/actions/runs/42894116665) completed successfully:226 JVM tests/zero failures;75 Python host tests and mocked shell contracts passed. Both debug and release lint report **0errors,0NewApi issues,79warnings each**. Warnings remain open; this is not physical or visual acceptance.
+
+[APK and evidence prerelease](https://github.com/lanaxpgg-boop/MantisTV/releases/tag/tigris-verified-42894116665) · [Verified experimental source](https://github.com/lanaxpgg-boop/MantisTV/tree/experiment/tigris-verified-42894116665). Runtime source commit `2ae8bcd8099246fcdbe5e7c19b85cca06d7b198c`; evidence commit `d9fc2a371383573ae514a89869ce7ef6f6cc8834`. The cloud checked237 source/resource/license hashes before compilation. Independent download checks reproduced release SHA256, API25 signature, alignment, ZIP integrity, metadata and DEX results using only tools already present on the Mac; no local build or new SDK/cache download occurred.
+
+| Artifact check | Observed result |
+|---|---|
+| Package/version |dev.mantistv.tigris.experimental /2.0.27-mantis-api25-experiment /code46|
+| SDK |min25,target31,compile36|
+| APK size |1,577,541bytes (~1.50MiB)|
+| APK SHA256 |`435b7b1434a467ce801ea58af0b9db4fc6557c81e921d9f80fc65391ed14e4ba`|
+| Certificate SHA256 |`d103a704bfa582e2bb54196ed3756a6a2fabc932d10b9316f33cb26d8b1fae37`|
+| Signature on API25 |APK Signature Scheme v2 verified; one self-signed Android Debug certificate|
+| Alignment/archive |4byte ZIP alignment and all ZIP entry CRCs passed|
+| DEX |classes.dex/classes2.dex use037 headers compatible with the declared API25 floor|
+| Native code |No .so entries; no observed64-bit-only native dependency|
+| HOME/system components |No HOME category; selected boot/guard/revival/keeper/dream/update components and privileged permissions absent in packaged manifest|
+| Device execution |Not performed; no ADB/device commands or installation|
+
+**Signing continuity is unresolved:** the valid certificate comes from a temporary cloud test key. The private key is not retained; this artifact does not establish a safe future in-place update path. Never uninstall an existing application or clear its data to bypass a signature mismatch. This separate package does not replace Mantis0.4/0.4.1/0.5. All three Mantis APK hashes and Mantis app-source hashes were checked unchanged.
+
+The earlier published follow-up patch omitted a newly added values-v26 theme resource. A6second source preflight correctly stopped before Gradle, SDK setup or APK generation. The complete committed patch (`TIGRIS-NINE-FIXES-COMPLETE.patch`) includes that file; source-only replay reproduced all237 expected files before the successful cloud build. Record both workflow executions honestly: one preparation-only failure and one additional actual verification build. No further build is authorized in this window.
+
+The new result supersedes the previous nine-error/withheld-APK checkpoint **only for static build and artifact gates**. AFTMM startup, remote interaction, frame timing/RAM/thermal performance, all firmware variants, exact tvOS27 screen fidelity and Apple ecosystem integrations remain unverified or unfinished. Keep OptionA conditional; preserve Mantis as the physical fallback. Next: address unavailable maintenance controls and durable signing, then obtain a separately authorized physical test window. The Fire Stick remains untouched.
