@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      GH_TOKEN: ${{ github.token }}
+      JAVA_TOOL_OPTIONS: -Xmx768m
     steps:
       - name: Check cloud reserve before checkout
         run: |
@@ -40,12 +40,17 @@ jobs:
             test ! -f out/javac-diagnostics.txt || cat out/javac-diagnostics.txt
             exit 1
           fi
+      - name: Require selected Android lint checks to pass
+        working-directory: project
+        run: bash scripts/lint.sh
       - name: Publish APK, source and checksums as free release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
         working-directory: project
         run: |
           set -euo pipefail
           git archive --format=zip --output=releases/MantisTV-source.zip HEAD
           cp LICENSE documentation/INSTALLATION-GUIDE.md documentation/ROLLBACK-GUIDE.md releases/
-          (cd releases && sha256sum *.apk *.zip *.txt *.md LICENSE > SHA256SUMS.txt)
-          gh release create "preview-$GITHUB_RUN_ID" releases/* --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title 'MantisTV 0.2.0 API25 development preview' --notes-file releases/BUILD-REPORT.txt
+          (cd releases && find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt)
+          gh release create "preview-$GITHUB_RUN_ID" releases/* --repo "$GITHUB_REPOSITORY" --target "$(git rev-parse HEAD)" --prerelease --title 'MantisTV API25 preview and debug APK' --notes-file releases/BUILD-REPORT.txt
           cat releases/BUILD-REPORT.txt >> "$GITHUB_STEP_SUMMARY"
