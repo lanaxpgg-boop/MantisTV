@@ -5,6 +5,7 @@ plugins {
 android {
     namespace = "com.leslie.tvhome"
     compileSdk = 36
+    buildFeatures { buildConfig = true }
 
     defaultConfig {
         applicationId = "com.leslie.tvhome"
@@ -21,6 +22,13 @@ android {
     productFlavors {
         create("standard") { dimension = "home" }
         create("guard") { dimension = "home" }
+        create("mantis") {
+            dimension = "home"
+            applicationId = "dev.mantistv.tigris.experimental"
+            minSdk = 25
+            versionNameSuffix = "-mantis-api25-experiment"
+            ndk { abiFilters += "armeabi-v7a" }
+        }
     }
 
     signingConfigs {
@@ -43,6 +51,7 @@ android {
     }
 
     lint {
+        checkDependencies = true
         // Sideloaded onto one TV, never published to Play.
         disable += "ExpiredTargetSdkVersion"
     }
@@ -50,10 +59,12 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
 }
 
 dependencies {
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
     testImplementation("junit:junit:4.13.2")
     // android.jar stubs org.json in JVM unit tests. This jar is tests only.
     testImplementation("org.json:json:20240303")

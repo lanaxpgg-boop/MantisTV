@@ -137,7 +137,10 @@ object Fonts {
 
     fun inter(ctx: Context, weight: Int): Typeface = cache.getOrPut(weight) {
         try {
-            Typeface.Builder(ctx.assets, "inter.ttf")
+            if (android.os.Build.VERSION.SDK_INT < 26) {
+                Typeface.create(Typeface.createFromAsset(ctx.assets, "inter.ttf"),
+                    if (weight >= 600) Typeface.BOLD else Typeface.NORMAL)
+            } else Typeface.Builder(ctx.assets, "inter.ttf")
                 .setFontVariationSettings("'wght' $weight")
                 .setWeight(weight)
                 .setFallback("sans-serif")

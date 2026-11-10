@@ -56,7 +56,7 @@ object InputTile {
 class AppRepo(private val ctx: Context) {
     private val pm: PackageManager = ctx.packageManager
     private val prefs = Prefs(ctx)
-    private val tiles = object : LruCache<String, AppTileArt>(24 * 1024 * 1024) {
+    private val tiles = object : LruCache<String, AppTileArt>((if (MantisExperiment.enabled) 8 else 24) * 1024 * 1024) {
         override fun sizeOf(key: String, value: AppTileArt) = value.background.byteCount
     }
     private val heightPx: Int get() = BrandTilePolicy.renderedHeight(TILE_W)

@@ -27,6 +27,7 @@ internal object IdleTimerTakeover {
     }
 
     @Synchronized fun sync(ctx: Context) {
+        if (MantisExperiment.enabled) return
         if (!Guard.isUserUnlocked(ctx)) return
         val prefs = Prefs(ctx)
         val store = ctx.getSharedPreferences("idle_timer_takeover", Context.MODE_PRIVATE)

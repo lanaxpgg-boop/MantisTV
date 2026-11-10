@@ -69,7 +69,7 @@ open class AndroidAdapter(protected val ctx: Context) : TvAdapter {
 
     override fun volume(): Level? {
         val s = AudioManager.STREAM_MUSIC
-        return Level(audio.getStreamVolume(s), audio.getStreamMinVolume(s), audio.getStreamMaxVolume(s))
+        return Level(audio.getStreamVolume(s), if (android.os.Build.VERSION.SDK_INT >= 28) audio.getStreamMinVolume(s) else 0, audio.getStreamMaxVolume(s))
     }
 
     override fun setVolume(target: String, v: Int): Boolean {

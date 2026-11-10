@@ -4,8 +4,6 @@ import android.content.Context
 import android.media.MediaMetadataRetriever
 import java.io.File
 import java.io.InputStream
-import java.nio.file.Files
-import java.nio.file.StandardCopyOption
 
 /** Bounded, disk-streamed transfers. A failed upload never replaces the last usable file. */
 internal object MediaFiles {
@@ -31,7 +29,10 @@ internal object MediaFiles {
     }.getOrDefault(false)
 
     fun replace(temp: File, target: File) {
-        Files.move(temp.toPath(), target.toPath(), StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+        // Both upload files reside in filesDir. POSIX rename atomically replaces the target
+        // on the same filesystem (API 21), without deleting the last usable file on failure.
+        require(temp.parentFile?.canonicalFile == target.parentFile?.canonicalFile)
+        check(temp.renameTo(target)) { "Atomic media rename failed; previous file retained" }
     }
 
     const val WALL_FILE = "wallpaper-video.mp4"

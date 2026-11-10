@@ -1945,7 +1945,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     }
 
     private fun askAdbAuthorization() {
-        if (prefs.adbAuthorized || isFinishing || !resumed || welcome != null) return
+        if (MantisExperiment.enabled || prefs.adbAuthorized || isFinishing || !resumed || welcome != null) return
         showSheet(Sheet(root).title(I18n.text(R.string.i18n_homeactivity_050))
             .message(I18n.text(R.string.i18n_homeactivity_051))
             .button(I18n.text(R.string.i18n_homeactivity_052)) { authorizeAdb() }
@@ -1955,7 +1955,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     private var adbAuthorizing = false
 
     fun authorizeAdb() {
-        if (adbAuthorizing) return
+        if (MantisExperiment.enabled || adbAuthorizing) return
         adbAuthorizing = true
         Toast.makeText(this, I18n.text(R.string.i18n_homeactivity_054), Toast.LENGTH_LONG).show()
         io.execute {

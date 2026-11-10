@@ -1,0 +1,32 @@
+[
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 6,
+    "class": "android.graphics.BlendMode",
+    "since": "29"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt",
+    "line": 10,
+    "class": "android.media.AudioPlaybackConfiguration",
+    "since": "26"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/KeeperService.kt",
+    "line": 4,
+    "class": "android.app.NotificationChannel",
+    "since": "26"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 4,
+    "class": "android.app.NotificationChannel",
+    "since": "26"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 4,
+    "class": "android.graphics.BlendMode",
+    "since": "29"
+  }
+]

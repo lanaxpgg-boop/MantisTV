@@ -1,0 +1,1634 @@
+[
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/PhoneServer.kt",
+    "line": 324,
+    "class": "java.security.SecureRandom",
+    "member": "getParameters",
+    "since": 35,
+    "code": "return session.parameters.mapValues { it.value.firstOrNull().orEmpty() }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/WallpaperActivity.kt",
+    "line": 101,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(14), dp(14), dp(14), dp(14))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/WallpaperActivity.kt",
+    "line": 121,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(64), dp(44), dp(56), dp(32))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 519,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = if (material.light) Color.rgb(240, 242, 247) else Color.rgb(20, 20, 24)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 523,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = material.tint"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 527,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = Color.WHITE"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 544,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = Color.argb((90 + focusWash * lit).toInt().coerceAtMost(255), 48, 52, 58)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 548,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = Color.WHITE"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 624,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "paint.color = Color.argb(a, 255, 255, 255)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1093,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "fillPaint.color = Color.argb(if (isFocused) 255 else 190, 255, 255, 255)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 841,
+    "class": "android.graphics.BlendMode",
+    "member": "values",
+    "since": 29,
+    "code": "for (members in groups.values) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1246,
+    "class": "android.graphics.BlendMode",
+    "member": "values",
+    "since": 29,
+    "code": "shadowCache.values.forEach { it.recycle() }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1119,
+    "class": "android.graphics.BlendMode",
+    "member": "DARKEN",
+    "since": 29,
+    "code": "if (tone.light) PorterDuff.Mode.DARKEN else PorterDuff.Mode.ADD)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1116,
+    "class": "android.graphics.BlendMode",
+    "member": "MULTIPLY",
+    "since": 29,
+    "code": "else if (tone.light) BlendMode.MULTIPLY else BlendMode.PLUS"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1116,
+    "class": "android.graphics.BlendMode",
+    "member": "PLUS",
+    "since": 29,
+    "code": "else if (tone.light) BlendMode.MULTIPLY else BlendMode.PLUS"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 966,
+    "class": "android.graphics.BlendMode",
+    "member": "SRC_IN",
+    "since": 29,
+    "code": "colorFilter = android.graphics.PorterDuffColorFilter(Color.argb(230, 0, 0, 0), PorterDuff.Mode.SRC_IN)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1145,
+    "class": "android.graphics.BlendMode",
+    "member": "SRC_IN",
+    "since": 29,
+    "code": "emptyInkPaint.colorFilter = android.graphics.PorterDuffColorFilter(baseInk, PorterDuff.Mode.SRC_IN)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1115,
+    "class": "android.graphics.BlendMode",
+    "member": "SRC_OVER",
+    "since": 29,
+    "code": "emptyInkPaint.blendMode = if (prefs.solidGlass(ctx)) BlendMode.SRC_OVER"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1115,
+    "class": "android.graphics.Paint",
+    "member": "getBlendMode",
+    "since": 29,
+    "code": "emptyInkPaint.blendMode = if (prefs.solidGlass(ctx)) BlendMode.SRC_OVER"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ControlCenter.kt",
+    "line": 1115,
+    "class": "android.graphics.Paint",
+    "member": "setBlendMode",
+    "since": 29,
+    "code": "emptyInkPaint.blendMode = if (prefs.solidGlass(ctx)) BlendMode.SRC_OVER"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Cleaner.kt",
+    "line": 132,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": ".filter { it.startsWith(\"package:\") }.map { it.removePrefix(\"package:\").trim() }.toList(), keep)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Cleaner.kt",
+    "line": 142,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": ".filter { it.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM == 0 }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Cleaner.kt",
+    "line": 159,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "am.runningAppProcesses.orEmpty().filter { it.importance <= ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND_SERVICE }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 421,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "getSystemService(DisplayManager::class.java)?.getDisplay(Display.DEFAULT_DISPLAY)?.state"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 427,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"event=$event display=${BootIntroGate.displayLabel(displayState())} interactive=$interactive resumed=$resumed focused=${hasWindowFocus()} intro=$introMode\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1750,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "if (intro != null) BootLog.i(\"event=focus has=$hasFocus display=${BootIntroGate.displayLabel(displayState())}\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1929,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "if (intro?.isWaitingForDisplay() == true) BootLog.i(\"pause during display wait\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1036,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val bitmap = LiquidGlass.shadow("
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1042,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "setImageBitmap(bitmap)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1134,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val bitmap = Shelf.image(this, item.image)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1135,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val glass = bitmap?.let { shelfGlass(it) }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1139,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "if (bitmap != null && glass != null) showShelfItem(index, bitmap, glass)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1298,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val image = video ?: (bgPhoto as? BitmapDrawable)?.bitmap"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1299,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val soft = (frost.drawable as? BitmapDrawable)?.bitmap"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1354,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val bitmap = videoWallpaper.frame ?: (bgPhoto as? BitmapDrawable)?.bitmap ?: return false"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1355,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val scale = maxOf(scene.width.toFloat() / bitmap.width, scene.height.toFloat() / bitmap.height)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1356,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val left = (scene.width - bitmap.width * scale) / 2f"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1357,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "val top = (scene.height - bitmap.height * scale) / 2f"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1358,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "canvas.drawBitmap(bitmap, null, android.graphics.RectF(left, top, left + bitmap.width * scale, top + bitmap.height * scale),"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 2025,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "fun setPortrait(bitmap: Bitmap?) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 2026,
+    "class": "android.graphics.drawable.BitmapDrawable",
+    "member": "setBitmap",
+    "since": 31,
+    "code": "if (bitmap == null) img.setImageResource(R.drawable.profile_avatar) else img.setImageBitmap(bitmap)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 2007,
+    "class": "android.view.Display",
+    "member": "getShape",
+    "since": 34,
+    "code": "shape = android.graphics.drawable.GradientDrawable.OVAL"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 471,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "/** Plays the boot animation over the home screen; [preview] is the one started from settings. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1352,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "/** An opaque wallpaper base prevents transitional scene alpha from baking black into glass. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1401,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "/** How far the grid is scrolled from its resting place, worked out from the first laid-out tile. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1731,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "/** Keeps D-pad focus from wandering from an overlay onto the screen behind it. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1375,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "prefs.pinnedInputs = prefs.pinnedInputs.filter { InputTile.decode(it)?.uri != i.uri }.toSet() + if (on) setOf(enc) else emptySet()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1573,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "val apps = folder.members.filter { it !in prefs.hidden }.mapNotNull { all[it] }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 1615,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "store.save(store.read().filter { it.id != folder.id }); foldersChanged()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 201,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** Top Shelf: content of the focused first-row dock app filling the screen above the dock. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 495,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** Independent of the user's boot video and sound preferences. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 201,
+    "class": "java.util.concurrent.TimeUnit",
+    "member": "of",
+    "since": 33,
+    "code": "/** Top Shelf: content of the focused first-row dock app filling the screen above the dock. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeActivity.kt",
+    "line": 495,
+    "class": "java.util.concurrent.TimeUnit",
+    "member": "of",
+    "since": 33,
+    "code": "/** Independent of the user's boot video and sound preferences. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt",
+    "line": 118,
+    "class": "android.media.AudioAttributes",
+    "member": "USAGE_ASSISTANT",
+    "since": 26,
+    "code": "usage == AudioAttributes.USAGE_ASSISTANT ||"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt",
+    "line": 101,
+    "class": "android.media.AudioManager",
+    "member": "getActivePlaybackConfigurations",
+    "since": 26,
+    "code": "val configs = runCatching { am.activePlaybackConfigurations }.getOrNull() ?: return null"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt",
+    "line": 114,
+    "class": "android.media.AudioPlaybackConfiguration",
+    "member": "getAudioAttributes",
+    "since": 26,
+    "code": "val usage = config.audioAttributes.usage"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/MediaQuality.kt",
+    "line": 22,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "val mode = manager?.getDisplay(Display.DEFAULT_DISPLAY)?.mode"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/MediaQuality.kt",
+    "line": 54,
+    "class": "android.media.MediaCodecInfo",
+    "member": "isHardwareAccelerated",
+    "since": 29,
+    "code": "if (Build.VERSION.SDK_INT >= 29) codec.isHardwareAccelerated"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 79,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"watchdog extended display=${BootIntroGate.displayLabel(displayState())}\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 111,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"display ${BootIntroGate.displayLabel(lastDisplay)} -> ${BootIntroGate.displayLabel(state)}\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 114,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "evaluate(\"display\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 143,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "\"cover path=pre31 wake=$wake settle=$wakeDelayMs display=${BootIntroGate.displayLabel(lastDisplay)} focus=${host.hasWindowFocus()} sdk=${Build.VERSION.SDK_INT}\""
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 160,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "?.getDisplay(Display.DEFAULT_DISPLAY)?.state ?: -1"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 170,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"wait display=${BootIntroGate.displayLabel(state)} focus=$focus reason=$reason\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 201,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"display ready reason=$reason display=${BootIntroGate.displayLabel(state)}\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 209,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "\"readiness timeout display=${BootIntroGate.displayLabel(state)} focus=$focus frame=$frameOk reason=$reason; still waiting\""
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 231,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"playback paused; display not on\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 238,
+    "class": "android.content.Context",
+    "member": "getDisplay",
+    "since": 30,
+    "code": "BootLog.i(\"playback resumed; display on\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 520,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "c.drawBitmap(logo.color, 0f, 0f, ink)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 527,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "class Logo(val mask: Bitmap, val color: Bitmap, val pivotX: Float, val pivotY: Float, val endScale: Float) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 552,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "val color = Bitmap.createBitmap(px, w, h, Bitmap.Config.ARGB_8888)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 553,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "return of(alphaBitmap(alpha, w, h), color, alpha, w, h)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 562,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "color = Color.WHITE"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 586,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "private fun of(mask: Bitmap, color: Bitmap, alpha: ByteArray, w: Int, h: Int): Logo {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 625,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "return Logo(mask, color, px, py, (far / radius * 1.25f).coerceIn(4f, 120f))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 355,
+    "class": "android.media.MediaPlayer",
+    "member": "MEDIA_INFO_VIDEO_NOT_PLAYING",
+    "since": 26,
+    "code": "MediaPlayer.MEDIA_INFO_VIDEO_NOT_PLAYING -> BootLog.i(\"video not playing extra=$extra\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Intro.kt",
+    "line": 526,
+    "class": "android.view.Display",
+    "member": "getShape",
+    "since": 34,
+    "code": "/** A logo cut out of a frame: its shape, its colours, and where to zoom into it. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Glass.kt",
+    "line": 230,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "color = Color.argb(alpha.coerceIn(0, 255), 0, 0, 0)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/KeeperService.kt",
+    "line": 130,
+    "class": "android.content.Context",
+    "member": "startForegroundService",
+    "since": 26,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 26) ctx.startForegroundService(intent)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 27,
+    "class": "android.app.NotificationChannel",
+    "member": "getImportance",
+    "since": 26,
+    "code": "fun notification(c: Context, channel: String, title: String, importance: Int): Notification.Builder {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 30,
+    "class": "android.app.NotificationChannel",
+    "member": "getImportance",
+    "since": 26,
+    "code": ".createNotificationChannel(NotificationChannel(channel, title, importance))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 27,
+    "class": "android.app.NotificationChannel",
+    "member": "setImportance",
+    "since": 26,
+    "code": "fun notification(c: Context, channel: String, title: String, importance: Int): Notification.Builder {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 30,
+    "class": "android.app.NotificationChannel",
+    "member": "setImportance",
+    "since": 26,
+    "code": ".createNotificationChannel(NotificationChannel(channel, title, importance))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 30,
+    "class": "android.app.NotificationManager",
+    "member": "createNotificationChannel",
+    "since": 26,
+    "code": ".createNotificationChannel(NotificationChannel(channel, title, importance))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 15,
+    "class": "android.content.pm.PackageInfo",
+    "member": "getLongVersionCode",
+    "since": 28,
+    "code": "if (Build.VERSION.SDK_INT >= 28) info.longVersionCode else info.versionCode.toLong()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 15,
+    "class": "android.content.pm.PackageInfo",
+    "member": "setLongVersionCode",
+    "since": 28,
+    "code": "if (Build.VERSION.SDK_INT >= 28) info.longVersionCode else info.versionCode.toLong()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 21,
+    "class": "android.content.pm.PackageInfo",
+    "member": "signingInfo",
+    "since": 28,
+    "code": "if (Build.VERSION.SDK_INT >= 28) info?.signingInfo?.apkContentsSigners?.takeIf { it.isNotEmpty() }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 25,
+    "class": "android.content.pm.PackageManager",
+    "member": "canRequestPackageInstalls",
+    "since": 26,
+    "code": "Build.VERSION.SDK_INT < 26 || pm.canRequestPackageInstalls()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Api25Compat.kt",
+    "line": 18,
+    "class": "android.content.pm.PackageManager",
+    "member": "GET_SIGNING_CERTIFICATES",
+    "since": 28,
+    "code": "PackageManager.GET_SIGNING_CERTIFICATES else PackageManager.GET_SIGNATURES"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 762,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "val drawable = runCatching { packageManager.getActivityIcon(a.component) }.getOrNull()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 824,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "val drawable = runCatching { packageManager.getActivityIcon(a.component) }.getOrNull()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 446,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "row(I18n.text(R.string.i18n_settingsactivity_029), I18n.text(R.string.i18n_settingsactivity_030), { onOff(prefs.showAvatar) }, checked = { prefs.showAvatar }) { prefs.showAvatar = !prefs.showAvatar }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 459,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.doubleHomeSwitcher) }, checked = { prefs.doubleHomeSwitcher }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 475,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.extremeGlass) }, checked = { prefs.extremeGlass }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 487,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.reduceGlassTransparency) }, checked = { prefs.reduceGlassTransparency }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 507,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.weatherEnabled) }, checked = { prefs.weatherEnabled }) { prefs.weatherEnabled = !prefs.weatherEnabled }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 546,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "row(I18n.text(R.string.i18n_settingsactivity_057), I18n.text(R.string.i18n_settingsactivity_058), { onOff(prefs.introSound) }, checked = { prefs.introSound }) { prefs.introSound = !prefs.introSound }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 594,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.frameScreensaver) }, checked = { prefs.frameScreensaver }) { v ->"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 632,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "else I18n.text(R.string.unified_idle_pending) }, checked = { prefs.unifiedIdle }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 642,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "row(I18n.text(R.string.i18n_settingsactivity_088), I18n.text(R.string.i18n_settingsactivity_089), { onOff(prefs.cleanOnStandby) }, checked = { prefs.cleanOnStandby }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 672,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ onOff(prefs.recentFirst) }, checked = { prefs.recentFirst }) { prefs.recentFirst = !prefs.recentFirst }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 713,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "{ if (!prefs.guard) I18n.text(R.string.i18n_settingsactivity_124) else if (HomeGuardService.isRunning) I18n.text(R.string.i18n_settingsactivity_125) else I18n.text(R.string.i18n_settingsactivity_126) }, checked = { prefs.guard }) { v ->"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 727,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "checked = { prefs.persistentHomeFilter }) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 735,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "if (Guard.isXiaomi() || prefs.keepAdb) row(I18n.text(R.string.i18n_settingsactivity_132), I18n.text(R.string.i18n_settingsactivity_133), { onOff(prefs.keepAdb) }, checked = { prefs.keepAdb }) { v ->"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 764,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "checked = { a.pkg == prefs.shelfCustomPkg }, checkbox = true, appIcon = drawable) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 825,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "row(a.label, null, { if (a.pkg in sel) \"\u2713\" else \"\" }, checked = { a.pkg in sel },"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 955,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "checked: (() -> Boolean)? = null, checkbox: Boolean = false,"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 960,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "if (checked != null) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 963,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "info.isChecked = checked()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 990,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "val toggle = if (checked != null && !checkbox) UpdateSwitch(this) else null"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 1028,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "val on = checked?.invoke()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 1030,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "toggle?.checked = on"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 164,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "private lateinit var heading: TextView"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 207,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "heading = text(30f, weight = 600).apply { maxLines = 2 }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 208,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "root.addView(heading, FrameLayout.LayoutParams(dp(350), -2).apply {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 407,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "heading.text = I18n.text(R.string.i18n_settingsactivity_003)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 754,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "heading.text = I18n.text(R.string.shelf_custom_app)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 819,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "heading.text = title"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 837,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "setHeading",
+    "since": 28,
+    "code": "heading.text = I18n.text(R.string.i18n_settingsactivity_143)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 784,
+    "class": "android.widget.TextView",
+    "member": "isSingleLine",
+    "since": 29,
+    "code": "isSingleLine = true"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/SettingsActivity.kt",
+    "line": 871,
+    "class": "android.widget.TextView",
+    "member": "isSingleLine",
+    "since": 29,
+    "code": "isSingleLine = true"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 295,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "p.color = Color.WHITE"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 314,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "p.color = Color.WHITE"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 320,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "p.color = Color.argb(170, 255, 255, 255)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 355,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "color = Color.rgb(0x33, 0x33, 0x33)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 31,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "val component: ComponentName,"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 95,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "if (byPkg[ctx.packageName]?.component?.className == HomeActivity::class.java.name) byPkg.remove(ctx.packageName)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 148,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "if (app.component.packageName == ctx.packageName)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 149,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "return Intent(Intent.ACTION_MAIN).setComponent(app.component).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 151,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "return (i ?: pm.getLaunchIntentForPackage(app.pkg) ?: Intent(Intent.ACTION_MAIN).setComponent(app.component))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 187,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "if (app.component.className == WallpaperActivity::class.java.name) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 191,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "val ownIcon = if (app.component.className == SettingsActivity::class.java.name)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 198,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "val drawable = if (app.component.className == SettingsActivity::class.java.name) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 200,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "} else runCatching { pm.getActivityIcon(app.component) }.getOrNull()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 202,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "pm.getActivityInfo(app.component, 0).loadBanner(pm)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 203,
+    "class": "android.graphics.Color",
+    "member": "getComponent",
+    "since": 26,
+    "code": "?: pm.getApplicationInfo(app.component.packageName, 0).loadBanner(pm)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 107,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "val apps = allApps().filter { it.pkg !in grouped } + folders.map {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 115,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "return apps.filter { it.pkg !in hidden }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 287,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "folder.members.filter { it !in prefs.hidden }.take(4).forEachIndexed { index, pkg ->"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 332,
+    "class": "java.util.Locale",
+    "member": "filter",
+    "since": 26,
+    "code": "tiles.snapshot().keys.filter { it.startsWith(pkg + \"@\") }.forEach { tiles.remove(it) }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 25,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** The fully rendered horizontal tile of one app. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 121,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** Grid key of one of Tigris's own screens besides settings. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 124,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** A screen of Tigris itself or a pinned input: it can be moved and hidden, not deleted. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 270,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** Bounding box of opaque pixels [l,t,r,b], or null when fully transparent. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/AppRepo.kt",
+    "line": 327,
+    "class": "java.util.Locale",
+    "member": "of",
+    "since": 36,
+    "code": "/** Drops the cached tile of [pkg] (it was updated or removed), or of every app. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 143,
+    "class": "android.accessibilityservice.AccessibilityService",
+    "member": "takeScreenshot",
+    "since": 30,
+    "code": "service.takeScreenshot(android.view.Display.DEFAULT_DISPLAY, service.mainExecutor,"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 156,
+    "class": "android.accessibilityservice.AccessibilityService",
+    "member": "takeScreenshot",
+    "since": 30,
+    "code": "Log.w(\"TigrisShot\", \"takeScreenshot failed code=$errorCode pkg=$pkg\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 160,
+    "class": "android.accessibilityservice.AccessibilityService",
+    "member": "takeScreenshot",
+    "since": 30,
+    "code": "Log.w(\"TigrisShot\", \"takeScreenshot exception pkg=$pkg\", e)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 143,
+    "class": "android.content.Context",
+    "member": "getMainExecutor",
+    "since": 28,
+    "code": "service.takeScreenshot(android.view.Display.DEFAULT_DISPLAY, service.mainExecutor,"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 147,
+    "class": "android.graphics.Bitmap",
+    "member": "getColorSpace",
+    "since": 26,
+    "code": "val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 147,
+    "class": "android.graphics.Bitmap",
+    "member": "getHardwareBuffer",
+    "since": 31,
+    "code": "val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 151,
+    "class": "android.graphics.Bitmap",
+    "member": "getHardwareBuffer",
+    "since": 31,
+    "code": "runCatching { result.hardwareBuffer.close() }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 147,
+    "class": "android.graphics.Bitmap",
+    "member": "setColorSpace",
+    "since": 29,
+    "code": "val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ShotCapture.kt",
+    "line": 147,
+    "class": "android.graphics.Bitmap",
+    "member": "wrapHardwareBuffer",
+    "since": 29,
+    "code": "val hw = Bitmap.wrapHardwareBuffer(result.hardwareBuffer, result.colorSpace)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateSwitch.kt",
+    "line": 10,
+    "class": "android.view.View",
+    "member": "getFocusable",
+    "since": 26,
+    "code": "/** Visual only: its containing settings row is the single accessible, focusable switch. */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/PhotoFrame.kt",
+    "line": 134,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "val (from, to) = if (zoomIn) 1.04f to 1.16f else 1.16f to 1.04f"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/PhotoFrame.kt",
+    "line": 135,
+    "class": "java.util.Date",
+    "member": "from",
+    "since": 26,
+    "code": "v.scaleX = from; v.scaleY = from"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt",
+    "line": 38,
+    "class": "android.app.Activity",
+    "member": "getCaller",
+    "since": 35,
+    "code": "/** Remove the switcher card (the caller may also force-stop the app). */"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt",
+    "line": 229,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(24), dp(24), dp(24), dp(24))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 25,
+    "class": "android.graphics.Paint",
+    "member": "getBlendMode",
+    "since": 29,
+    "code": "text.blendMode = paint.blendMode"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 27,
+    "class": "android.graphics.Paint",
+    "member": "getBlendMode",
+    "since": 29,
+    "code": "text.blendMode = null"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 39,
+    "class": "android.graphics.Paint",
+    "member": "getBlendMode",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.MULTIPLY"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 43,
+    "class": "android.graphics.Paint",
+    "member": "getBlendMode",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.PLUS"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 25,
+    "class": "android.graphics.Paint",
+    "member": "setBlendMode",
+    "since": 29,
+    "code": "text.blendMode = paint.blendMode"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 27,
+    "class": "android.graphics.Paint",
+    "member": "setBlendMode",
+    "since": 29,
+    "code": "text.blendMode = null"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 39,
+    "class": "android.graphics.Paint",
+    "member": "setBlendMode",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.MULTIPLY"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 43,
+    "class": "android.graphics.Paint",
+    "member": "setBlendMode",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.PLUS"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 40,
+    "class": "android.graphics.BlendMode",
+    "member": "DARKEN",
+    "since": 29,
+    "code": "else xfermode = PorterDuffXfermode(PorterDuff.Mode.DARKEN)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 39,
+    "class": "android.graphics.BlendMode",
+    "member": "MULTIPLY",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.MULTIPLY"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/GlassInk.kt",
+    "line": 43,
+    "class": "android.graphics.BlendMode",
+    "member": "PLUS",
+    "since": 29,
+    "code": "if (android.os.Build.VERSION.SDK_INT >= 29) blendMode = BlendMode.PLUS"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeGuardService.kt",
+    "line": 570,
+    "class": "android.accessibilityservice.AccessibilityService",
+    "member": "getSystemActions",
+    "since": 30,
+    "code": "service.getSystemActions().any { it.id == AccessibilityService.GLOBAL_ACTION_RECENTS }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeGuardService.kt",
+    "line": 171,
+    "class": "android.content.Context",
+    "member": "getDeviceId",
+    "since": 34,
+    "code": "override fun onInputDeviceAdded(deviceId: Int) = refreshGamepads()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeGuardService.kt",
+    "line": 172,
+    "class": "android.content.Context",
+    "member": "getDeviceId",
+    "since": 34,
+    "code": "override fun onInputDeviceRemoved(deviceId: Int) = refreshGamepads()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeGuardService.kt",
+    "line": 173,
+    "class": "android.content.Context",
+    "member": "getDeviceId",
+    "since": 34,
+    "code": "override fun onInputDeviceChanged(deviceId: Int) = refreshGamepads()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/HomeGuardService.kt",
+    "line": 198,
+    "class": "android.content.Context",
+    "member": "RECEIVER_NOT_EXPORTED",
+    "since": 33,
+    "code": "registerReceiver(homeKey, homeFilter, RECEIVER_NOT_EXPORTED)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/ScreensaverScope.kt",
+    "line": 17,
+    "class": "android.app.Activity",
+    "member": "registerActivityLifecycleCallbacks",
+    "since": 29,
+    "code": "fun register(app: Application) = app.registerActivityLifecycleCallbacks(this)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Wallpapers.kt",
+    "line": 592,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "data class Blob(val x: Float, val y: Float, val r: Float, val color: Int)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Wallpapers.kt",
+    "line": 605,
+    "class": "android.graphics.Bitmap",
+    "member": "getColor",
+    "since": 29,
+    "code": "intArrayOf(bl.color, Color.argb(140, Color.red(bl.color), Color.green(bl.color), Color.blue(bl.color)), Color.TRANSPARENT),"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 138,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": "fun inter(ctx: Context, weight: Int): Typeface = cache.getOrPut(weight) {"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 142,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": "if (weight >= 600) Typeface.BOLD else Typeface.NORMAL)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 144,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": ".setFontVariationSettings(\"'wght' $weight\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 145,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": ".setWeight(weight)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 149,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": "Typeface.create(if (weight >= 500) FONT_BOLD else \"sans-serif\", Typeface.NORMAL)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 154,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": "fun Context.text(sizeSp: Float, color: Int = Color.WHITE, bold: Boolean = false, weight: Int = if (bold) 600 else 400): TextView ="
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 158,
+    "class": "android.graphics.Typeface",
+    "member": "getWeight",
+    "since": 28,
+    "code": "typeface = Fonts.inter(this@text, weight)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 188,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(24), 0, dp(24), 0)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/Ui.kt",
+    "line": 144,
+    "class": "android.widget.TextView",
+    "member": "setFontVariationSettings",
+    "since": 26,
+    "code": ".setFontVariationSettings(\"'wght' $weight\")"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 190,
+    "class": "android.graphics.Color",
+    "member": "valueOf",
+    "since": 26,
+    "code": "progressTintList = android.content.res.ColorStateList.valueOf(Color.WHITE)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 191,
+    "class": "android.graphics.Color",
+    "member": "valueOf",
+    "since": 26,
+    "code": "progressBackgroundTintList = android.content.res.ColorStateList.valueOf(0x30ffffff)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 98,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(14), 0, dp(14), 0)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 130,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(10), dp(10), dp(10), dp(10))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 148,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(12), dp(12), dp(12), dp(12))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 165,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(18), dp(17), dp(18), dp(17))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 360,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(44), dp(38), dp(40), dp(30))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 367,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(12), dp(16), dp(20), dp(16))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 405,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(16), 0, dp(14), 0)"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 437,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(14), dp(12), dp(14), dp(16))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 458,
+    "class": "android.graphics.drawable.GradientDrawable",
+    "member": "setPadding",
+    "since": 29,
+    "code": "setPadding(dp(4), dp(8), dp(4), dp(6))"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 462,
+    "class": "android.provider.Settings",
+    "member": "ACTION_MANAGE_UNKNOWN_APP_SOURCES",
+    "since": 26,
+    "code": "runCatching { startActivity(if (android.os.Build.VERSION.SDK_INT >= 26) Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse(\"package:$packageName\")) else Intent(Settings.ACTION_SECURITY_SETTINGS)) }"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 252,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "checked = sp.contains(p.pkg + \".version\"),"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/UpdateActivity.kt",
+    "line": 310,
+    "class": "android.view.accessibility.AccessibilityNodeInfo",
+    "member": "getChecked",
+    "since": 36,
+    "code": "autoSwitch.checked = auto"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/tv/SonyAdapter.kt",
+    "line": 127,
+    "class": "android.content.Context",
+    "member": "getParams",
+    "since": 31,
+    "code": ".put(\"params\", JSONArray().apply { if (param != null) put(param) })"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/tv/SonyAdapter.kt",
+    "line": 150,
+    "class": "android.content.Context",
+    "member": "getParams",
+    "since": 31,
+    "code": ".put(\"params\", JSONArray()"
+  },
+  {
+    "file": "app/src/main/java/com/leslie/tvhome/tv/AndroidAdapter.kt",
+    "line": 72,
+    "class": "android.media.AudioManager",
+    "member": "getStreamMinVolume",
+    "since": 28,
+    "code": "return Level(audio.getStreamVolume(s), audio.getStreamMinVolume(s), audio.getStreamMaxVolume(s))"
+  }
+]

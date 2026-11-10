@@ -256,7 +256,7 @@ internal object DockGlassFallback {
                 setScale(scale, scale)
                 postTranslate((bw - source.width * scale) / 2f, (bh - source.height * scale) / 2f)
             }
-            val readable = if (source.config == Bitmap.Config.HARDWARE) {
+            val readable = if (android.os.Build.VERSION.SDK_INT >= 26 && source.config == Bitmap.Config.HARDWARE) {
                 source.copy(Bitmap.Config.ARGB_8888, false)?.also { copied = it }
             } else {
                 source

@@ -44,7 +44,7 @@ internal object MediaQuality {
             info.availMem, am.memoryClass)
     }.getOrDefault(false)
 
-    fun uhdWallpapers(ctx: Context): Boolean = when (Prefs(ctx).wallQuality) {
+    fun uhdWallpapers(ctx: Context): Boolean = !MantisExperiment.enabled && when (Prefs(ctx).wallQuality) {
         UHD -> true
         COMPAT -> false
         else -> displayIsUhd(ctx) && enoughMemoryForWallpapers(ctx)
@@ -78,7 +78,7 @@ internal object MediaQuality {
     }.getOrDefault(false)
 
     /** HEVC is hardware decoded: the 3 GB bitmap policy must not disable 4K video. */
-    fun uhdAerial(ctx: Context): Boolean = when (Prefs(ctx).aerialQuality) {
+    fun uhdAerial(ctx: Context): Boolean = !MantisExperiment.enabled && when (Prefs(ctx).aerialQuality) {
         COMPAT -> false
         // Explicit 4K preference works even when a vendor reports a 1080p UI display mode.
         UHD -> canDecode4kHevc()

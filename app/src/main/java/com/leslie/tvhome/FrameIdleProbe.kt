@@ -88,7 +88,15 @@ internal object FrameIdleProbe {
         return lastForeground
     }
 
-    private fun foreignPlayback(am: AudioManager?, ourUid: Int, listComplete: Boolean): Boolean? {
+    private fun foreignPlayback(am: AudioManager?, ourUid: Int, listComplete: Boolean): Boolean? =
+        if (Build.VERSION.SDK_INT >= 26) FrameIdleProbeApi26.foreignPlayback(am, ourUid, listComplete)
+        else null // No public foreign-playback list on25: unknown is not paused/idle evidence.
+}
+
+/** Do not load API26 method signatures on the25 path. */
+@androidx.annotation.RequiresApi(26)
+internal object FrameIdleProbeApi26 {
+    fun foreignPlayback(am: AudioManager?, ourUid: Int, listComplete: Boolean): Boolean? {
         if (am == null) return null
         val configs = runCatching { am.activePlaybackConfigurations }.getOrNull() ?: return null
         val uids = configs.filter { playbackActive(it) && mediaUsage(it) }.map { clientUid(it) }

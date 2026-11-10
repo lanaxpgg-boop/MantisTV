@@ -1,0 +1,42 @@
+# Tigris AFTMM performance audit and lightweight configuration
+
+## Evidence boundary
+
+No Tigris startup, RAM, frame-time, thermal or idle-CPU measurement has been made on AFTMM. The Fire Stick is untouched. Sony BRAVIA upstream screenshots/measurements and Mantis measurements are comparison context, not transferable results.
+
+Earlier Mantis0.4 physical record:840ms first launch,37.58MiB initial PSS,72.20MiB after interaction,3.21% cumulative gfxinfo jank in a mixed session.0.5 first launch was1193/1250ms in isolated design package; later navigation was confounded by user remote input. These are not controlled same-workload benchmarks against Tigris.
+
+## Source cost model
+
+- Native Views/RecyclerView/property animations avoid a browser engine. Tigris has no JNI payload in the inspected release; video decoding uses Android/Media3 and may allocate codec buffers outside Java heap.
+- `AppRepo` caches400x225 ARGB tile bitmaps:360,000bytes each before view/GPU copies. Upstream cache cap24MiB. The experiment caps it at8MiB (roughly23 such buffers), with normal LRU eviction.
+- `Shelf` caches processed images with maxMemory/5 clamped12–24MiB plus disk cache; this is a separate memory consumer. Wallpaper, glass intermediates, shadows, settings prebuild and ExoPlayer coexist; do not add only one cache and call it total RAM. Reduce the shelf budget further if actual pressure requires it.
+- A1920x1080 ARGB bitmap is7.91MiB;3840x2160 is31.64MiB. Crossfades, blur input/output and IntArray temporaries can multiply peak usage. Decode sampling/caps must precede allocation; largeHeap is false.
+- `Glass`/`DockGlassFallback` perform CPU sampling/box blur/per-pixel masks and cache the result, retaining full mask geometry. Re-baking on every Dpad event or synchronous large decoding would be a latency risk. Home prepares background work on its executor; validate frame traces at every change/Top Shelf return, not just steady idle.
+- Pre31 fallback uses still samples160px(low-end)/240px, video capture320px, weak-device refresh10s rather than4s, and slows/stops refreshing after roughly150ms capture cost. AFTMM's memory class triggers the weak/low-end paths. PixelCopy Surface overload is API24, but vendor decoder behavior is unknown.
+- Extreme glass adds refraction/dispersion/lens work and layers. Keep it off initially; preserve cached normal glass rather than replacing the entire UI with flat panels automatically. Current focus is scale+shadow, not a costly per-frame content blur.
+- `HomeActivity` minute-boundary ticker and paused-video/idle checks, background keeper's30s ownership loop, updates every6h, phone-server grace and worker pools all matter for idle. Experiment removes keeper/revival/boot/update jobs; activity callbacks must still be checked in real pause/return cycles. TileAdapter's two-thread loader lifecycle and static shadow-cache growth deserve follow-up before release.
+
+## Implemented experimental profile
+
+`MantisExperiment.defaults`, mantis manifest, `AppRepo`, `MediaQuality`, `DockGlassFallback`:
+
+| Setting | Experimental choice | Rationale |
+|---|---|---|
+| Rendering |Keep Tigris geometry, rounded masks, glass and scale/shadows |Preserve visual composition |
+| Default material |Normal cached glass; extreme off; glass Control Center selected |Avoid unnecessary flat-panel downgrade |
+| Default background |Built-in graphite; user may choose photos |Repeatable offline first launch, no initial download burst |
+| Bitmap quality |1080p maximum wallpaper/aerial preference path; disable forced UHD in mantis flavor |Bound32-bit heap peaks |
+| App artwork cache |8MiB |Bound recurring app-art pressure |
+| Video |Off by default; existing weak-device capture fallback retained |No claim of hardware decode performance |
+| Maintenance |Keeper/guard/revival/boot/system-dream/timer takeover disabled; selfADB/cleanup/install backends blocked |No idle maintenance or system changes during visual experiment |
+| Intro |Welcome complete; intro default off; Apple asset downloads blocked |Reach Home directly without external presentation files |
+| Font |Inter preserved, old-API load fallback |Maintain closer typography; exact weights require visual test |
+
+These are implemented resource constraints, **not proven optimizations**. Shelf/scene/codec memory is not globally capped by the8MiB app cache. Prefer performance evidence over indiscriminately removing glass. A720p sample profile is a fallback candidate only if measured1080p costs demand it.
+
+## Required physical benchmark
+
+On an integrity-verified separately signed/package build, record exact fingerprint/display resolution, process startup mode and instrumentation. Reuse Mantis cases: cold/warm start, rapid grid traversal, Top Shelf enter/return, Control Center, photo change, app launch/return,20 repeated cycles and10min idle with no remote input. Collect PSS/heap/graphics, gfxinfo frame histograms and input-visible timing, CPU and thermal state; distinguish60Hz vs other modes. Repeat baseline/candidate under comparable media/network conditions.
+
+Proposed acceptance targets, not results: visible focus response p95<=100ms; p95 frame timing within16.7ms on60Hz scenes where hardware supports it; no sustained PSS growth across20 cycles; no background video/worker wake loop after pause; no OOM/ANR/crash. Define a measured RAM ceiling from available device headroom before enabling video/extreme glass. Normal-app Home/Back escape and Amazon Home recovery remain mandatory regardless of speed.

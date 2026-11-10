@@ -1,0 +1,13 @@
+{
+  "max_cloud_attempts": 2,
+  "minutes_per_attempt": 20,
+  "local_builds": false,
+  "local_sdk_downloads": false,
+  "local_new_data_limit_bytes": 536870912,
+  "normal_disk_reserve_gib": 34.241,
+  "physical_install": false,
+  "upstream_commit": "c6d258f467e0a8f68f5a112bb5aef9710e81392d",
+  "gradle_checksum_url": "https://services.gradle.org/distributions/gradle-9.8.2-bin.zip.sha256",
+  "sdk": 25,
+  "abi": "armeabi-v7a"
+}
