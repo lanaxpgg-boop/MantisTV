@@ -15,7 +15,6 @@ import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import dev.mantistv.home.AppCatalog.AppItem;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 import org.json.*;
@@ -160,7 +159,13 @@ public class MainActivity extends Activity {
         18);
     brand.setTextColor(accent);
     header.addView(brand, new LinearLayout.LayoutParams(0, dp(48), 1));
-    header.addView(text(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()), 17));
+    TextClock clock = new TextClock(this);
+    clock.setFormat12Hour("HH:mm");
+    clock.setFormat24Hour("HH:mm");
+    clock.setTextSize(17);
+    clock.setTextColor(Color.WHITE);
+    clock.setPadding(dp(8), dp(6), dp(8), dp(6));
+    header.addView(clock);
     root.addView(header);
     HorizontalScrollView navScroll = new HorizontalScrollView(this);
     navScroll.setHorizontalScrollBarEnabled(false);
@@ -491,7 +496,7 @@ public class MainActivity extends Activity {
     body.addView(text("Device · " + Build.MODEL + " / " + Build.DEVICE + "\nAndroid API "
             + Build.VERSION.SDK_INT + " · " + Arrays.toString(Build.SUPPORTED_ABIS)
             + "\nFirmware · " + Build.DISPLAY
-            + ("\nMantisTV 0.4.0 preview · dev.mantistv.home\nOriginal native implementation. Not "
+            + ("\nMantisTV 0.4.1 preview · dev.mantistv.home\nOriginal native implementation. Not "
                + "affiliated with Apple or Amazon.\nFavorites, recent launches and watchlist are "
                + "local to each profile. Profile switching is not parental access control."),
         15));

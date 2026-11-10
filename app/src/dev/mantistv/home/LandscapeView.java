@@ -65,16 +65,18 @@ public final class LandscapeView extends View {
       long current = now / 60000;
       if (current != minute) {
         minute = current;
+        clockFormat.setTimeZone(TimeZone.getDefault());
         clockDate.setTime(now);
         clock = clockFormat.format(clockDate);
+        setContentDescription(clock);
       }
       paint.setColor(0xddffffff);
       paint.setTextSize(dp(40));
       canvas.drawText(clock, dp(50), h - dp(70), paint);
       paint.setTextSize(dp(16));
       canvas.drawText("MANTIS  /  Quiet horizons", dp(52), h - dp(40), paint);
-      if (!reduced)
-        postInvalidateDelayed(100);
+      // Reduced motion keeps the scene still, while the clock refreshes each minute.
+      postInvalidateDelayed(reduced ? 60000 - Math.floorMod(now, 60000L) : 100);
     }
   }
 }
