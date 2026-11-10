@@ -1,5 +1,5 @@
 {
-  "max_cloud_attempts": 3,
+  "max_cloud_attempts": 4,
   "minutes_per_attempt": 20,
   "local_builds": false,
   "local_sdk_downloads": false,

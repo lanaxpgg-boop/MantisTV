@@ -1,0 +1,371 @@
+diff --git a/app/src/main/java/com/leslie/tvhome/ControlCenter.kt b/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
+index eb255c0..ac976ab 100644
+--- a/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
++++ b/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
+@@ -277,7 +277,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+ 
+         // tvOS layout: a square power tile beside two capsules, then a row of round buttons.
+         val top = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
+-        val power = GlassButton(I18n.text(R.string.i18n_controlcenter_001), R.drawable.ic_power, Shape.TILE) {
++        val power = GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_001)), R.drawable.ic_power, Shape.TILE) {
+             confirm(I18n.text(R.string.i18n_controlcenter_002), I18n.text(R.string.i18n_controlcenter_003)) { Cleaner.shutdown(ctx) }
+         }
+         top.addView(power, LinearLayout.LayoutParams(0, cell * 2 + gap, 1f).apply { marginEnd = gap })
+@@ -287,7 +287,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+             runCatching { ctx.startActivity(tv.wifiIntent()) }
+         }
+         right.addView(networkModule, LinearLayout.LayoutParams(-1, cell))
+-        right.addView(GlassButton(I18n.text(R.string.i18n_controlcenter_005), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
++        right.addView(GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_005)), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
+             LinearLayout.LayoutParams(-1, cell).apply { topMargin = gap })
+         top.addView(right, LinearLayout.LayoutParams(0, -2, 1f))
+         generalPage.addView(top)
+@@ -299,12 +299,12 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+                     if (utilities.childCount > 0) marginStart = (this@ControlCenter.width - cell * 4) / 3
+                 })
+             }
+-        memButton = utility(I18n.text(R.string.i18n_controlcenter_006), R.drawable.ic_memory) { cleanNow() }
++        memButton = utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_006)), R.drawable.ic_memory) { cleanNow() }
+         utility(I18n.text(R.string.i18n_controlcenter_007), R.drawable.ic_photo) {
+             close()
+             ctx.openFrame()
+         }
+-        utility(I18n.text(R.string.i18n_controlcenter_008), R.drawable.ic_restart) {
++        utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_008)), R.drawable.ic_restart) {
+             confirm(I18n.text(R.string.i18n_controlcenter_009), I18n.text(R.string.i18n_controlcenter_010)) { Cleaner.reboot(ctx) }
+         }
+         utility(I18n.text(R.string.i18n_controlcenter_011), R.drawable.ic_gear) {
+@@ -1256,7 +1256,8 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+ 
+     fun refresh() {
+         if (destroyed) return
+-        status.text = if (prefs.adbAuthorized) "" else I18n.text(R.string.i18n_controlcenter_017)
++        status.text = if (MantisExperiment.enabled) I18n.text(R.string.mantis_system_unavailable)
++            else if (prefs.adbAuthorized) "" else I18n.text(R.string.i18n_controlcenter_017)
+         status.visibility = if (status.text.isEmpty()) View.GONE else View.VISIBLE
+         val cm = ctx.getSystemService(android.net.ConnectivityManager::class.java)
+         val caps = runCatching { cm.getNetworkCapabilities(cm.activeNetwork) }.getOrNull()
+@@ -1320,7 +1321,16 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+         home.showSheet(sheet)
+     }
+ 
++    private fun unavailableMaintenance(): Boolean {
++        if (!MantisExperiment.enabled) return false
++        home.showSheet(Sheet(host).title(I18n.text(R.string.mantis_unavailable))
++            .message(I18n.text(R.string.mantis_system_unavailable))
++            .button(ctx.getString(android.R.string.ok)) {})
++        return true
++    }
++
+     private fun cleanNow() {
++        if (unavailableMaintenance()) return
+         status.text = I18n.text(R.string.i18n_controlcenter_027)
+         status.visibility = View.VISIBLE
+         Thread {
+@@ -1332,6 +1342,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+     }
+ 
+     private fun needAdb(action: () -> Unit) {
++        if (unavailableMaintenance()) return
+         if (prefs.adbAuthorized) action() else home.showSheet(Sheet(host).title(I18n.text(R.string.i18n_controlcenter_028))
+             .message(I18n.text(R.string.i18n_controlcenter_029))
+             .button(I18n.text(R.string.i18n_controlcenter_030)) { home.authorizeAdb() }
+diff --git a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+index 76a6cb5..576d621 100644
+--- a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+@@ -1524,7 +1524,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+                 startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${app.pkg}"))
+                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+             }
+-        if (!repo.isEssential(app.pkg)) s.button(I18n.text(R.string.i18n_homeactivity_014)) { confirmDelete(app, pos) }
++        if (!repo.isEssential(app.pkg)) s.button(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_homeactivity_014))) { confirmDelete(app, pos) }
+         s.button(I18n.text(R.string.i18n_homeactivity_015)) {}
+         showSheet(s, restoreFocusTo = pos)
+     }
+@@ -1619,6 +1619,12 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+     }
+ 
+     private fun confirmDelete(app: AppEntry, pos: Int) {
++        if (MantisExperiment.enabled) {
++            showSheet(Sheet(root).title(I18n.text(R.string.mantis_unavailable))
++                .message(I18n.text(R.string.mantis_remove_unavailable))
++                .button(getString(android.R.string.ok)) {}, restoreFocusTo = pos)
++            return
++        }
+         val system = repo.isSystem(app.pkg)
+         if (!prefs.adbAuthorized) {
+             if (!system) {
+diff --git a/app/src/main/java/com/leslie/tvhome/MantisExperiment.kt b/app/src/main/java/com/leslie/tvhome/MantisExperiment.kt
+index 14a1a99..dc68b3b 100644
+--- a/app/src/main/java/com/leslie/tvhome/MantisExperiment.kt
++++ b/app/src/main/java/com/leslie/tvhome/MantisExperiment.kt
+@@ -3,6 +3,9 @@ package com.leslie.tvhome
+ /** The experiment is a normal app, never a HOME/firmware maintenance tool. */
+ internal object MantisExperiment {
+     val enabled: Boolean get() = BuildConfig.FLAVOR == "mantis"
++    fun unavailableLabel(label: String): String = if (enabled)
++        I18n.text(R.string.mantis_restricted_label, label, I18n.text(R.string.mantis_unavailable)) else label
++
+     fun defaults(ctx: android.content.Context) {
+         if (!enabled) return
+         // First-run defaults only; keep settings keys and the upstream renderer/layout intact.
+diff --git a/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt b/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt
+index 3c0ec5e..60ee29a 100644
+--- a/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt
+@@ -321,7 +321,7 @@ class SettingsActivity : Activity() {
+         row(I18n.text(title), I18n.text(R.string.optional_asset_help), {
+             I18n.text(if (asset.id in downloadingAssets) R.string.asset_downloading
+                 else if (OptionalAssets.file(this, asset) != null) R.string.asset_remove else R.string.asset_download)
+-        }) { value ->
++        }, unavailableInMantis = R.string.mantis_assets_unavailable) { value ->
+             if (asset.id !in downloadingAssets) {
+                 downloadingAssets.add(asset.id)
+                 value.text = I18n.text(R.string.asset_downloading)
+@@ -408,7 +408,7 @@ class SettingsActivity : Activity() {
+         about.text = ""
+ 
+         section(I18n.text(R.string.i18n_settingsactivity_004))
+-        row(I18n.text(R.string.i18n_settingsactivity_005), I18n.text(R.string.i18n_settingsactivity_006), { "" }, chevron = true) {
++        row(I18n.text(R.string.i18n_settingsactivity_005), I18n.text(R.string.i18n_settingsactivity_006), { "" }, chevron = true, unavailableInMantis = R.string.mantis_updates_unavailable) {
+             startActivity(Intent(this, UpdateActivity::class.java))
+         }
+         section(I18n.text(R.string.i18n_settingsactivity_008))
+@@ -456,7 +456,7 @@ class SettingsActivity : Activity() {
+             recreate()
+         }
+         row(getString(R.string.tvos_double_home_title), getString(R.string.tvos_double_home_help),
+-            { onOff(prefs.doubleHomeSwitcher) }, checked = { prefs.doubleHomeSwitcher }) {
++            { onOff(prefs.doubleHomeSwitcher) }, checked = { prefs.doubleHomeSwitcher }, unavailableInMantis = R.string.mantis_home_unavailable) {
+             prefs.doubleHomeSwitcher = !prefs.doubleHomeSwitcher
+         }
+         row(I18n.text(R.string.i18n_settingsactivity_031), I18n.text(R.string.i18n_settingsactivity_032) +
+@@ -566,7 +566,7 @@ class SettingsActivity : Activity() {
+                 MediaQuality.COMPAT -> I18n.text(R.string.media_quality_1080)
+                 else -> I18n.text(R.string.media_quality_auto)
+             }
+-        }) {
++        }, unavailableInMantis = R.string.mantis_quality_unavailable, mantisValue = R.string.media_quality_1080) {
+             prefs.wallQuality = when (prefs.wallQuality) {
+                 MediaQuality.AUTO -> MediaQuality.UHD
+                 MediaQuality.UHD -> MediaQuality.COMPAT
+@@ -591,7 +591,7 @@ class SettingsActivity : Activity() {
+             }.start()
+         }
+         row(I18n.text(R.string.i18n_settingsactivity_072), I18n.text(R.string.i18n_settingsactivity_073),
+-            { onOff(prefs.frameScreensaver) }, checked = { prefs.frameScreensaver }) { v ->
++            { onOff(prefs.frameScreensaver) }, checked = { prefs.frameScreensaver }, unavailableInMantis = R.string.mantis_screensaver_unavailable) { v ->
+             val on = !prefs.frameScreensaver
+             val current = Settings.Secure.getString(contentResolver, "screensaver_components").orEmpty()
+             val mine = "$packageName/${PhotoDream::class.java.name}"
+@@ -616,7 +616,7 @@ class SettingsActivity : Activity() {
+                 MediaQuality.COMPAT -> I18n.text(R.string.media_quality_compat)
+                 else -> I18n.text(R.string.media_quality_auto)
+             }
+-        }) {
++        }, unavailableInMantis = R.string.mantis_quality_unavailable, mantisValue = R.string.media_quality_compat) {
+             prefs.aerialQuality = when (prefs.aerialQuality) {
+                 MediaQuality.AUTO -> MediaQuality.UHD
+                 MediaQuality.UHD -> MediaQuality.COMPAT
+@@ -629,7 +629,7 @@ class SettingsActivity : Activity() {
+         }
+         row(I18n.text(R.string.unified_idle_title), I18n.text(R.string.unified_idle_desc),
+             { if (!prefs.unifiedIdle) onOff(false) else if (IdleTimerTakeover.isActive(this)) onOff(true)
+-              else I18n.text(R.string.unified_idle_pending) }, checked = { prefs.unifiedIdle }) {
++              else I18n.text(R.string.unified_idle_pending) }, checked = { prefs.unifiedIdle }, unavailableInMantis = R.string.mantis_screensaver_unavailable) {
+             prefs.unifiedIdle = !prefs.unifiedIdle
+             IdleTimerTakeover.sync(this)
+         }
+@@ -639,29 +639,29 @@ class SettingsActivity : Activity() {
+         }
+ 
+         section(I18n.text(R.string.i18n_settingsactivity_087))
+-        row(I18n.text(R.string.i18n_settingsactivity_088), I18n.text(R.string.i18n_settingsactivity_089), { onOff(prefs.cleanOnStandby) }, checked = { prefs.cleanOnStandby }) {
++        row(I18n.text(R.string.i18n_settingsactivity_088), I18n.text(R.string.i18n_settingsactivity_089), { onOff(prefs.cleanOnStandby) }, checked = { prefs.cleanOnStandby }, unavailableInMantis = R.string.mantis_system_unavailable) {
+             prefs.cleanOnStandby = !prefs.cleanOnStandby
+         }
+         row(I18n.text(R.string.i18n_settingsactivity_090), I18n.text(R.string.i18n_settingsactivity_091), {
+             if (prefs.cleanIntervalHours == 0) I18n.text(R.string.i18n_settingsactivity_092) else I18n.text(R.string.i18n_settingsactivity_093, prefs.cleanIntervalHours)
+-        }) {
++        }, unavailableInMantis = R.string.mantis_system_unavailable) {
+             val opts = listOf(0, 2, 4, 8)
+             prefs.cleanIntervalHours = opts[(opts.indexOf(prefs.cleanIntervalHours) + 1) % opts.size]
+             KeeperService.start(this, KeeperService.ACTION_RESCHEDULE)
+         }
+-        row(I18n.text(R.string.i18n_settingsactivity_094), I18n.text(R.string.i18n_settingsactivity_095), { I18n.text(R.string.i18n_settingsactivity_096, Cleaner.availMb(this)) }) { v ->
++        row(I18n.text(R.string.i18n_settingsactivity_094), I18n.text(R.string.i18n_settingsactivity_095), { I18n.text(R.string.i18n_settingsactivity_096, Cleaner.availMb(this)) }, unavailableInMantis = R.string.mantis_system_unavailable) { v ->
+             v.text = I18n.text(R.string.i18n_settingsactivity_097)
+             Thread {
+                 val r = Cleaner.clean(applicationContext)
+                 runOnUiThread { v.text = r.description() }
+             }.start()
+         }
+-        row(I18n.text(R.string.i18n_settingsactivity_098), I18n.text(R.string.i18n_settingsactivity_099), { I18n.text(R.string.i18n_settingsactivity_100, prefs.keep.size) }, chevron = true) {
++        row(I18n.text(R.string.i18n_settingsactivity_098), I18n.text(R.string.i18n_settingsactivity_099), { I18n.text(R.string.i18n_settingsactivity_100, prefs.keep.size) }, chevron = true, unavailableInMantis = R.string.mantis_system_unavailable) {
+             show(Page.KEEP)
+         }
+         row(I18n.text(R.string.i18n_settingsactivity_101), I18n.text(R.string.i18n_settingsactivity_102), {
+             if (prefs.shutdownOnPowerKey) I18n.text(R.string.i18n_settingsactivity_103) else I18n.text(R.string.i18n_settingsactivity_104)
+-        }) {
++        }, unavailableInMantis = R.string.mantis_system_unavailable) {
+             prefs.shutdownOnPowerKey = !prefs.shutdownOnPowerKey
+             if (prefs.shutdownOnPowerKey && !prefs.adbAuthorized)
+                 Toast.makeText(this, I18n.text(R.string.i18n_settingsactivity_105), Toast.LENGTH_LONG).show()
+@@ -671,13 +671,13 @@ class SettingsActivity : Activity() {
+         row(I18n.text(R.string.i18n_settingsactivity_106), I18n.text(R.string.i18n_settingsactivity_107),
+             { onOff(prefs.recentFirst) }, checked = { prefs.recentFirst }) { prefs.recentFirst = !prefs.recentFirst }
+         row(I18n.text(R.string.i18n_settingsactivity_108), I18n.text(R.string.i18n_settingsactivity_109), { I18n.text(R.string.i18n_settingsactivity_110, prefs.hidden.size) }, chevron = true) { show(Page.HIDDEN) }
+-        row(I18n.text(R.string.i18n_settingsactivity_111), I18n.text(R.string.i18n_settingsactivity_112), { I18n.text(R.string.i18n_settingsactivity_113, prefs.removed.size) }, chevron = true) {
++        row(I18n.text(R.string.i18n_settingsactivity_111), I18n.text(R.string.i18n_settingsactivity_112), { I18n.text(R.string.i18n_settingsactivity_113, prefs.removed.size) }, chevron = true, unavailableInMantis = R.string.mantis_remove_unavailable) {
+             show(Page.REMOVED)
+         }
+ 
+         section(I18n.text(R.string.i18n_settingsactivity_114))
+         row(I18n.text(R.string.i18n_settingsactivity_115), I18n.text(R.string.i18n_settingsactivity_116),
+-            { if (prefs.adbAuthorized) I18n.text(R.string.i18n_settingsactivity_117) else I18n.text(R.string.i18n_settingsactivity_118) }) { v ->
++            { if (prefs.adbAuthorized) I18n.text(R.string.i18n_settingsactivity_117) else I18n.text(R.string.i18n_settingsactivity_118) }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
+             if (adbAuthorizing) return@row
+             adbAuthorizing = true
+             v.text = I18n.text(R.string.i18n_settingsactivity_119)
+@@ -693,7 +693,7 @@ class SettingsActivity : Activity() {
+             }.start()
+         }
+         // Resolver success is not proof that the physical HOME key reaches us.
+-        row(I18n.text(R.string.install_home_check_title), I18n.text(R.string.install_home_check_help), { "" }) {
++        row(I18n.text(R.string.install_home_check_title), I18n.text(R.string.install_home_check_help), { "" }, unavailableInMantis = R.string.mantis_home_unavailable) {
+             val native = Guard.isDefaultHome(this)
+             val bound = HomeGuardService.isRunning
+             val secure = Guard.hasSecureSettings(this)
+@@ -710,7 +710,7 @@ class SettingsActivity : Activity() {
+                 })
+         }
+         row(I18n.text(R.string.i18n_settingsactivity_122), I18n.text(R.string.i18n_settingsactivity_123),
+-            { if (!prefs.guard) I18n.text(R.string.i18n_settingsactivity_124) else if (HomeGuardService.isRunning) I18n.text(R.string.i18n_settingsactivity_125) else I18n.text(R.string.i18n_settingsactivity_126) }, checked = { prefs.guard }) { v ->
++            { if (!prefs.guard) I18n.text(R.string.i18n_settingsactivity_124) else if (HomeGuardService.isRunning) I18n.text(R.string.i18n_settingsactivity_125) else I18n.text(R.string.i18n_settingsactivity_126) }, checked = { prefs.guard }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
+             val on = !prefs.guard
+             v.text = I18n.text(R.string.i18n_settingsactivity_127)
+             Thread {
+@@ -724,7 +724,7 @@ class SettingsActivity : Activity() {
+         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && !Guard.isXiaomi()) {
+             row(I18n.text(R.string.home_filter_title), I18n.text(R.string.home_filter_warning),
+                 { if (prefs.persistentHomeFilter) I18n.text(R.string.home_filter_on) else I18n.text(R.string.home_filter_off) },
+-                checked = { prefs.persistentHomeFilter }) {
++                checked = { prefs.persistentHomeFilter }, unavailableInMantis = R.string.mantis_home_unavailable) {
+                 val on = !prefs.persistentHomeFilter
+                 prefs.persistentHomeFilter = on && prefs.guard
+                 if (on && !prefs.guard) prefs.persistentHomeFilter = false
+@@ -732,7 +732,7 @@ class SettingsActivity : Activity() {
+                 if (on) Toast.makeText(this, I18n.text(R.string.home_filter_warning), Toast.LENGTH_LONG).show()
+             }
+         }
+-        if (Guard.isXiaomi() || prefs.keepAdb) row(I18n.text(R.string.i18n_settingsactivity_132), I18n.text(R.string.i18n_settingsactivity_133), { onOff(prefs.keepAdb) }, checked = { prefs.keepAdb }) { v ->
++        if (Guard.isXiaomi() || prefs.keepAdb) row(I18n.text(R.string.i18n_settingsactivity_132), I18n.text(R.string.i18n_settingsactivity_133), { onOff(prefs.keepAdb) }, checked = { prefs.keepAdb }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
+             val on = !prefs.keepAdb
+             v.text = I18n.text(R.string.i18n_settingsactivity_134)
+             Thread {
+@@ -953,7 +953,15 @@ class SettingsActivity : Activity() {
+     /** One focus target per row; explicit switch/checkbox semantics and bounded value width. */
+     private fun row(label: String, desc: String?, value: () -> String, chevron: Boolean = false,
+                     checked: (() -> Boolean)? = null, checkbox: Boolean = false,
+-                    appIcon: Drawable? = null, onClick: (TextView) -> Unit) {
++                    appIcon: Drawable? = null, unavailableInMantis: Int? = null,
++                    mantisValue: Int = R.string.mantis_unavailable, onClick: (TextView) -> Unit) {
++        if (MantisExperiment.enabled && unavailableInMantis != null) {
++            // No original value/checked/action callback is evaluated on this path.
++            row(label, I18n.text(unavailableInMantis), { I18n.text(mantisValue) }, chevron = true) {
++                dialog(label, I18n.text(unavailableInMantis))
++            }
++            return
++        }
+         val r = object : LinearLayout(this) {
+             override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
+                 super.onInitializeAccessibilityNodeInfo(info)
+diff --git a/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt b/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt
+index ac575a0..25ca3eb 100644
+--- a/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt
++++ b/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt
+@@ -415,6 +415,7 @@ class AppSwitcherActivity : Activity() {
+  */
+ internal object AppCloser {
+     fun close(ctx: Context, pkg: String) {
++        if (MantisExperiment.enabled) return // Removing a history card never claims to stop a process.
+         if (pkg.isEmpty() || pkg == ctx.packageName) return
+         runCatching {
+             val am = ctx.getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager
+diff --git a/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt b/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt
+index 0261482..6b5e039 100644
+--- a/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt
+@@ -52,10 +52,19 @@ class UpdateActivity : Activity() {
+         }
+     }
+ 
+-    override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState); show() }
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        if (MantisExperiment.enabled) {
++            Toast.makeText(this, I18n.text(R.string.mantis_updates_unavailable), Toast.LENGTH_LONG).show()
++            finish()
++            return
++        }
++        show()
++    }
+ 
+     override fun onResume() {
+         super.onResume()
++        if (MantisExperiment.enabled) return
+         visible = true
+         Updates.executor.execute { Updates.reconcile(applicationContext) }
+         // Returning from the system uninstaller: refresh so the card turns into Install.
+@@ -74,12 +83,12 @@ class UpdateActivity : Activity() {
+ 
+     override fun onPause() {
+         visible = false
+-        Updates.prefs(this).unregisterOnSharedPreferenceChangeListener(listener)
++        if (!MantisExperiment.enabled) Updates.prefs(this).unregisterOnSharedPreferenceChangeListener(listener)
+         super.onPause()
+     }
+ 
+     override fun onDestroy() {
+-        glass.close()
++        if (::glass.isInitialized) glass.close()
+         artwork.shutdownNow()
+         super.onDestroy()
+     }
+diff --git a/app/src/main/res/values-zh/mantis_availability.xml b/app/src/main/res/values-zh/mantis_availability.xml
+new file mode 100644
+index 0000000..e4ce25f
+--- /dev/null
++++ b/app/src/main/res/values-zh/mantis_availability.xml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="mantis_unavailable">不可用</string>
++    <string name="mantis_restricted_label">%1$s · %2$s</string>
++    <string name="mantis_system_unavailable">此版本不提供系统控制。请使用 Fire TV 遥控器或系统设置。</string>
++    <string name="mantis_home_unavailable">此版本作为普通应用打开，不提供主页键接管或后台服务。</string>
++    <string name="mantis_updates_unavailable">此版本不提供应用安装或更新。现有应用不会改变。</string>
++    <string name="mantis_remove_unavailable">此版本不提供应用移除。您可以在设备设置中管理已安装的应用。</string>
++    <string name="mantis_assets_unavailable">此版本不提供这些 Apple 展示素材下载。您可以使用自己的图片和视频。</string>
++    <string name="mantis_quality_unavailable">此版本使用兼容媒体画质。更高画质尚未在此设备上验证。</string>
++    <string name="mantis_screensaver_unavailable">此版本不会更改系统屏保或空闲设置。您仍可在控制中心预览照片。</string>
++</resources>
+diff --git a/app/src/main/res/values/mantis_availability.xml b/app/src/main/res/values/mantis_availability.xml
+new file mode 100644
+index 0000000..1c3a60a
+--- /dev/null
++++ b/app/src/main/res/values/mantis_availability.xml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <string name="mantis_unavailable">Unavailable</string>
++    <string name="mantis_restricted_label">%1$s · %2$s</string>
++    <string name="mantis_system_unavailable">System controls are unavailable in this version. Use the Fire TV remote or system settings.</string>
++    <string name="mantis_home_unavailable">This version opens as a regular app. Home button takeover and background services are unavailable.</string>
++    <string name="mantis_updates_unavailable">Installing and updating apps is unavailable in this version. Existing apps are unchanged.</string>
++    <string name="mantis_remove_unavailable">Removing apps is unavailable in this version. You can manage installed apps in your device settings.</string>
++    <string name="mantis_assets_unavailable">These Apple presentation downloads are unavailable. You can use your own images and videos.</string>
++    <string name="mantis_quality_unavailable">This version uses compatibility media quality. Higher quality has not been tested on this device.</string>
++    <string name="mantis_screensaver_unavailable">System screensaver and idle settings are unchanged. The photo preview is available in Control Center.</string>
++</resources>

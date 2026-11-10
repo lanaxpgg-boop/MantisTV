@@ -277,7 +277,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
 
         // tvOS layout: a square power tile beside two capsules, then a row of round buttons.
         val top = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
-        val power = GlassButton(I18n.text(R.string.i18n_controlcenter_001), R.drawable.ic_power, Shape.TILE) {
+        val power = GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_001)), R.drawable.ic_power, Shape.TILE) {
             confirm(I18n.text(R.string.i18n_controlcenter_002), I18n.text(R.string.i18n_controlcenter_003)) { Cleaner.shutdown(ctx) }
         }
         top.addView(power, LinearLayout.LayoutParams(0, cell * 2 + gap, 1f).apply { marginEnd = gap })
@@ -287,7 +287,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
             runCatching { ctx.startActivity(tv.wifiIntent()) }
         }
         right.addView(networkModule, LinearLayout.LayoutParams(-1, cell))
-        right.addView(GlassButton(I18n.text(R.string.i18n_controlcenter_005), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
+        right.addView(GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_005)), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
             LinearLayout.LayoutParams(-1, cell).apply { topMargin = gap })
         top.addView(right, LinearLayout.LayoutParams(0, -2, 1f))
         generalPage.addView(top)
@@ -299,12 +299,12 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
                     if (utilities.childCount > 0) marginStart = (this@ControlCenter.width - cell * 4) / 3
                 })
             }
-        memButton = utility(I18n.text(R.string.i18n_controlcenter_006), R.drawable.ic_memory) { cleanNow() }
+        memButton = utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_006)), R.drawable.ic_memory) { cleanNow() }
         utility(I18n.text(R.string.i18n_controlcenter_007), R.drawable.ic_photo) {
             close()
             ctx.openFrame()
         }
-        utility(I18n.text(R.string.i18n_controlcenter_008), R.drawable.ic_restart) {
+        utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_008)), R.drawable.ic_restart) {
             confirm(I18n.text(R.string.i18n_controlcenter_009), I18n.text(R.string.i18n_controlcenter_010)) { Cleaner.reboot(ctx) }
         }
         utility(I18n.text(R.string.i18n_controlcenter_011), R.drawable.ic_gear) {
@@ -1256,7 +1256,8 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
 
     fun refresh() {
         if (destroyed) return
-        status.text = if (prefs.adbAuthorized) "" else I18n.text(R.string.i18n_controlcenter_017)
+        status.text = if (MantisExperiment.enabled) I18n.text(R.string.mantis_system_unavailable)
+            else if (prefs.adbAuthorized) "" else I18n.text(R.string.i18n_controlcenter_017)
         status.visibility = if (status.text.isEmpty()) View.GONE else View.VISIBLE
         val cm = ctx.getSystemService(android.net.ConnectivityManager::class.java)
         val caps = runCatching { cm.getNetworkCapabilities(cm.activeNetwork) }.getOrNull()
@@ -1320,7 +1321,16 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
         home.showSheet(sheet)
     }
 
+    private fun unavailableMaintenance(): Boolean {
+        if (!MantisExperiment.enabled) return false
+        home.showSheet(Sheet(host).title(I18n.text(R.string.mantis_unavailable))
+            .message(I18n.text(R.string.mantis_system_unavailable))
+            .button(ctx.getString(android.R.string.ok)) {})
+        return true
+    }
+
     private fun cleanNow() {
+        if (unavailableMaintenance()) return
         status.text = I18n.text(R.string.i18n_controlcenter_027)
         status.visibility = View.VISIBLE
         Thread {
@@ -1332,6 +1342,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
     }
 
     private fun needAdb(action: () -> Unit) {
+        if (unavailableMaintenance()) return
         if (prefs.adbAuthorized) action() else home.showSheet(Sheet(host).title(I18n.text(R.string.i18n_controlcenter_028))
             .message(I18n.text(R.string.i18n_controlcenter_029))
             .button(I18n.text(R.string.i18n_controlcenter_030)) { home.authorizeAdb() }

@@ -52,10 +52,19 @@ class UpdateActivity : Activity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState); show() }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (MantisExperiment.enabled) {
+            Toast.makeText(this, I18n.text(R.string.mantis_updates_unavailable), Toast.LENGTH_LONG).show()
+            finish()
+            return
+        }
+        show()
+    }
 
     override fun onResume() {
         super.onResume()
+        if (MantisExperiment.enabled) return
         visible = true
         Updates.executor.execute { Updates.reconcile(applicationContext) }
         // Returning from the system uninstaller: refresh so the card turns into Install.
@@ -74,12 +83,12 @@ class UpdateActivity : Activity() {
 
     override fun onPause() {
         visible = false
-        Updates.prefs(this).unregisterOnSharedPreferenceChangeListener(listener)
+        if (!MantisExperiment.enabled) Updates.prefs(this).unregisterOnSharedPreferenceChangeListener(listener)
         super.onPause()
     }
 
     override fun onDestroy() {
-        glass.close()
+        if (::glass.isInitialized) glass.close()
         artwork.shutdownNow()
         super.onDestroy()
     }

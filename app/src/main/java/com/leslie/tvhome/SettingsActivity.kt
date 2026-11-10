@@ -321,7 +321,7 @@ class SettingsActivity : Activity() {
         row(I18n.text(title), I18n.text(R.string.optional_asset_help), {
             I18n.text(if (asset.id in downloadingAssets) R.string.asset_downloading
                 else if (OptionalAssets.file(this, asset) != null) R.string.asset_remove else R.string.asset_download)
-        }) { value ->
+        }, unavailableInMantis = R.string.mantis_assets_unavailable) { value ->
             if (asset.id !in downloadingAssets) {
                 downloadingAssets.add(asset.id)
                 value.text = I18n.text(R.string.asset_downloading)
@@ -408,7 +408,7 @@ class SettingsActivity : Activity() {
         about.text = ""
 
         section(I18n.text(R.string.i18n_settingsactivity_004))
-        row(I18n.text(R.string.i18n_settingsactivity_005), I18n.text(R.string.i18n_settingsactivity_006), { "" }, chevron = true) {
+        row(I18n.text(R.string.i18n_settingsactivity_005), I18n.text(R.string.i18n_settingsactivity_006), { "" }, chevron = true, unavailableInMantis = R.string.mantis_updates_unavailable) {
             startActivity(Intent(this, UpdateActivity::class.java))
         }
         section(I18n.text(R.string.i18n_settingsactivity_008))
@@ -456,7 +456,7 @@ class SettingsActivity : Activity() {
             recreate()
         }
         row(getString(R.string.tvos_double_home_title), getString(R.string.tvos_double_home_help),
-            { onOff(prefs.doubleHomeSwitcher) }, checked = { prefs.doubleHomeSwitcher }) {
+            { onOff(prefs.doubleHomeSwitcher) }, checked = { prefs.doubleHomeSwitcher }, unavailableInMantis = R.string.mantis_home_unavailable) {
             prefs.doubleHomeSwitcher = !prefs.doubleHomeSwitcher
         }
         row(I18n.text(R.string.i18n_settingsactivity_031), I18n.text(R.string.i18n_settingsactivity_032) +
@@ -566,7 +566,7 @@ class SettingsActivity : Activity() {
                 MediaQuality.COMPAT -> I18n.text(R.string.media_quality_1080)
                 else -> I18n.text(R.string.media_quality_auto)
             }
-        }) {
+        }, unavailableInMantis = R.string.mantis_quality_unavailable, mantisValue = R.string.media_quality_1080) {
             prefs.wallQuality = when (prefs.wallQuality) {
                 MediaQuality.AUTO -> MediaQuality.UHD
                 MediaQuality.UHD -> MediaQuality.COMPAT
@@ -591,7 +591,7 @@ class SettingsActivity : Activity() {
             }.start()
         }
         row(I18n.text(R.string.i18n_settingsactivity_072), I18n.text(R.string.i18n_settingsactivity_073),
-            { onOff(prefs.frameScreensaver) }, checked = { prefs.frameScreensaver }) { v ->
+            { onOff(prefs.frameScreensaver) }, checked = { prefs.frameScreensaver }, unavailableInMantis = R.string.mantis_screensaver_unavailable) { v ->
             val on = !prefs.frameScreensaver
             val current = Settings.Secure.getString(contentResolver, "screensaver_components").orEmpty()
             val mine = "$packageName/${PhotoDream::class.java.name}"
@@ -616,7 +616,7 @@ class SettingsActivity : Activity() {
                 MediaQuality.COMPAT -> I18n.text(R.string.media_quality_compat)
                 else -> I18n.text(R.string.media_quality_auto)
             }
-        }) {
+        }, unavailableInMantis = R.string.mantis_quality_unavailable, mantisValue = R.string.media_quality_compat) {
             prefs.aerialQuality = when (prefs.aerialQuality) {
                 MediaQuality.AUTO -> MediaQuality.UHD
                 MediaQuality.UHD -> MediaQuality.COMPAT
@@ -629,7 +629,7 @@ class SettingsActivity : Activity() {
         }
         row(I18n.text(R.string.unified_idle_title), I18n.text(R.string.unified_idle_desc),
             { if (!prefs.unifiedIdle) onOff(false) else if (IdleTimerTakeover.isActive(this)) onOff(true)
-              else I18n.text(R.string.unified_idle_pending) }, checked = { prefs.unifiedIdle }) {
+              else I18n.text(R.string.unified_idle_pending) }, checked = { prefs.unifiedIdle }, unavailableInMantis = R.string.mantis_screensaver_unavailable) {
             prefs.unifiedIdle = !prefs.unifiedIdle
             IdleTimerTakeover.sync(this)
         }
@@ -639,29 +639,29 @@ class SettingsActivity : Activity() {
         }
 
         section(I18n.text(R.string.i18n_settingsactivity_087))
-        row(I18n.text(R.string.i18n_settingsactivity_088), I18n.text(R.string.i18n_settingsactivity_089), { onOff(prefs.cleanOnStandby) }, checked = { prefs.cleanOnStandby }) {
+        row(I18n.text(R.string.i18n_settingsactivity_088), I18n.text(R.string.i18n_settingsactivity_089), { onOff(prefs.cleanOnStandby) }, checked = { prefs.cleanOnStandby }, unavailableInMantis = R.string.mantis_system_unavailable) {
             prefs.cleanOnStandby = !prefs.cleanOnStandby
         }
         row(I18n.text(R.string.i18n_settingsactivity_090), I18n.text(R.string.i18n_settingsactivity_091), {
             if (prefs.cleanIntervalHours == 0) I18n.text(R.string.i18n_settingsactivity_092) else I18n.text(R.string.i18n_settingsactivity_093, prefs.cleanIntervalHours)
-        }) {
+        }, unavailableInMantis = R.string.mantis_system_unavailable) {
             val opts = listOf(0, 2, 4, 8)
             prefs.cleanIntervalHours = opts[(opts.indexOf(prefs.cleanIntervalHours) + 1) % opts.size]
             KeeperService.start(this, KeeperService.ACTION_RESCHEDULE)
         }
-        row(I18n.text(R.string.i18n_settingsactivity_094), I18n.text(R.string.i18n_settingsactivity_095), { I18n.text(R.string.i18n_settingsactivity_096, Cleaner.availMb(this)) }) { v ->
+        row(I18n.text(R.string.i18n_settingsactivity_094), I18n.text(R.string.i18n_settingsactivity_095), { I18n.text(R.string.i18n_settingsactivity_096, Cleaner.availMb(this)) }, unavailableInMantis = R.string.mantis_system_unavailable) { v ->
             v.text = I18n.text(R.string.i18n_settingsactivity_097)
             Thread {
                 val r = Cleaner.clean(applicationContext)
                 runOnUiThread { v.text = r.description() }
             }.start()
         }
-        row(I18n.text(R.string.i18n_settingsactivity_098), I18n.text(R.string.i18n_settingsactivity_099), { I18n.text(R.string.i18n_settingsactivity_100, prefs.keep.size) }, chevron = true) {
+        row(I18n.text(R.string.i18n_settingsactivity_098), I18n.text(R.string.i18n_settingsactivity_099), { I18n.text(R.string.i18n_settingsactivity_100, prefs.keep.size) }, chevron = true, unavailableInMantis = R.string.mantis_system_unavailable) {
             show(Page.KEEP)
         }
         row(I18n.text(R.string.i18n_settingsactivity_101), I18n.text(R.string.i18n_settingsactivity_102), {
             if (prefs.shutdownOnPowerKey) I18n.text(R.string.i18n_settingsactivity_103) else I18n.text(R.string.i18n_settingsactivity_104)
-        }) {
+        }, unavailableInMantis = R.string.mantis_system_unavailable) {
             prefs.shutdownOnPowerKey = !prefs.shutdownOnPowerKey
             if (prefs.shutdownOnPowerKey && !prefs.adbAuthorized)
                 Toast.makeText(this, I18n.text(R.string.i18n_settingsactivity_105), Toast.LENGTH_LONG).show()
@@ -671,13 +671,13 @@ class SettingsActivity : Activity() {
         row(I18n.text(R.string.i18n_settingsactivity_106), I18n.text(R.string.i18n_settingsactivity_107),
             { onOff(prefs.recentFirst) }, checked = { prefs.recentFirst }) { prefs.recentFirst = !prefs.recentFirst }
         row(I18n.text(R.string.i18n_settingsactivity_108), I18n.text(R.string.i18n_settingsactivity_109), { I18n.text(R.string.i18n_settingsactivity_110, prefs.hidden.size) }, chevron = true) { show(Page.HIDDEN) }
-        row(I18n.text(R.string.i18n_settingsactivity_111), I18n.text(R.string.i18n_settingsactivity_112), { I18n.text(R.string.i18n_settingsactivity_113, prefs.removed.size) }, chevron = true) {
+        row(I18n.text(R.string.i18n_settingsactivity_111), I18n.text(R.string.i18n_settingsactivity_112), { I18n.text(R.string.i18n_settingsactivity_113, prefs.removed.size) }, chevron = true, unavailableInMantis = R.string.mantis_remove_unavailable) {
             show(Page.REMOVED)
         }
 
         section(I18n.text(R.string.i18n_settingsactivity_114))
         row(I18n.text(R.string.i18n_settingsactivity_115), I18n.text(R.string.i18n_settingsactivity_116),
-            { if (prefs.adbAuthorized) I18n.text(R.string.i18n_settingsactivity_117) else I18n.text(R.string.i18n_settingsactivity_118) }) { v ->
+            { if (prefs.adbAuthorized) I18n.text(R.string.i18n_settingsactivity_117) else I18n.text(R.string.i18n_settingsactivity_118) }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
             if (adbAuthorizing) return@row
             adbAuthorizing = true
             v.text = I18n.text(R.string.i18n_settingsactivity_119)
@@ -693,7 +693,7 @@ class SettingsActivity : Activity() {
             }.start()
         }
         // Resolver success is not proof that the physical HOME key reaches us.
-        row(I18n.text(R.string.install_home_check_title), I18n.text(R.string.install_home_check_help), { "" }) {
+        row(I18n.text(R.string.install_home_check_title), I18n.text(R.string.install_home_check_help), { "" }, unavailableInMantis = R.string.mantis_home_unavailable) {
             val native = Guard.isDefaultHome(this)
             val bound = HomeGuardService.isRunning
             val secure = Guard.hasSecureSettings(this)
@@ -710,7 +710,7 @@ class SettingsActivity : Activity() {
                 })
         }
         row(I18n.text(R.string.i18n_settingsactivity_122), I18n.text(R.string.i18n_settingsactivity_123),
-            { if (!prefs.guard) I18n.text(R.string.i18n_settingsactivity_124) else if (HomeGuardService.isRunning) I18n.text(R.string.i18n_settingsactivity_125) else I18n.text(R.string.i18n_settingsactivity_126) }, checked = { prefs.guard }) { v ->
+            { if (!prefs.guard) I18n.text(R.string.i18n_settingsactivity_124) else if (HomeGuardService.isRunning) I18n.text(R.string.i18n_settingsactivity_125) else I18n.text(R.string.i18n_settingsactivity_126) }, checked = { prefs.guard }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
             val on = !prefs.guard
             v.text = I18n.text(R.string.i18n_settingsactivity_127)
             Thread {
@@ -724,7 +724,7 @@ class SettingsActivity : Activity() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && !Guard.isXiaomi()) {
             row(I18n.text(R.string.home_filter_title), I18n.text(R.string.home_filter_warning),
                 { if (prefs.persistentHomeFilter) I18n.text(R.string.home_filter_on) else I18n.text(R.string.home_filter_off) },
-                checked = { prefs.persistentHomeFilter }) {
+                checked = { prefs.persistentHomeFilter }, unavailableInMantis = R.string.mantis_home_unavailable) {
                 val on = !prefs.persistentHomeFilter
                 prefs.persistentHomeFilter = on && prefs.guard
                 if (on && !prefs.guard) prefs.persistentHomeFilter = false
@@ -732,7 +732,7 @@ class SettingsActivity : Activity() {
                 if (on) Toast.makeText(this, I18n.text(R.string.home_filter_warning), Toast.LENGTH_LONG).show()
             }
         }
-        if (Guard.isXiaomi() || prefs.keepAdb) row(I18n.text(R.string.i18n_settingsactivity_132), I18n.text(R.string.i18n_settingsactivity_133), { onOff(prefs.keepAdb) }, checked = { prefs.keepAdb }) { v ->
+        if (Guard.isXiaomi() || prefs.keepAdb) row(I18n.text(R.string.i18n_settingsactivity_132), I18n.text(R.string.i18n_settingsactivity_133), { onOff(prefs.keepAdb) }, checked = { prefs.keepAdb }, unavailableInMantis = R.string.mantis_home_unavailable) { v ->
             val on = !prefs.keepAdb
             v.text = I18n.text(R.string.i18n_settingsactivity_134)
             Thread {
@@ -953,7 +953,15 @@ class SettingsActivity : Activity() {
     /** One focus target per row; explicit switch/checkbox semantics and bounded value width. */
     private fun row(label: String, desc: String?, value: () -> String, chevron: Boolean = false,
                     checked: (() -> Boolean)? = null, checkbox: Boolean = false,
-                    appIcon: Drawable? = null, onClick: (TextView) -> Unit) {
+                    appIcon: Drawable? = null, unavailableInMantis: Int? = null,
+                    mantisValue: Int = R.string.mantis_unavailable, onClick: (TextView) -> Unit) {
+        if (MantisExperiment.enabled && unavailableInMantis != null) {
+            // No original value/checked/action callback is evaluated on this path.
+            row(label, I18n.text(unavailableInMantis), { I18n.text(mantisValue) }, chevron = true) {
+                dialog(label, I18n.text(unavailableInMantis))
+            }
+            return
+        }
         val r = object : LinearLayout(this) {
             override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
                 super.onInitializeAccessibilityNodeInfo(info)

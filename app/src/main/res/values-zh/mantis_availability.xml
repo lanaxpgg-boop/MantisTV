@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mantis_unavailable">不可用</string>
+    <string name="mantis_restricted_label">%1$s · %2$s</string>
+    <string name="mantis_system_unavailable">此版本不提供系统控制。请使用 Fire TV 遥控器或系统设置。</string>
+    <string name="mantis_home_unavailable">此版本作为普通应用打开，不提供主页键接管或后台服务。</string>
+    <string name="mantis_updates_unavailable">此版本不提供应用安装或更新。现有应用不会改变。</string>
+    <string name="mantis_remove_unavailable">此版本不提供应用移除。您可以在设备设置中管理已安装的应用。</string>
+    <string name="mantis_assets_unavailable">此版本不提供这些 Apple 展示素材下载。您可以使用自己的图片和视频。</string>
+    <string name="mantis_quality_unavailable">此版本使用兼容媒体画质。更高画质尚未在此设备上验证。</string>
+    <string name="mantis_screensaver_unavailable">此版本不会更改系统屏保或空闲设置。您仍可在控制中心预览照片。</string>
+</resources>

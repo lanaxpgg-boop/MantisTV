@@ -3,6 +3,9 @@ package com.leslie.tvhome
 /** The experiment is a normal app, never a HOME/firmware maintenance tool. */
 internal object MantisExperiment {
     val enabled: Boolean get() = BuildConfig.FLAVOR == "mantis"
+    fun unavailableLabel(label: String): String = if (enabled)
+        I18n.text(R.string.mantis_restricted_label, label, I18n.text(R.string.mantis_unavailable)) else label
+
     fun defaults(ctx: android.content.Context) {
         if (!enabled) return
         // First-run defaults only; keep settings keys and the upstream renderer/layout intact.

@@ -1524,7 +1524,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
                 startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:${app.pkg}"))
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
             }
-        if (!repo.isEssential(app.pkg)) s.button(I18n.text(R.string.i18n_homeactivity_014)) { confirmDelete(app, pos) }
+        if (!repo.isEssential(app.pkg)) s.button(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_homeactivity_014))) { confirmDelete(app, pos) }
         s.button(I18n.text(R.string.i18n_homeactivity_015)) {}
         showSheet(s, restoreFocusTo = pos)
     }
@@ -1619,6 +1619,12 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     }
 
     private fun confirmDelete(app: AppEntry, pos: Int) {
+        if (MantisExperiment.enabled) {
+            showSheet(Sheet(root).title(I18n.text(R.string.mantis_unavailable))
+                .message(I18n.text(R.string.mantis_remove_unavailable))
+                .button(getString(android.R.string.ok)) {}, restoreFocusTo = pos)
+            return
+        }
         val system = repo.isSystem(app.pkg)
         if (!prefs.adbAuthorized) {
             if (!system) {

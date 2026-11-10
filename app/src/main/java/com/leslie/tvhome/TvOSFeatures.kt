@@ -415,6 +415,7 @@ class AppSwitcherActivity : Activity() {
  */
 internal object AppCloser {
     fun close(ctx: Context, pkg: String) {
+        if (MantisExperiment.enabled) return // Removing a history card never claims to stop a process.
         if (pkg.isEmpty() || pkg == ctx.packageName) return
         runCatching {
             val am = ctx.getSystemService(Context.ACTIVITY_SERVICE) as android.app.ActivityManager

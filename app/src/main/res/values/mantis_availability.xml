@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mantis_unavailable">Unavailable</string>
+    <string name="mantis_restricted_label">%1$s · %2$s</string>
+    <string name="mantis_system_unavailable">System controls are unavailable in this version. Use the Fire TV remote or system settings.</string>
+    <string name="mantis_home_unavailable">This version opens as a regular app. Home button takeover and background services are unavailable.</string>
+    <string name="mantis_updates_unavailable">Installing and updating apps is unavailable in this version. Existing apps are unchanged.</string>
+    <string name="mantis_remove_unavailable">Removing apps is unavailable in this version. You can manage installed apps in your device settings.</string>
+    <string name="mantis_assets_unavailable">These Apple presentation downloads are unavailable. You can use your own images and videos.</string>
+    <string name="mantis_quality_unavailable">This version uses compatibility media quality. Higher quality has not been tested on this device.</string>
+    <string name="mantis_screensaver_unavailable">System screensaver and idle settings are unchanged. The photo preview is available in Control Center.</string>
+</resources>
