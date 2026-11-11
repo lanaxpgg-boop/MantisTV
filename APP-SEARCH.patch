@@ -1,0 +1,782 @@
+diff --git a/THIRD_PARTY_NOTICES.md b/THIRD_PARTY_NOTICES.md
+index 3015fa8..507f011 100644
+--- a/THIRD_PARTY_NOTICES.md
++++ b/THIRD_PARTY_NOTICES.md
+@@ -30,3 +30,5 @@ test. Depicted brands and media retain their respective rights.
+ 
+ The aerial preview records the owner's television playing the Apple-hosted
+ screensaver. The app streams aerials and does not bundle the films.
++
++- **Hume Launcher local Search matching** — Copyright2026 Petrobot, Apache License2.0. Adapted from `Search.java` at `petrobot-admin/hume-launcher@19bd8b1fa2d535929c768e6e197a9f464e89f953` into `LocalAppSearch.kt`, with blank-normalization guards, bounded/deduplicated ranking and deterministic tie breaks. License: `app/src/main/assets/hume-Apache-2.0.txt`; relevant notice: `app/src/main/assets/hume-NOTICE.txt`. No network catalogue/provider/voice code or Hume artwork/fonts copied.
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index ec8828d..15168db 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -26,7 +26,7 @@ android {
+             dimension = "home"
+             applicationId = "dev.mantistv.tigris.homepreview"
+             minSdk = 25
+-            versionCode = 47
++            versionCode = 48
+             versionNameSuffix = "-mantis-api25-home-preview"
+             ndk { abiFilters += "armeabi-v7a" }
+         }
+diff --git a/app/src/main/assets/hume-Apache-2.0.txt b/app/src/main/assets/hume-Apache-2.0.txt
+new file mode 100644
+index 0000000..d645695
+--- /dev/null
++++ b/app/src/main/assets/hume-Apache-2.0.txt
+@@ -0,0 +1,202 @@
++
++                                 Apache License
++                           Version 2.0, January 2004
++                        http://www.apache.org/licenses/
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      "License" shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      "Licensor" shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      "Legal Entity" shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      "control" means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      "You" (or "Your") shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      "Source" form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      "Object" form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      "Work" shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      "Derivative Works" shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      "Contribution" shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, "submitted"
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as "Not a Contribution."
++
++      "Contributor" shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a "NOTICE" text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an "AS IS" BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets "[]"
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same "printed page" as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
+diff --git a/app/src/main/assets/hume-NOTICE.txt b/app/src/main/assets/hume-NOTICE.txt
+new file mode 100644
+index 0000000..491e2bb
+--- /dev/null
++++ b/app/src/main/assets/hume-NOTICE.txt
+@@ -0,0 +1,5 @@
++Portions adapted from Hume Launcher
++Copyright 2026 Petrobot
++Licensed under the Apache License, Version 2.0.
++Source: petrobot-admin/hume-launcher, revision19bd8b1fa2d535929c768e6e197a9f464e89f953, Search.java text matching.
++Only local matching is adapted; no Hume fonts, QR code, network catalogue or provider data copied.
+diff --git a/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt b/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt
+new file mode 100644
+index 0000000..9d570b3
+--- /dev/null
++++ b/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt
+@@ -0,0 +1,219 @@
++package com.leslie.tvhome
++
++import android.app.Activity
++import android.app.ActivityOptions
++import android.graphics.Color
++import android.os.Bundle
++import android.os.Handler
++import android.os.Looper
++import android.text.Editable
++import android.text.TextWatcher
++import android.view.Gravity
++import android.view.KeyEvent
++import android.view.View
++import android.view.inputmethod.EditorInfo
++import android.view.inputmethod.InputMethodManager
++import android.widget.EditText
++import android.widget.LinearLayout
++import android.widget.Toast
++import androidx.recyclerview.widget.GridLayoutManager
++import androidx.recyclerview.widget.RecyclerView
++import java.util.concurrent.Executors
++
++/** Foreground-only, installed-app Search. No network catalogue, microphone or system changes. */
++class AppSearchActivity : Activity(), TileAdapter.Listener {
++    private lateinit var repo: AppRepo
++    private lateinit var adapter: TileAdapter
++    private lateinit var input: EditText
++    private lateinit var status: android.widget.TextView
++    private lateinit var grid: RecyclerView
++    private lateinit var close: PillButton
++    private val main = Handler(Looper.getMainLooper())
++    private val catalogWorker = Executors.newSingleThreadExecutor()
++    private var catalog: List<AppEntry> = emptyList()
++    private var catalogGeneration = 0L
++    private var loaded = false
++    private var active = false
++    private var columns = 6
++    private val queryTask = Runnable { if (active) updateResults() }
++
++    override fun onCreate(state: Bundle?) {
++        super.onCreate(state)
++        if (!MantisExperiment.enabled) { finish(); return }
++        Tween.readScale(this)
++        repo = AppRepo(this)
++        columns = Prefs(this).dockColumns
++        val body = LinearLayout(this).apply {
++            orientation = LinearLayout.VERTICAL
++            setPadding(dp(48), dp(28), dp(48), dp(24))
++            setBackgroundColor(Color.rgb(12, 19, 28))
++        }
++        body.addView(text(28f, bold = true).apply { text = getString(R.string.app_search_title) })
++        body.addView(text(14f, Color.LTGRAY).apply {
++            text = getString(R.string.app_search_scope)
++        }, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(16) })
++        input = EditText(this).apply {
++            id = View.generateViewId()
++            setSingleLine()
++            textSize = 20f * Prefs(this@AppSearchActivity).textScale
++            setTextColor(Color.WHITE)
++            setHintTextColor(Color.LTGRAY)
++            hint = getString(R.string.app_search_hint)
++            contentDescription = getString(R.string.app_search_hint)
++            background = rounded(Color.argb(70, 255, 255, 255), dp(14).toFloat())
++            setPadding(dp(16), dp(12), dp(16), dp(12))
++            filters = arrayOf(android.text.InputFilter.LengthFilter(LocalAppSearch.MAX_QUERY))
++            imeOptions = EditorInfo.IME_ACTION_SEARCH or EditorInfo.IME_FLAG_NO_EXTRACT_UI
++            inputType = android.text.InputType.TYPE_CLASS_TEXT
++            setText(state?.getString("query").orEmpty().take(LocalAppSearch.MAX_QUERY))
++            setSelection(text.length)
++        }
++        body.addView(input, LinearLayout.LayoutParams(-1, -2))
++        status = text(14f, Color.LTGRAY).apply {
++            text = getString(R.string.app_search_loading)
++            setPadding(0, dp(12), 0, dp(8))
++        }
++        body.addView(status, LinearLayout.LayoutParams(-1, -2))
++        val side = dp(48)
++        val gap = dp(24)
++        val tileW = DockLayout.tileWidth(resources.displayMetrics.widthPixels, side + dp(12), gap, columns)
++        val tileH = tileW * 9 / 16
++        adapter = TileAdapter(repo, tileW, tileH, this).apply {
++            setHasStableIds(true)
++            allowLongPress = false
++            tvosFocus = Prefs(this@AppSearchActivity).focusTvos(this@AppSearchActivity)
++        }
++        grid = RecyclerView(this).apply {
++            layoutManager = GridLayoutManager(this@AppSearchActivity, columns)
++            adapter = this@AppSearchActivity.adapter
++            itemAnimator = null
++            clipChildren = false
++            clipToPadding = false
++            setPadding(dp(12), dp(12), dp(12), dp(52))
++            overScrollMode = View.OVER_SCROLL_NEVER
++            setItemViewCacheSize(LocalAppSearch.MAX_RESULTS)
++            addItemDecoration(object : RecyclerView.ItemDecoration() {
++                override fun getItemOffsets(out: android.graphics.Rect, view: View,
++                    parent: RecyclerView, state: RecyclerView.State) {
++                    val column = parent.getChildAdapterPosition(view).coerceAtLeast(0) % columns
++                    out.left = column * gap / columns
++                    out.right = gap - (column + 1) * gap / columns
++                    out.bottom = dp(52 * Prefs(this@AppSearchActivity).textScale.coerceAtLeast(1f))
++                }
++            })
++        }
++        body.addView(grid, LinearLayout.LayoutParams(-1, 0, 1f))
++        close = PillButton(this, getString(android.R.string.cancel)) { finish() }.apply {
++            id = View.generateViewId()
++        }
++        body.addView(close, LinearLayout.LayoutParams(dp(240), dp(48)).apply { gravity = Gravity.END })
++        setContentView(body)
++        input.addTextChangedListener(object : TextWatcher {
++            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
++            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
++                main.removeCallbacks(queryTask)
++                main.postDelayed(queryTask, 200)
++            }
++            override fun afterTextChanged(s: Editable?) = Unit
++        })
++        input.setOnEditorActionListener { _, action, _ ->
++            if (action != EditorInfo.IME_ACTION_SEARCH) false else {
++                main.removeCallbacks(queryTask)
++                updateResults()
++                getSystemService(InputMethodManager::class.java)?.hideSoftInputFromWindow(input.windowToken, 0)
++                grid.post { grid.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus() }
++                true
++            }
++        }
++        input.requestFocus()
++    }
++
++    override fun onResume() {
++        super.onResume()
++        if (!::repo.isInitialized) return
++        active = true
++        loaded = false
++        adapter.submit(emptyList())
++        status.text = getString(R.string.app_search_loading)
++        val generation = ++catalogGeneration
++        catalogWorker.execute {
++            val result = runCatching {
++                val hidden = Prefs(this).hidden.toMutableSet()
++                Folders(this).read().filter { it.id in hidden }.forEach { hidden.addAll(it.members) }
++                repo.allApps().filter { it.input == null && it.folder == null &&
++                    !repo.isOwn(it.pkg) && it.pkg !in hidden }
++                    .map { if (it.label.isBlank()) it.copy(label = it.pkg) else it }
++            }
++            main.post {
++                if (!active || isDestroyed || generation != catalogGeneration) return@post
++                if (result.isFailure) {
++                    catalog = emptyList()
++                    adapter.submit(emptyList())
++                    status.text = getString(R.string.app_search_unavailable)
++                } else {
++                    catalog = result.getOrThrow()
++                    loaded = true
++                    updateResults()
++                }
++            }
++        }
++    }
++
++    private fun updateResults() {
++        if (!loaded || !active) return
++        val query = input.text.toString()
++        val results = LocalAppSearch.ranked(catalog, query, { it.pkg }, { it.label })
++        adapter.submit(results)
++        status.text = when {
++            query.isBlank() -> getString(R.string.app_search_scope)
++            results.isEmpty() -> getString(R.string.app_search_empty)
++            else -> getString(R.string.app_search_count, results.size, LocalAppSearch.MAX_RESULTS)
++        }
++    }
++
++    override fun onTileFocused(pos: Int, cell: TileCell) = Unit
++    override fun onTileLongPressed(pos: Int, cell: TileCell) = Unit
++    override fun onTileClicked(pos: Int, cell: TileCell) {
++        if (!active || isFinishing) return
++        val app = adapter.apps.getOrNull(pos) ?: return
++        try {
++            val intent = repo.launchIntent(app) ?: error("No launch target")
++            val options = ActivityOptions.makeScaleUpAnimation(cell.card, 0, 0, cell.card.width, cell.card.height)
++            startActivity(intent, options.toBundle())
++            RecentApps.record(this, app.pkg)
++            HomeReturnHandoff.set(app.pkg)
++            finish()
++        } catch (_: Exception) {
++            Toast.makeText(this, getString(R.string.i18n_homeactivity_005, app.label), Toast.LENGTH_SHORT).show()
++        }
++    }
++    override fun onTileKey(pos: Int, cell: TileCell, keyCode: Int): Boolean {
++        adapter.lastDx = when (keyCode) { KeyEvent.KEYCODE_DPAD_LEFT -> -1; KeyEvent.KEYCODE_DPAD_RIGHT -> 1; else -> 0 }
++        adapter.lastDy = when (keyCode) { KeyEvent.KEYCODE_DPAD_UP -> -1; KeyEvent.KEYCODE_DPAD_DOWN -> 1; else -> 0 }
++        return when {
++            keyCode == KeyEvent.KEYCODE_DPAD_UP && pos < columns -> { input.requestFocus(); true }
++            keyCode == KeyEvent.KEYCODE_DPAD_DOWN && pos + columns >= adapter.itemCount -> { close.requestFocus(); true }
++            else -> false
++        }
++    }
++    override fun onSaveInstanceState(outState: Bundle) {
++        if (::input.isInitialized) outState.putString("query", input.text.toString())
++        super.onSaveInstanceState(outState)
++    }
++    override fun onPause() {
++        active = false
++        ++catalogGeneration
++        main.removeCallbacks(queryTask)
++        super.onPause()
++    }
++    override fun onDestroy() {
++        active = false
++        ++catalogGeneration
++        main.removeCallbacksAndMessages(null)
++        if (::grid.isInitialized) grid.adapter = null
++        if (::adapter.isInitialized) adapter.close()
++        catalogWorker.shutdownNow()
++        if (::repo.isInitialized) repo.invalidate()
++        super.onDestroy()
++    }
++}
+diff --git a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+index a6f8667..bc42e32 100644
+--- a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+@@ -547,6 +547,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+     override fun onDestroy() {
+         resumed = false
+         ++shelfGeneration
++        if (::grid.isInitialized) grid.adapter = null
++        if (::adapter.isInitialized) adapter.close()
+         cancelIdle()
+         wallpaperPlaying = false
+         syncOwnPlayback()
+@@ -663,6 +665,13 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         netButton.contentDescription = I18n.text(R.string.i18n_homeactivity_001)
+         ccButton.contentDescription = I18n.text(R.string.i18n_homeactivity_002)
+         icons.addView(clockText, LinearLayout.LayoutParams(-2, -2).apply { marginEnd = dp(10) })
++        val searchButton = if (MantisExperiment.enabled) IconButton(this, R.drawable.ic_app_search) {
++            openAppSearch()
++        }.apply {
++            id = View.generateViewId()
++            contentDescription = getString(R.string.app_search_title)
++        } else null
++        searchButton?.let { icons.addView(it, LinearLayout.LayoutParams(dp(28), dp(28)).apply { marginEnd = dp(6) }) }
+         icons.addView(netButton, LinearLayout.LayoutParams(dp(28), dp(28)).apply { marginEnd = dp(6) })
+         icons.addView(ccButton, LinearLayout.LayoutParams(dp(28), dp(28)))
+         avatar = IconButton(this, R.drawable.profile_avatar, portrait = true) {
+@@ -693,7 +702,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+             Gravity.TOP or Gravity.END).apply {
+             rightMargin = dp(31); topMargin = dp(79)
+         })
+-        listOf(netButton, ccButton, avatar).forEach { b ->
++        listOfNotNull(searchButton, netButton, ccButton, avatar).forEach { b ->
+             b.setOnKeyListener { _, code, e ->
+                 if (e.action != KeyEvent.ACTION_DOWN) false else when {
+                     code == KeyEvent.KEYCODE_DPAD_DOWN -> { focusAt(focusedPos); true }
+@@ -707,6 +716,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         ccButton.nextFocusLeftId = View.generateViewId().also { netButton.id = it }
+         ccButton.nextFocusRightId = avatar.id
+         avatar.nextFocusLeftId = ccButton.id
++        searchButton?.let { it.nextFocusRightId = netButton.id; netButton.nextFocusLeftId = it.id }
+         scene.addView(header, match())
+ 
+         adapter = TileAdapter(repo, tileW, tileH, this).apply { setHasStableIds(true); dockCount = cols }
+@@ -1784,6 +1794,12 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+ 
+     // ------------------------------------------------------------ overlays / keys
+ 
++    private fun openAppSearch() {
++        if (!MantisExperiment.enabled || !resumed || welcome != null || intro != null ||
++            moving >= 0 || sheets.isNotEmpty() || control.isOpen) return
++        startActivity(Intent(this, AppSearchActivity::class.java))
++    }
++
+     fun showSheet(s: Sheet, restoreFocusTo: Int? = null): Sheet {
+         sheets += s
+         setGridBlocked(true)
+@@ -1836,6 +1852,10 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         // Any key skips the intro to its closing zoom; nothing behind it reacts meanwhile.
+         intro?.let { if (event.action == KeyEvent.ACTION_UP) it.skip(); return true }
+         val code = event.keyCode
++        if (MantisExperiment.enabled && code == KeyEvent.KEYCODE_SEARCH) {
++            if (event.action == KeyEvent.ACTION_UP) openAppSearch()
++            return true
++        }
+         if (event.action == KeyEvent.ACTION_UP && code == shelfConsumeExitKeyUp) {
+             shelfConsumeExitKeyUp = -1
+             return true
+diff --git a/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt b/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt
+new file mode 100644
+index 0000000..063e6d6
+--- /dev/null
++++ b/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt
+@@ -0,0 +1,38 @@
++package com.leslie.tvhome
++
++import java.util.Locale
++
++/**
++ * Local matching adapted from Hume Launcher Search.java (Apache-2.0).
++ * Copyright2026 Petrobot; revision19bd8b1fa2d535929c768e6e197a9f464e89f953.
++ * Changes: empty-normalization guards, bounded unique results and stable tie breaking.
++ * See assets/hume-NOTICE.txt and hume-Apache-2.0.txt. No provider/network code.
++ */
++internal object LocalAppSearch {
++    const val MAX_QUERY = 64
++    const val MAX_RESULTS = 12
++    private val wordBreaks = Regex("[^\\p{L}\\p{N}]+")
++
++    private fun norm(value: String) = value.lowercase(Locale.ROOT).filter { it.isLetterOrDigit() }
++
++    fun score(name: String, keywords: String, query: String): Int {
++        val q = query.trim().take(MAX_QUERY).lowercase(Locale.ROOT)
++        val normalized = norm(q)
++        if (normalized.isEmpty()) return -1
++        val n = name.lowercase(Locale.ROOT)
++        val normalizedName = norm(n)
++        if (n.startsWith(q) || normalizedName.startsWith(normalized)) return 0
++        if (n.split(wordBreaks).any { it.isNotEmpty() && it.startsWith(q) }) return 1
++        if (normalized.length >= 2 && normalizedName.contains(normalized)) return 2
++        if (keywords.lowercase(Locale.ROOT).split(' ').any { it.startsWith(q) }) return 3
++        return -1
++    }
++
++    fun <T> ranked(items: List<T>, query: String, key: (T) -> String, label: (T) -> String): List<T> =
++        items.asSequence().distinctBy(key)
++            .map { it to score(label(it), key(it), query) }
++            .filter { it.second >= 0 }
++            .sortedWith(compareBy<Pair<T, Int>> { it.second }
++                .thenBy { label(it.first).lowercase(Locale.ROOT) }.thenBy { key(it.first) })
++            .take(MAX_RESULTS).map { it.first }.toList()
++}
+diff --git a/app/src/main/java/com/leslie/tvhome/TileAdapter.kt b/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
+index a6f932f..0f39486 100644
+--- a/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
++++ b/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
+@@ -197,12 +197,19 @@ class TileAdapter(
+         fun onTileKey(pos: Int, cell: TileCell, keyCode: Int): Boolean
+     }
+ 
+-    class VH(val cell: TileCell) : RecyclerView.ViewHolder(cell)
++    class VH(val cell: TileCell) : RecyclerView.ViewHolder(cell) {
++        @Volatile var artworkRevision = 0L
++    }
+ 
+     var apps: MutableList<AppEntry> = mutableListOf()
+         private set
+     var movingPkg: String? = null
+     private val loader = Executors.newFixedThreadPool(2)
++    @Volatile private var closed = false
++    var allowLongPress = true
++
++    /** Activity owners release pending artwork work; posted callbacks also check this flag. */
++    fun close() { closed = true; loader.shutdownNow() }
+ 
+     /** Tiles in the dock (the first row) hide their name, which would sit on the glass edge. */
+     var dockCount = 0
+@@ -253,6 +260,7 @@ class TileAdapter(
+     }
+ 
+     override fun onViewRecycled(holder: VH) {
++        ++holder.artworkRevision
+         holder.cell.stopMotion()
+         super.onViewRecycled(holder)
+     }
+@@ -270,6 +278,7 @@ class TileAdapter(
+             vh.bindingAdapterPosition.takeIf { it >= 0 }?.let { listener.onTileClicked(it, cell) }
+         }
+         cell.setOnLongClickListener {
++            if (!allowLongPress) return@setOnLongClickListener false
+             vh.bindingAdapterPosition.takeIf { it >= 0 }?.let { listener.onTileLongPressed(it, cell) }
+             true
+         }
+@@ -281,8 +290,11 @@ class TileAdapter(
+     }
+ 
+     override fun onBindViewHolder(h: VH, position: Int) {
++        if (closed) return
+         val app = apps[position]
+         val cell = h.cell
++        val revision = ++h.artworkRevision
++        cell.isLongClickable = allowLongPress
+         cell.label.text = app.label
+         // Rebind the name with the app identity, including dock tiles whose label is hidden.
+         cell.contentDescription = app.label
+@@ -296,8 +308,9 @@ class TileAdapter(
+             // Rebinding the same app keeps the old image until the replacement is ready.
+             if (!same) cell.setArtwork(null)
+             loader.execute {
++                if (closed || h.artworkRevision != revision) return@execute
+                 val artwork = runCatching { repo.artwork(app) }.getOrNull()
+-                cell.post { if (cell.tag == app.pkg) cell.setArtwork(artwork) }
++                cell.post { if (!closed && h.artworkRevision == revision && cell.tag == app.pkg) cell.setArtwork(artwork) }
+             }
+         }
+     }
+diff --git a/app/src/main/java/com/leslie/tvhome/features/FeatureSpec.kt b/app/src/main/java/com/leslie/tvhome/features/FeatureSpec.kt
+index 267805f..89f19b1 100644
+--- a/app/src/main/java/com/leslie/tvhome/features/FeatureSpec.kt
++++ b/app/src/main/java/com/leslie/tvhome/features/FeatureSpec.kt
+@@ -64,5 +64,12 @@ object Features {
+         lifecycle = "HomeActivity owns the overlay; pause suspends animation, destroy releases callbacks and worker",
+         testMethod = "Native first-use persistence, preview isolation and pause/resume; physical TV playback",
+     )
+-    val all = listOf(weather, liquidGlass, dock, hdmi, videoWallpaper, welcome)
++    val localAppSearch = FeatureSpec(
++        id = "local-app-search", name = "Search apps", purpose = "Find and launch installed visible applications",
++        minSdk = 25, capabilities = emptySet(), settings = emptySet(), defaultEnabled = true,
++        permissions = emptySet(), fallback = "Native TV keyboard; local-only results or explicit unavailable/empty state",
++        lifecycle = "Mantis foreground Activity owns catalog worker and tile adapter; pause invalidates callbacks, destroy releases work",
++        testMethod = "LocalAppSearchTest, all-flavor build/lint; remote input, launch/Back and lifecycle on API25",
++    )
++    val all = listOf(weather, liquidGlass, dock, hdmi, videoWallpaper, welcome, localAppSearch)
+ }
+diff --git a/app/src/main/res/drawable/ic_app_search.xml b/app/src/main/res/drawable/ic_app_search.xml
+new file mode 100644
+index 0000000..bd9b9b9
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_app_search.xml
+@@ -0,0 +1,5 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp" android:height="24dp" android:viewportWidth="24" android:viewportHeight="24">
++    <!-- Material Icons Search, Google LLC, Apache-2.0; see THIRD_PARTY_NOTICES.md. -->
++    <path android:fillColor="#FFFFFFFF" android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5C16,5.91 13.09,3 9.5,3S3,5.91 3,9.5S5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19.5L15.5,14zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5S14,7.01 14,9.5S11.99,14 9.5,14z"/>
++</vector>
+diff --git a/app/src/main/res/values-zh/app_search.xml b/app/src/main/res/values-zh/app_search.xml
+new file mode 100644
+index 0000000..b34daf4
+--- /dev/null
++++ b/app/src/main/res/values-zh/app_search.xml
+@@ -0,0 +1,9 @@
++<resources>
++    <string name="app_search_title">搜索应用</string>
++    <string name="app_search_scope">搜索已安装的应用，不包含影视、语音或在线目录。</string>
++    <string name="app_search_hint">应用名称或软件包名称</string>
++    <string name="app_search_loading">正在读取已安装的应用…</string>
++    <string name="app_search_unavailable">无法读取应用。返回主屏幕后重新打开搜索以重试。</string>
++    <string name="app_search_empty">没有匹配的应用。</string>
++    <string name="app_search_count">显示 %1$d 个应用（最多 %2$d 个）。请按名称搜索以缩小结果范围。</string>
++</resources>
+diff --git a/app/src/main/res/values/app_search.xml b/app/src/main/res/values/app_search.xml
+new file mode 100644
+index 0000000..e405da4
+--- /dev/null
++++ b/app/src/main/res/values/app_search.xml
+@@ -0,0 +1,9 @@
++<resources>
++    <string name="app_search_title">Search apps</string>
++    <string name="app_search_scope">Search installed applications. Films, voice and online catalogues are not included.</string>
++    <string name="app_search_hint">Application name or package</string>
++    <string name="app_search_loading">Reading installed applications…</string>
++    <string name="app_search_unavailable">Applications could not be read. Return Home and reopen Search to retry.</string>
++    <string name="app_search_empty">No matching applications.</string>
++    <string name="app_search_count">Showing %1$d applications (maximum %2$d). Search by name to narrow the results.</string>
++</resources>
+diff --git a/app/src/mantis/AndroidManifest.xml b/app/src/mantis/AndroidManifest.xml
+index 6281b5f..e4a8d18 100644
+--- a/app/src/mantis/AndroidManifest.xml
++++ b/app/src/mantis/AndroidManifest.xml
+@@ -13,6 +13,9 @@
+   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+   <uses-feature android:name="android.software.leanback" android:required="false"/>
+   <application android:banner="@drawable/banner" android:label="MantisTV Home Preview" tools:replace="android:label">
++    <activity android:name=".AppSearchActivity" android:exported="false"
++      android:launchMode="singleTop" android:screenOrientation="landscape"
++      android:windowSoftInputMode="adjustResize"/>
+     <service android:name=".KeeperService" tools:node="remove"/>
+     <service android:name=".HomeGuardService" tools:node="remove"/>
+     <service android:name=".RevivalListener" tools:node="remove"/>
+@@ -23,7 +26,8 @@
+     <receiver android:name=".BootReceiver" tools:node="remove"/>
+     <receiver android:name=".ConfigReceiver" tools:node="remove"/>
+     <receiver android:name=".UpdateResult" tools:node="remove"/>
+-    <activity android:name=".HomeActivity" android:exported="true"><intent-filter>
++    <activity android:name=".HomeActivity" android:exported="true" android:stateNotNeeded="false"
++      tools:replace="android:stateNotNeeded"><intent-filter>
+       <action android:name="android.intent.action.MAIN"/>
+       <category android:name="android.intent.category.LAUNCHER"/>
+       <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>
+diff --git a/app/src/test/java/com/leslie/tvhome/FeatureSpecTest.kt b/app/src/test/java/com/leslie/tvhome/FeatureSpecTest.kt
+index bd174e5..5936234 100644
+--- a/app/src/test/java/com/leslie/tvhome/FeatureSpecTest.kt
++++ b/app/src/test/java/com/leslie/tvhome/FeatureSpecTest.kt
+@@ -5,6 +5,11 @@ import org.junit.Assert.*
+ import org.junit.Test
+ 
+ class FeatureSpecTest {
++    @Test fun localSearchNeedsNoNetworkOrMicrophoneOnApi25() {
++        assertTrue(Features.localAppSearch.supported(25, emptySet()))
++        assertFalse(Features.localAppSearch.supported(24, emptySet()))
++        assertTrue(Features.localAppSearch.permissions.isEmpty())
++    }
+     @Test fun weatherRemainsOptInWithoutBrandRequirements() {
+         assertFalse(Features.weather.defaultEnabled)
+         assertTrue(Features.weather.supported(28, emptySet()))
+diff --git a/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt b/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt
+new file mode 100644
+index 0000000..b3b606d
+--- /dev/null
++++ b/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt
+@@ -0,0 +1,34 @@
++package com.leslie.tvhome
++
++import org.junit.Assert.*
++import org.junit.Test
++
++class LocalAppSearchTest {
++    @Test fun punctuationAndWhitespaceNeverMatchTheWholeCatalog() {
++        for (q in listOf("", "  ", "---", "!?", "🙂")) assertEquals(-1, LocalAppSearch.score("Appstore", "com.store", q))
++    }
++    @Test fun matchingKeepsPrefixWordSubstringAndPackagePriorities() {
++        assertEquals(0, LocalAppSearch.score("Prime Video", "com.video", "prime"))
++        assertEquals(1, LocalAppSearch.score("Prime Video", "com.video", "video"))
++        assertEquals(2, LocalAppSearch.score("Prime Video", "com.video", "ime"))
++        assertEquals(3, LocalAppSearch.score("Prime Video", "com.video", "com.vi"))
++        assertEquals(-1, LocalAppSearch.score("Prime Video", "com.video", "unknown"))
++    }
++    @Test fun normalizationHandlesCaseSpacingAndUnicodeLetters() {
++        assertEquals(0, LocalAppSearch.score("Sony LIV", "", "sonyliv"))
++        assertEquals(0, LocalAppSearch.score("Čuvar", "", " ČU "))
++        assertEquals(0, LocalAppSearch.score("电视", "", "电"))
++    }
++    @Test fun exactLabelPrefixesRankAheadOfPackageOnlyMatches() {
++        val entries = listOf("com.app" to "Zebra", "other" to "Com App")
++        assertEquals(listOf("other", "com.app"), LocalAppSearch.ranked(entries, "com", { it.first }, { it.second }).map { it.first })
++    }
++    @Test fun resultsAreBoundedDeduplicatedAndDeterministic() {
++        val entries = (0..30).reversed().map { "pkg.%02d".format(it) to "App %02d".format(it) }
++        val result = LocalAppSearch.ranked(entries + entries.first(), "app", { it.first }, { it.second })
++        assertEquals(12, result.size)
++        assertEquals(12, result.map { it.first }.toSet().size)
++        assertEquals("pkg.00", result.first().first)
++        assertTrue(LocalAppSearch.ranked(entries, "missing", { it.first }, { it.second }).isEmpty())
++    }
++}

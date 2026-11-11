@@ -547,6 +547,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     override fun onDestroy() {
         resumed = false
         ++shelfGeneration
+        if (::grid.isInitialized) grid.adapter = null
+        if (::adapter.isInitialized) adapter.close()
         cancelIdle()
         wallpaperPlaying = false
         syncOwnPlayback()
@@ -663,6 +665,13 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         netButton.contentDescription = I18n.text(R.string.i18n_homeactivity_001)
         ccButton.contentDescription = I18n.text(R.string.i18n_homeactivity_002)
         icons.addView(clockText, LinearLayout.LayoutParams(-2, -2).apply { marginEnd = dp(10) })
+        val searchButton = if (MantisExperiment.enabled) IconButton(this, R.drawable.ic_app_search) {
+            openAppSearch()
+        }.apply {
+            id = View.generateViewId()
+            contentDescription = getString(R.string.app_search_title)
+        } else null
+        searchButton?.let { icons.addView(it, LinearLayout.LayoutParams(dp(28), dp(28)).apply { marginEnd = dp(6) }) }
         icons.addView(netButton, LinearLayout.LayoutParams(dp(28), dp(28)).apply { marginEnd = dp(6) })
         icons.addView(ccButton, LinearLayout.LayoutParams(dp(28), dp(28)))
         avatar = IconButton(this, R.drawable.profile_avatar, portrait = true) {
@@ -693,7 +702,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
             Gravity.TOP or Gravity.END).apply {
             rightMargin = dp(31); topMargin = dp(79)
         })
-        listOf(netButton, ccButton, avatar).forEach { b ->
+        listOfNotNull(searchButton, netButton, ccButton, avatar).forEach { b ->
             b.setOnKeyListener { _, code, e ->
                 if (e.action != KeyEvent.ACTION_DOWN) false else when {
                     code == KeyEvent.KEYCODE_DPAD_DOWN -> { focusAt(focusedPos); true }
@@ -707,6 +716,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         ccButton.nextFocusLeftId = View.generateViewId().also { netButton.id = it }
         ccButton.nextFocusRightId = avatar.id
         avatar.nextFocusLeftId = ccButton.id
+        searchButton?.let { it.nextFocusRightId = netButton.id; netButton.nextFocusLeftId = it.id }
         scene.addView(header, match())
 
         adapter = TileAdapter(repo, tileW, tileH, this).apply { setHasStableIds(true); dockCount = cols }
@@ -1784,6 +1794,12 @@ class HomeActivity : Activity(), TileAdapter.Listener {
 
     // ------------------------------------------------------------ overlays / keys
 
+    private fun openAppSearch() {
+        if (!MantisExperiment.enabled || !resumed || welcome != null || intro != null ||
+            moving >= 0 || sheets.isNotEmpty() || control.isOpen) return
+        startActivity(Intent(this, AppSearchActivity::class.java))
+    }
+
     fun showSheet(s: Sheet, restoreFocusTo: Int? = null): Sheet {
         sheets += s
         setGridBlocked(true)
@@ -1836,6 +1852,10 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         // Any key skips the intro to its closing zoom; nothing behind it reacts meanwhile.
         intro?.let { if (event.action == KeyEvent.ACTION_UP) it.skip(); return true }
         val code = event.keyCode
+        if (MantisExperiment.enabled && code == KeyEvent.KEYCODE_SEARCH) {
+            if (event.action == KeyEvent.ACTION_UP) openAppSearch()
+            return true
+        }
         if (event.action == KeyEvent.ACTION_UP && code == shelfConsumeExitKeyUp) {
             shelfConsumeExitKeyUp = -1
             return true

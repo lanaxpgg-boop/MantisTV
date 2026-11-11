@@ -13,6 +13,9 @@
   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
   <uses-feature android:name="android.software.leanback" android:required="false"/>
   <application android:banner="@drawable/banner" android:label="MantisTV Home Preview" tools:replace="android:label">
+    <activity android:name=".AppSearchActivity" android:exported="false"
+      android:launchMode="singleTop" android:screenOrientation="landscape"
+      android:windowSoftInputMode="adjustResize"/>
     <service android:name=".KeeperService" tools:node="remove"/>
     <service android:name=".HomeGuardService" tools:node="remove"/>
     <service android:name=".RevivalListener" tools:node="remove"/>
@@ -23,7 +26,8 @@
     <receiver android:name=".BootReceiver" tools:node="remove"/>
     <receiver android:name=".ConfigReceiver" tools:node="remove"/>
     <receiver android:name=".UpdateResult" tools:node="remove"/>
-    <activity android:name=".HomeActivity" android:exported="true"><intent-filter>
+    <activity android:name=".HomeActivity" android:exported="true" android:stateNotNeeded="false"
+      tools:replace="android:stateNotNeeded"><intent-filter>
       <action android:name="android.intent.action.MAIN"/>
       <category android:name="android.intent.category.LAUNCHER"/>
       <category android:name="android.intent.category.LEANBACK_LAUNCHER"/>

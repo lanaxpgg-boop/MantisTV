@@ -197,12 +197,19 @@ class TileAdapter(
         fun onTileKey(pos: Int, cell: TileCell, keyCode: Int): Boolean
     }
 
-    class VH(val cell: TileCell) : RecyclerView.ViewHolder(cell)
+    class VH(val cell: TileCell) : RecyclerView.ViewHolder(cell) {
+        @Volatile var artworkRevision = 0L
+    }
 
     var apps: MutableList<AppEntry> = mutableListOf()
         private set
     var movingPkg: String? = null
     private val loader = Executors.newFixedThreadPool(2)
+    @Volatile private var closed = false
+    var allowLongPress = true
+
+    /** Activity owners release pending artwork work; posted callbacks also check this flag. */
+    fun close() { closed = true; loader.shutdownNow() }
 
     /** Tiles in the dock (the first row) hide their name, which would sit on the glass edge. */
     var dockCount = 0
@@ -253,6 +260,7 @@ class TileAdapter(
     }
 
     override fun onViewRecycled(holder: VH) {
+        ++holder.artworkRevision
         holder.cell.stopMotion()
         super.onViewRecycled(holder)
     }
@@ -270,6 +278,7 @@ class TileAdapter(
             vh.bindingAdapterPosition.takeIf { it >= 0 }?.let { listener.onTileClicked(it, cell) }
         }
         cell.setOnLongClickListener {
+            if (!allowLongPress) return@setOnLongClickListener false
             vh.bindingAdapterPosition.takeIf { it >= 0 }?.let { listener.onTileLongPressed(it, cell) }
             true
         }
@@ -281,8 +290,11 @@ class TileAdapter(
     }
 
     override fun onBindViewHolder(h: VH, position: Int) {
+        if (closed) return
         val app = apps[position]
         val cell = h.cell
+        val revision = ++h.artworkRevision
+        cell.isLongClickable = allowLongPress
         cell.label.text = app.label
         // Rebind the name with the app identity, including dock tiles whose label is hidden.
         cell.contentDescription = app.label
@@ -296,8 +308,9 @@ class TileAdapter(
             // Rebinding the same app keeps the old image until the replacement is ready.
             if (!same) cell.setArtwork(null)
             loader.execute {
+                if (closed || h.artworkRevision != revision) return@execute
                 val artwork = runCatching { repo.artwork(app) }.getOrNull()
-                cell.post { if (cell.tag == app.pkg) cell.setArtwork(artwork) }
+                cell.post { if (!closed && h.artworkRevision == revision && cell.tag == app.pkg) cell.setArtwork(artwork) }
             }
         }
     }

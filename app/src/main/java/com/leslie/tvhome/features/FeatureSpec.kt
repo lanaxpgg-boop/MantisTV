@@ -64,5 +64,12 @@ object Features {
         lifecycle = "HomeActivity owns the overlay; pause suspends animation, destroy releases callbacks and worker",
         testMethod = "Native first-use persistence, preview isolation and pause/resume; physical TV playback",
     )
-    val all = listOf(weather, liquidGlass, dock, hdmi, videoWallpaper, welcome)
+    val localAppSearch = FeatureSpec(
+        id = "local-app-search", name = "Search apps", purpose = "Find and launch installed visible applications",
+        minSdk = 25, capabilities = emptySet(), settings = emptySet(), defaultEnabled = true,
+        permissions = emptySet(), fallback = "Native TV keyboard; local-only results or explicit unavailable/empty state",
+        lifecycle = "Mantis foreground Activity owns catalog worker and tile adapter; pause invalidates callbacks, destroy releases work",
+        testMethod = "LocalAppSearchTest, all-flavor build/lint; remote input, launch/Back and lifecycle on API25",
+    )
+    val all = listOf(weather, liquidGlass, dock, hdmi, videoWallpaper, welcome, localAppSearch)
 }

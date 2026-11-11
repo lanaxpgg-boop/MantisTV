@@ -26,7 +26,7 @@ android {
             dimension = "home"
             applicationId = "dev.mantistv.tigris.homepreview"
             minSdk = 25
-            versionCode = 47
+            versionCode = 48
             versionNameSuffix = "-mantis-api25-home-preview"
             ndk { abiFilters += "armeabi-v7a" }
         }

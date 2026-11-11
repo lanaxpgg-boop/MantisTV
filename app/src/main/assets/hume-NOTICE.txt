@@ -1,0 +1,5 @@
+Portions adapted from Hume Launcher
+Copyright 2026 Petrobot
+Licensed under the Apache License, Version 2.0.
+Source: petrobot-admin/hume-launcher, revision19bd8b1fa2d535929c768e6e197a9f464e89f953, Search.java text matching.
+Only local matching is adapted; no Hume fonts, QR code, network catalogue or provider data copied.

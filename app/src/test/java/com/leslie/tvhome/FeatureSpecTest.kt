@@ -5,6 +5,11 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class FeatureSpecTest {
+    @Test fun localSearchNeedsNoNetworkOrMicrophoneOnApi25() {
+        assertTrue(Features.localAppSearch.supported(25, emptySet()))
+        assertFalse(Features.localAppSearch.supported(24, emptySet()))
+        assertTrue(Features.localAppSearch.permissions.isEmpty())
+    }
     @Test fun weatherRemainsOptInWithoutBrandRequirements() {
         assertFalse(Features.weather.defaultEnabled)
         assertTrue(Features.weather.supported(28, emptySet()))

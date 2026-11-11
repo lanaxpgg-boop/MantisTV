@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_search_title">搜索应用</string>
+    <string name="app_search_scope">搜索已安装的应用，不包含影视、语音或在线目录。</string>
+    <string name="app_search_hint">应用名称或软件包名称</string>
+    <string name="app_search_loading">正在读取已安装的应用…</string>
+    <string name="app_search_unavailable">无法读取应用。返回主屏幕后重新打开搜索以重试。</string>
+    <string name="app_search_empty">没有匹配的应用。</string>
+    <string name="app_search_count">显示 %1$d 个应用（最多 %2$d 个）。请按名称搜索以缩小结果范围。</string>
+</resources>

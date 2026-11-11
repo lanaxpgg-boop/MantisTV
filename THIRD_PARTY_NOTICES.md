@@ -30,3 +30,5 @@ test. Depicted brands and media retain their respective rights.
 
 The aerial preview records the owner's television playing the Apple-hosted
 screensaver. The app streams aerials and does not bundle the films.
+
+- **Hume Launcher local Search matching** — Copyright2026 Petrobot, Apache License2.0. Adapted from `Search.java` at `petrobot-admin/hume-launcher@19bd8b1fa2d535929c768e6e197a9f464e89f953` into `LocalAppSearch.kt`, with blank-normalization guards, bounded/deduplicated ranking and deterministic tie breaks. License: `app/src/main/assets/hume-Apache-2.0.txt`; relevant notice: `app/src/main/assets/hume-NOTICE.txt`. No network catalogue/provider/voice code or Hume artwork/fonts copied.
