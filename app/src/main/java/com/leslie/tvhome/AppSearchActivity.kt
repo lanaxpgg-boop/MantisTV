@@ -59,7 +59,6 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
             setTextColor(Color.WHITE)
             setHintTextColor(Color.LTGRAY)
             hint = getString(R.string.app_search_hint)
-            contentDescription = getString(R.string.app_search_hint)
             background = rounded(Color.argb(70, 255, 255, 255), dp(14).toFloat())
             setPadding(dp(16), dp(12), dp(16), dp(12))
             filters = arrayOf(android.text.InputFilter.LengthFilter(LocalAppSearch.MAX_QUERY))
@@ -121,7 +120,15 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
                 main.removeCallbacks(queryTask)
                 updateResults()
                 getSystemService(InputMethodManager::class.java)?.hideSoftInputFromWindow(input.windowToken, 0)
-                grid.post { grid.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus() }
+                if (adapter.itemCount > 0) focusResult(0)
+                true
+            }
+        }
+        input.setOnKeyListener { _, code, event ->
+            if (code != KeyEvent.KEYCODE_DPAD_DOWN || event.action != KeyEvent.ACTION_DOWN) false else {
+                main.removeCallbacks(queryTask)
+                updateResults()
+                if (adapter.itemCount == 0) close.requestFocus() else focusResult(0)
                 true
             }
         }
@@ -167,7 +174,15 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
         status.text = when {
             query.isBlank() -> getString(R.string.app_search_scope)
             results.isEmpty() -> getString(R.string.app_search_empty)
-            else -> getString(R.string.app_search_count, results.size, LocalAppSearch.MAX_RESULTS)
+            else -> resources.getQuantityString(R.plurals.app_search_count, results.size,
+                results.size, LocalAppSearch.MAX_RESULTS)
+        }
+    }
+
+    private fun focusResult(position: Int) {
+        grid.scrollToPosition(position)
+        grid.post {
+            if (active && !isDestroyed) grid.findViewHolderForAdapterPosition(position)?.itemView?.requestFocus()
         }
     }
 
@@ -192,7 +207,11 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
         adapter.lastDy = when (keyCode) { KeyEvent.KEYCODE_DPAD_UP -> -1; KeyEvent.KEYCODE_DPAD_DOWN -> 1; else -> 0 }
         return when {
             keyCode == KeyEvent.KEYCODE_DPAD_UP && pos < columns -> { input.requestFocus(); true }
-            keyCode == KeyEvent.KEYCODE_DPAD_DOWN && pos + columns >= adapter.itemCount -> { close.requestFocus(); true }
+            keyCode == KeyEvent.KEYCODE_DPAD_DOWN && pos + columns >= adapter.itemCount -> {
+                val target = AppSearchNavigation.downTarget(pos, adapter.itemCount, columns)
+                if (target < 0) close.requestFocus() else focusResult(target)
+                true
+            }
             else -> false
         }
     }

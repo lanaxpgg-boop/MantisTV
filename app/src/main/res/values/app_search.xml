@@ -5,5 +5,8 @@
     <string name="app_search_loading">Reading installed applications…</string>
     <string name="app_search_unavailable">Applications could not be read. Return Home and reopen Search to retry.</string>
     <string name="app_search_empty">No matching applications.</string>
-    <string name="app_search_count">Showing %1$d applications (maximum %2$d). Search by name to narrow the results.</string>
+    <plurals name="app_search_count">
+        <item quantity="one">Showing %1$d application (maximum %2$d). Search by name to narrow the results.</item>
+        <item quantity="other">Showing %1$d applications (maximum %2$d). Search by name to narrow the results.</item>
+    </plurals>
 </resources>

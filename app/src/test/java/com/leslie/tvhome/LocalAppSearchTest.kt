@@ -4,6 +4,15 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class LocalAppSearchTest {
+    @Test fun shortLastRowIsReachedBeforeCancel() {
+        assertEquals(11, AppSearchNavigation.downTarget(8, 12, 5))
+        assertEquals(11, AppSearchNavigation.downTarget(9, 12, 5))
+        assertEquals(-1, AppSearchNavigation.downTarget(10, 12, 5))
+        assertEquals(10, AppSearchNavigation.downTarget(4, 12, 6))
+        assertEquals(-1, AppSearchNavigation.downTarget(6, 12, 6))
+        assertEquals(-1, AppSearchNavigation.downTarget(0, 0, 5))
+        assertEquals(-1, AppSearchNavigation.downTarget(0, 12, 0))
+    }
     @Test fun punctuationAndWhitespaceNeverMatchTheWholeCatalog() {
         for (q in listOf("", "  ", "---", "!?", "🙂")) assertEquals(-1, LocalAppSearch.score("Appstore", "com.store", q))
     }

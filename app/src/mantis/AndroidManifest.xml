@@ -14,7 +14,7 @@
   <uses-feature android:name="android.software.leanback" android:required="false"/>
   <application android:banner="@drawable/banner" android:label="MantisTV Home Preview" tools:replace="android:label">
     <activity android:name=".AppSearchActivity" android:exported="false"
-      android:launchMode="singleTop" android:screenOrientation="landscape"
+      android:launchMode="singleTop"
       android:windowSoftInputMode="adjustResize"/>
     <service android:name=".KeeperService" tools:node="remove"/>
     <service android:name=".HomeGuardService" tools:node="remove"/>

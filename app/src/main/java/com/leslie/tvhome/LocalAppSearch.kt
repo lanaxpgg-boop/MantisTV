@@ -36,3 +36,12 @@ internal object LocalAppSearch {
                 .thenBy { label(it.first).lowercase(Locale.ROOT) }.thenBy { key(it.first) })
             .take(MAX_RESULTS).map { it.first }.toList()
 }
+
+/** A short last row remains reachable from every column above it. */
+internal object AppSearchNavigation {
+    fun downTarget(position: Int, count: Int, columns: Int): Int {
+        if (columns <= 0 || position !in 0 until count) return -1
+        if (position / columns >= (count - 1) / columns) return -1
+        return (position + columns).coerceAtMost(count - 1)
+    }
+}

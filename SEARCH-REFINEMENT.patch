@@ -1,0 +1,149 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index 15168db..67bcab2 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -26,7 +26,7 @@ android {
+             dimension = "home"
+             applicationId = "dev.mantistv.tigris.homepreview"
+             minSdk = 25
+-            versionCode = 48
++            versionCode = 49
+             versionNameSuffix = "-mantis-api25-home-preview"
+             ndk { abiFilters += "armeabi-v7a" }
+         }
+diff --git a/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt b/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt
+index 9d570b3..7f662bc 100644
+--- a/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/AppSearchActivity.kt
+@@ -59,7 +59,6 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
+             setTextColor(Color.WHITE)
+             setHintTextColor(Color.LTGRAY)
+             hint = getString(R.string.app_search_hint)
+-            contentDescription = getString(R.string.app_search_hint)
+             background = rounded(Color.argb(70, 255, 255, 255), dp(14).toFloat())
+             setPadding(dp(16), dp(12), dp(16), dp(12))
+             filters = arrayOf(android.text.InputFilter.LengthFilter(LocalAppSearch.MAX_QUERY))
+@@ -121,7 +120,15 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
+                 main.removeCallbacks(queryTask)
+                 updateResults()
+                 getSystemService(InputMethodManager::class.java)?.hideSoftInputFromWindow(input.windowToken, 0)
+-                grid.post { grid.findViewHolderForAdapterPosition(0)?.itemView?.requestFocus() }
++                if (adapter.itemCount > 0) focusResult(0)
++                true
++            }
++        }
++        input.setOnKeyListener { _, code, event ->
++            if (code != KeyEvent.KEYCODE_DPAD_DOWN || event.action != KeyEvent.ACTION_DOWN) false else {
++                main.removeCallbacks(queryTask)
++                updateResults()
++                if (adapter.itemCount == 0) close.requestFocus() else focusResult(0)
+                 true
+             }
+         }
+@@ -167,7 +174,15 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
+         status.text = when {
+             query.isBlank() -> getString(R.string.app_search_scope)
+             results.isEmpty() -> getString(R.string.app_search_empty)
+-            else -> getString(R.string.app_search_count, results.size, LocalAppSearch.MAX_RESULTS)
++            else -> resources.getQuantityString(R.plurals.app_search_count, results.size,
++                results.size, LocalAppSearch.MAX_RESULTS)
++        }
++    }
++
++    private fun focusResult(position: Int) {
++        grid.scrollToPosition(position)
++        grid.post {
++            if (active && !isDestroyed) grid.findViewHolderForAdapterPosition(position)?.itemView?.requestFocus()
+         }
+     }
+ 
+@@ -192,7 +207,11 @@ class AppSearchActivity : Activity(), TileAdapter.Listener {
+         adapter.lastDy = when (keyCode) { KeyEvent.KEYCODE_DPAD_UP -> -1; KeyEvent.KEYCODE_DPAD_DOWN -> 1; else -> 0 }
+         return when {
+             keyCode == KeyEvent.KEYCODE_DPAD_UP && pos < columns -> { input.requestFocus(); true }
+-            keyCode == KeyEvent.KEYCODE_DPAD_DOWN && pos + columns >= adapter.itemCount -> { close.requestFocus(); true }
++            keyCode == KeyEvent.KEYCODE_DPAD_DOWN && pos + columns >= adapter.itemCount -> {
++                val target = AppSearchNavigation.downTarget(pos, adapter.itemCount, columns)
++                if (target < 0) close.requestFocus() else focusResult(target)
++                true
++            }
+             else -> false
+         }
+     }
+diff --git a/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt b/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt
+index 063e6d6..883b861 100644
+--- a/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt
++++ b/app/src/main/java/com/leslie/tvhome/LocalAppSearch.kt
+@@ -36,3 +36,12 @@ internal object LocalAppSearch {
+                 .thenBy { label(it.first).lowercase(Locale.ROOT) }.thenBy { key(it.first) })
+             .take(MAX_RESULTS).map { it.first }.toList()
+ }
++
++/** A short last row remains reachable from every column above it. */
++internal object AppSearchNavigation {
++    fun downTarget(position: Int, count: Int, columns: Int): Int {
++        if (columns <= 0 || position !in 0 until count) return -1
++        if (position / columns >= (count - 1) / columns) return -1
++        return (position + columns).coerceAtMost(count - 1)
++    }
++}
+diff --git a/app/src/main/res/values-zh/app_search.xml b/app/src/main/res/values-zh/app_search.xml
+index b34daf4..9a7c9d0 100644
+--- a/app/src/main/res/values-zh/app_search.xml
++++ b/app/src/main/res/values-zh/app_search.xml
+@@ -5,5 +5,7 @@
+     <string name="app_search_loading">正在读取已安装的应用…</string>
+     <string name="app_search_unavailable">无法读取应用。返回主屏幕后重新打开搜索以重试。</string>
+     <string name="app_search_empty">没有匹配的应用。</string>
+-    <string name="app_search_count">显示 %1$d 个应用（最多 %2$d 个）。请按名称搜索以缩小结果范围。</string>
++    <plurals name="app_search_count">
++        <item quantity="other">显示 %1$d 个应用（最多 %2$d 个）。请按名称搜索以缩小结果范围。</item>
++    </plurals>
+ </resources>
+diff --git a/app/src/main/res/values/app_search.xml b/app/src/main/res/values/app_search.xml
+index e405da4..2cb7d77 100644
+--- a/app/src/main/res/values/app_search.xml
++++ b/app/src/main/res/values/app_search.xml
+@@ -5,5 +5,8 @@
+     <string name="app_search_loading">Reading installed applications…</string>
+     <string name="app_search_unavailable">Applications could not be read. Return Home and reopen Search to retry.</string>
+     <string name="app_search_empty">No matching applications.</string>
+-    <string name="app_search_count">Showing %1$d applications (maximum %2$d). Search by name to narrow the results.</string>
++    <plurals name="app_search_count">
++        <item quantity="one">Showing %1$d application (maximum %2$d). Search by name to narrow the results.</item>
++        <item quantity="other">Showing %1$d applications (maximum %2$d). Search by name to narrow the results.</item>
++    </plurals>
+ </resources>
+diff --git a/app/src/mantis/AndroidManifest.xml b/app/src/mantis/AndroidManifest.xml
+index e4a8d18..cf5305b 100644
+--- a/app/src/mantis/AndroidManifest.xml
++++ b/app/src/mantis/AndroidManifest.xml
+@@ -14,7 +14,7 @@
+   <uses-feature android:name="android.software.leanback" android:required="false"/>
+   <application android:banner="@drawable/banner" android:label="MantisTV Home Preview" tools:replace="android:label">
+     <activity android:name=".AppSearchActivity" android:exported="false"
+-      android:launchMode="singleTop" android:screenOrientation="landscape"
++      android:launchMode="singleTop"
+       android:windowSoftInputMode="adjustResize"/>
+     <service android:name=".KeeperService" tools:node="remove"/>
+     <service android:name=".HomeGuardService" tools:node="remove"/>
+diff --git a/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt b/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt
+index b3b606d..e52fe7f 100644
+--- a/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt
++++ b/app/src/test/java/com/leslie/tvhome/LocalAppSearchTest.kt
+@@ -4,6 +4,15 @@ import org.junit.Assert.*
+ import org.junit.Test
+ 
+ class LocalAppSearchTest {
++    @Test fun shortLastRowIsReachedBeforeCancel() {
++        assertEquals(11, AppSearchNavigation.downTarget(8, 12, 5))
++        assertEquals(11, AppSearchNavigation.downTarget(9, 12, 5))
++        assertEquals(-1, AppSearchNavigation.downTarget(10, 12, 5))
++        assertEquals(10, AppSearchNavigation.downTarget(4, 12, 6))
++        assertEquals(-1, AppSearchNavigation.downTarget(6, 12, 6))
++        assertEquals(-1, AppSearchNavigation.downTarget(0, 0, 5))
++        assertEquals(-1, AppSearchNavigation.downTarget(0, 12, 0))
++    }
+     @Test fun punctuationAndWhitespaceNeverMatchTheWholeCatalog() {
+         for (q in listOf("", "  ", "---", "!?", "🙂")) assertEquals(-1, LocalAppSearch.score("Appstore", "com.store", q))
+     }
