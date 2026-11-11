@@ -6,6 +6,9 @@
   var lang = /^zh(?:-|$)/i.test(preferred) ? "zh" : "en";
   var messages = {
   "zh": {
+    "assetUnavailable": "此实验版本不提供默认素材下载。仍可上传自己的文件或删除已下载的素材。",
+    "backdropUploadDefault": "没有自定义图片时使用纯色背景。请上传主体位于左侧的 16:9 图片。",
+    "introUploadDefault": "未上传视频时播放 Tigris 文字动画。建议使用以黑底标志结尾的短视频。",
     "liveWallpaper": "动态壁纸",
     "uploadWallpaper": "上传桌面视频 · 支持 4K",
     "liveHint": "保留原画质，不重新压缩；单个文件最大 1 GB。建议使用 MP4（H.264 或 HEVC 编码），能否播放取决于电视解码能力。仅在桌面静音循环。Apple 航拍优先播放 4K，不支持时降级。",
@@ -112,6 +115,9 @@
     "source_graphite": "深灰"
   },
   "en": {
+    "assetUnavailable": "Default asset downloads are unavailable in this experiment. You can still upload your own files or remove saved defaults.",
+    "backdropUploadDefault": "Without a custom image, use the plain background. Upload a 16:9 image with the subject on the left.",
+    "introUploadDefault": "Without an uploaded video, the Tigris wordmark plays. A short video ending with a logo on black works best.",
     "liveWallpaper": "Video Wallpaper",
     "uploadWallpaper": "Upload a wallpaper video · up to 4K",
     "liveHint": "Original quality, no recompression; up to 1 GB. MP4 with H.264 or HEVC is recommended. Playback depends on your TV decoder. Silent loop on Home only. Apple aerials stream in 4K when supported, with lower-resolution fallback.",

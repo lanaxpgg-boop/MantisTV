@@ -95,6 +95,8 @@ class PhoneServer private constructor(private val ctx: Context, private val toke
                 }
                 post && path == "/api/assets" -> {
                     val fields = form(session)
+                    if (MantisExperiment.enabled && fields["action"] != "delete")
+                        return text(Response.Status.FORBIDDEN, I18n.text(R.string.mantis_assets_unavailable))
                     val asset = when (fields["id"]) {
                         "intro" -> OptionalAssets.intro
                         "backdrop" -> OptionalAssets.backdrop
@@ -166,6 +168,7 @@ class PhoneServer private constructor(private val ctx: Context, private val toke
     private fun names(source: String) = JSONArray().apply { Wallpapers(ctx, source).files().forEach { put(it.name) } }
 
     private fun state(): JSONObject = JSONObject()
+        .put("capabilities", JSONObject().put("optionalAssetDownloads", !MantisExperiment.enabled))
         .put("background", prefs.background)
         .put("wallpaperVideo", MediaFiles.wallpaper(ctx)?.length() ?: 0L)
         .put("defaultIntro", OptionalAssets.file(ctx, OptionalAssets.intro) != null)

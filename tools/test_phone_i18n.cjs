@@ -57,3 +57,31 @@ for (const lang of ["en", "zh"]) {
   }
 }
 console.log("Phone companion language coverage, dynamic copy, API route and browser fallback PASS");
+
+// Exercise capability transitions without a TV or external DOM dependency.
+const buttons = Object.fromEntries(["defaultIntro", "defaultBackdrop"].map(id =>
+  [id, {disabled: true, dataset: {capabilityDisabled: "true"}, textContent: ""}]));
+const hints = [{textContent: ""}, {textContent: ""}];
+const helper = html.slice(html.indexOf("function renderOptionalAssets(s) {"), html.indexOf("function render(s) {"));
+assert.ok(helper.length, "Optional asset capability renderer exists");
+const context = {t: en.t, $: id => buttons[id], document: {querySelectorAll: () => hints}};
+vm.createContext(context);
+vm.runInContext(helper, context);
+const renderAssets = state => {context.input = state; vm.runInContext("renderOptionalAssets(input)", context);};
+renderAssets({capabilities: {optionalAssetDownloads: false}, defaultIntro: false, defaultBackdrop: false});
+assert.ok(buttons.defaultIntro.disabled && buttons.defaultBackdrop.disabled);
+assert.equal(buttons.defaultIntro.textContent, en.t("assetUnavailable"));
+assert.equal(hints[0].textContent, en.t("assetUnavailable"));
+renderAssets({capabilities: {optionalAssetDownloads: false}, defaultIntro: true, defaultBackdrop: false});
+assert.equal(buttons.defaultIntro.disabled, false, "Saved defaults may still be removed");
+assert.equal(buttons.defaultIntro.textContent, en.t("assetRemove"));
+assert.equal(buttons.defaultBackdrop.disabled, true);
+renderAssets({defaultIntro: false, defaultBackdrop: false});
+assert.equal(buttons.defaultBackdrop.disabled, false, "Older/standard server state keeps download behavior");
+assert.equal(buttons.defaultBackdrop.textContent, en.t("downloadBackdrop"));
+buttons.defaultIntro.disabled = true;
+buttons.defaultIntro.textContent = en.t("assetWorking");
+renderAssets({capabilities: {optionalAssetDownloads: true}, defaultIntro: false, defaultBackdrop: false});
+assert.equal(buttons.defaultIntro.disabled, true, "Polling cannot re-enable an in-flight action");
+assert.equal(buttons.defaultIntro.textContent, en.t("assetWorking"));
+console.log("Optional asset blocked, deletion, legacy fallback and busy-state transitions PASS");

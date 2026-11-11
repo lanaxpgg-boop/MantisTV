@@ -110,7 +110,7 @@
 </div>
 <p style="margin-top:12px"><label class="primary" id="pickIntro"><span data-i18n="uploadIntro">Upload welcome video</span><input type="file" id="introFile" accept="video/*" hidden></label></p>
 <p class="hint" id="introHint"></p>
-<button class="primary" id="defaultIntro" data-i18n="downloadIntro"></button>
+<button class="primary" id="defaultIntro" disabled data-capability-disabled="true" data-i18n="downloadIntro"></button>
 <p class="hint" data-i18n="assetHint"></p>
 <div class="seg" id="introSource" style="margin-top:12px">
   <button data-source="video" data-i18n="introVideo">Downloaded / uploaded video</button>
@@ -120,7 +120,7 @@
 <h2 data-i18n="settingsBackdrop">Settings Background</h2>
 <label class="primary" id="pickBackdrop"><span data-i18n="uploadBackdrop">Upload Settings background</span><input type="file" id="backdropFile" accept="image/*" hidden></label>
 <p class="hint" id="backdropHint"></p>
-<button class="primary" id="defaultBackdrop" data-i18n="downloadBackdrop"></button>
+<button class="primary" id="defaultBackdrop" disabled data-capability-disabled="true" data-i18n="downloadBackdrop"></button>
 <p class="hint" data-i18n="assetHint"></p>
 
 <h2 id="avatar" data-i18n="avatar">Profile Picture</h2>
@@ -177,6 +177,27 @@ function photos(el, source, names) {
   }
 }
 
+function renderOptionalAssets(s) {
+  const allowed = !s.capabilities || s.capabilities.optionalAssetDownloads !== false;
+  document.querySelectorAll('[data-i18n="assetHint"]').forEach(hint => {
+    hint.textContent = t(allowed ? 'assetHint' : 'assetUnavailable');
+  });
+  for (const [id, field, label] of [['defaultIntro', 'defaultIntro', 'downloadIntro'], ['defaultBackdrop', 'defaultBackdrop', 'downloadBackdrop']]) {
+    const button = $(id);
+    if (!allowed && !s[field]) {
+      button.disabled = true;
+      button.dataset.capabilityDisabled = 'true';
+      button.textContent = t('assetUnavailable');
+    } else {
+      if (button.dataset.capabilityDisabled) {
+        delete button.dataset.capabilityDisabled;
+        button.disabled = false;
+      }
+      if (!button.disabled) button.textContent = s[field] ? t('assetRemove') : t(label);
+    }
+  }
+}
+
 function render(s) {
   state = s;
   $('videoHint').textContent = s.wallpaperVideo ? t('videoSaved', (s.wallpaperVideo / 1048576).toFixed(1)) : t('videoEmpty');
@@ -184,9 +205,7 @@ function render(s) {
   for (const [id, key] of [['wallhavenQuery', 'query'], ['wallhavenCategories', 'categories'], ['wallhavenSorting', 'sorting'], ['wallhavenResolution', 'resolution']]) {
     if (document.activeElement !== $(id)) $(id).value = s.wallhaven[key];
   }
-  for (const [id, field, label] of [['defaultIntro', 'defaultIntro', 'downloadIntro'], ['defaultBackdrop', 'defaultBackdrop', 'downloadBackdrop']]) {
-    if (!$(id).disabled) $(id).textContent = s[field] ? t('assetRemove') : t(label);
-  }
+  renderOptionalAssets(s);
   const bg = $('backgrounds'); bg.innerHTML = '';
   for (const o of [...s.sources, ...s.themes]) {
     const b = document.createElement('button'); b.textContent = sourceLabel(o.id, o.label);
@@ -210,7 +229,7 @@ function render(s) {
     $('backdropHint').innerHTML = t('backdropActive') + ' <a href="#" id="backdropDel">' + t('backdropDelete') + '</a>';
     $('backdropDel').onclick = e => { e.preventDefault(); post('api/backdrop/delete', {}).then(() => toast(t('deleted'))); };
   } else {
-    $('backdropHint').textContent = t('backdropDefault');
+    $('backdropHint').textContent = t(s.capabilities && s.capabilities.optionalAssetDownloads === false ? 'backdropUploadDefault' : 'backdropDefault');
   }
   $('avatarHint').textContent = s.avatar ? t('avatarCustom') : t('avatarDefault');
   if (s.avatar) {
@@ -229,7 +248,7 @@ function render(s) {
     hint.innerHTML = t('introUploaded', (s.introVideo / 1048576).toFixed(1)) + ' <a href="#" id="introDel">' + t('introDelete') + '</a>';
     $('introDel').onclick = e => { e.preventDefault(); post('api/intro/delete', {}).then(() => toast(t('introDeleted'))); };
   } else {
-    hint.textContent = t('introDefault');
+    hint.textContent = t(s.capabilities && s.capabilities.optionalAssetDownloads === false ? 'introUploadDefault' : 'introDefault');
   }
   if (document.activeElement !== $('links')) $('links').value = s.links;
   photos($('mine'), 'mine', s.mine);

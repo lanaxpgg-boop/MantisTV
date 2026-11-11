@@ -1,0 +1,436 @@
+[
+  {
+    "repository": "lesnolie/Tigris",
+    "revision": "c6d258f467e0a8f68f5a112bb5aef9710e81392d",
+    "observed_release": "v2.0.27",
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "5fe6d0f008c861a70cc92ef8d385e81a87c7af6dbec1c06833a52f1656533c09"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "305ad54ebefc97aec1ced0667446ec4fdac6a04e4231e9a87d92aad6c4373b63"
+      },
+      {
+        "path": "README.en.md",
+        "sha256": "1b0f1796e33aa0e04d496365e0715ebc2f85bec766476686e0eda80631771ae2"
+      },
+      {
+        "path": "README.md",
+        "sha256": "2fd29b5386ff1860ffa75e9dbb667fee32023ede70bbb14608a41afabd92c4de"
+      },
+      {
+        "path": "THIRD_PARTY_NOTICES.md",
+        "sha256": "d13e8bccfa268c5b4b182b76bb737e16965514961e15aacd11f322fc2205b549"
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "sha256": "2c0f5483b12a18b643de7cdbd1b55e96dc1936b7f6a93fb4682932b8637a8673"
+      },
+      {
+        "path": "app/src/guard/AndroidManifest.xml",
+        "sha256": "eeebd0b9df8886106c7cd2d9c07211dc5a6666bb34eedbb77b5f9f04c100c2d9"
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "sha256": "a7912210af3beb8fe66dddd99a2237e7709f522b573245dc533d6f1ce355f2cd"
+      },
+      {
+        "path": "app/src/standard/AndroidManifest.xml",
+        "sha256": "eb40e6086c4cffbd0716f37ebc4fcc908c9309964e9042f4afa79cb8b8ec90d4"
+      },
+      {
+        "path": "build.gradle.kts",
+        "sha256": "eafc4af9ce6b7190e01563d9243b4bbcead454bc910c33d1e91baeb5284e83dc"
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "sha256": "70839bbe38c101499b2c65ee26c17365e01daa5bef158aded54c661f966dcdf3"
+      },
+      {
+        "path": "settings.gradle.kts",
+        "sha256": "ffeb646a1aac6ddc915dd7903f478ca07469cc9728ce28a42cdd9573d28fbe08"
+      }
+    ]
+  },
+  {
+    "repository": "techgenius1/tvOS-Launcher",
+    "revision": "463fa6c2a9b7322c4407f1d00db935ef09d20f4f",
+    "observed_release": "v2.1.5",
+    "files": [
+      {
+        "path": "AndroidManifest.xml",
+        "sha256": "8feba57bb9c3687256245f2120f16c0094553f1c499fed4dc6c7193b02da103f"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "NOTICE",
+        "sha256": "e39226bc2fabb494e62d6d399bf5f8a707e39aedef55a959ba2f21a359052202"
+      },
+      {
+        "path": "README.md",
+        "sha256": "6cef6d9110f5f48e3b316f3e671abf9eb808cac89040938ad4402b57046c5d4b"
+      },
+      {
+        "path": "assets/fonts/Inter-LICENSE.txt",
+        "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+      },
+      {
+        "path": "build.ps1",
+        "sha256": "5d47bafe0faf6d070648701dd2b2d21fc29cebd0b932804607c3bb6888fd9a53"
+      },
+      {
+        "path": "build.sh",
+        "sha256": "8259aac4ad5b211b7be0604cbea3edb57345a536d1e9166751f7bf90346b78a3"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/ButtonMapper.java",
+        "sha256": "131076bee17a15e9836e594928b90a90c3835b68fc16e5fa92f679644b257b3b"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/HomeDashboard.java",
+        "sha256": "c87d758945e0943f9435a7f33e399b7975311185ca3c3d41b424cf59357b6f40"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/LocalAdb.java",
+        "sha256": "4b99f72b8274bbe8ac530f762ea8abb7352dcbfffca1d5bda01a8bc5cf9fc57b"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/MainActivity.java",
+        "sha256": "8f4152d50f41d78c321f0f498e656ae4358efefd7ff0e33bc474ecbeddf208c3"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/Profiles.java",
+        "sha256": "5ce8ef9c115631bcc78352d02a3c32fe9a0d177949f7ed6836e179945969cbbd"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/SceneHome.java",
+        "sha256": "d04572be26feae9e835356b01664d720efb8e97099aeff2970c7de7ff790a340"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/Search.java",
+        "sha256": "450d1ab6ccd7b58e61892a66a6d66df6bbd94bb2eb275b08c843ece368b31f8f"
+      },
+      {
+        "path": "src/com/techgenius/tvoslauncher/SearchPanel.java",
+        "sha256": "bb296b1c2f2e1e50e2e2128d411fa2637892adbca47fcf11ffebe850b27d6123"
+      }
+    ]
+  },
+  {
+    "repository": "humblemuzzu/dumbtv",
+    "revision": "28828203b9f35796d0c8fb86f0ddf1b0a55f99cc",
+    "observed_release": "launcher-v1.9",
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "f99fe2aa0d047ef75558bc7f194a58d64241cd3e188a0cfba2439f0a15dd71e4"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "1daf99b793caeb85aadf8b682bc9a2473ba60b30261340322cd6565f60186056"
+      },
+      {
+        "path": "README.md",
+        "sha256": "f2ee6d69fef03cad37e217c2776b912c0fae73761de8cee0e213bf8e82771159"
+      },
+      {
+        "path": "catalog/LICENSE",
+        "sha256": "5e41e050c0b20e706044559c53035584b3d0eb5a89e623335e24e29077abd034"
+      },
+      {
+        "path": "launcher/AndroidManifest.xml",
+        "sha256": "b1bba2bd93f24572ad9145d9653e5cbea3d4b44c581f34d6c8128c7659b53806"
+      },
+      {
+        "path": "launcher/build.sh",
+        "sha256": "81d69fc1703bfc9cbfce5d989173d99311d2eab1d01b3ebfba5c0cada9711648"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/Catalog.java",
+        "sha256": "b18133ccb1db12c027013d16210b937a56d7df491aa07e02b2b693f3a284e8e0"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/FireSettings.java",
+        "sha256": "82954c7dd6165aafc0112e6de608b2c59ea4878e28bc7be65951f6ce0cb672f4"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/Grid.java",
+        "sha256": "cdb5787d14e60b4bc45c2fd6db5c1c16ab9d73759a13365af79ce0af24423c89"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/Hero.java",
+        "sha256": "bd58e8347f1d021191d640f48cd51c1f520368cc6555152373a252741bf3ce9f"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/Home.java",
+        "sha256": "9bb2880f8eb810f0a241e90137f329f55d8aed211fd5c85d915b6443ccc5c544"
+      },
+      {
+        "path": "launcher/src/tv/dumbtv/home/HomeRetry.java",
+        "sha256": "0225afc5baf505a76082125a2dc06d34fd2706af430923009989978e1d98344d"
+      },
+      {
+        "path": "launcher/tests/HomeRetryTest.java",
+        "sha256": "4552bb8b561560baef5718cedc8f3e1c6377bf6bd9391344a68965ce6b106f75"
+      }
+    ]
+  },
+  {
+    "repository": "petrobot-admin/hume-launcher",
+    "revision": "19bd8b1fa2d535929c768e6e197a9f464e89f953",
+    "observed_release": "v7.8",
+    "files": [
+      {
+        "path": "AndroidManifest.xml",
+        "sha256": "9dd609ea6fa32a5e4abc2824bd1e76c3ce1521640c207e3a3f3f67d7e9c2b8d2"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "path": "NOTICE",
+        "sha256": "f7c3a00b3274fd0a4bb988794a7b62fd7e040a65577db6137614d40553cc6545"
+      },
+      {
+        "path": "README.md",
+        "sha256": "93dce650435592eb26e0c4fc566fd436de2e7d0058ffd1e4f34c9363b13e6866"
+      },
+      {
+        "path": "assets/fonts/Inter-LICENSE.txt",
+        "sha256": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a"
+      },
+      {
+        "path": "build.sh",
+        "sha256": "c7f2f0c0294a0aca86e1ef9d9c758372d96f0e145514cce3e52a3963c7525f5e"
+      },
+      {
+        "path": "src/com/petrobot/hume/Carousel.java",
+        "sha256": "5284874177bd7be73d4deb0e5a0f4388bc1c38ffc9ffa33fa3f2694ca69622bd"
+      },
+      {
+        "path": "src/com/petrobot/hume/MainActivity.java",
+        "sha256": "7f70f513387d492531b22f5a75951459e0327324c21608066970817228898a00"
+      },
+      {
+        "path": "src/com/petrobot/hume/Motion.java",
+        "sha256": "4ab5faedc03aa028222a580fbd529b8ff3c8a93576b4d6d3f2b402a982b158ea"
+      },
+      {
+        "path": "src/com/petrobot/hume/Profiles.java",
+        "sha256": "ee1bd34b3e818ecc07b3d59ce9ef8e466d1bccc892ada00948d6f230e445ceae"
+      },
+      {
+        "path": "src/com/petrobot/hume/Search.java",
+        "sha256": "392ab82ed14be3b91f12bffa34eb6c7d0c8820d70a06cae51c92ac19a9563150"
+      },
+      {
+        "path": "src/com/petrobot/hume/SearchPanel.java",
+        "sha256": "155d581a6b0738b2cfa4ce64bf9600ef16abeaff101c66dd3d6e15ff5c5fa9a8"
+      }
+    ]
+  },
+  {
+    "repository": "hamdalaa/tvhome",
+    "revision": "eac48f2a04e4895c69b986fd3f2aafcaadeb92a3",
+    "observed_release": null,
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "df1371ccdca38df1c858c722bfbc69e3d06eff05d5802f28021ec0ec93946411"
+      },
+      {
+        "path": "README.md",
+        "sha256": "7587e2506ed1ed6ea1998d62c6cded84efa96f20e931aea616ddfa4f79bbc358"
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "sha256": "0197cde1735207433ca0da7dce9ea27f993527ba91513768f4e6310cdd7a832d"
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "sha256": "e1a2ed4fbc2a8a55af844a511637015a51f0128a941c3ce23df843e232a8a6b2"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/AppRepository.kt",
+        "sha256": "eca47fd9f3a183c3760919c95b5de6f54d9a6f11cf9f23b5d61869e435ee0ac2"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/Bitmaps.kt",
+        "sha256": "47094545bd41ed793b378142f87d63defc458f6174924e15405d17013e040ba4"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/GridNav.kt",
+        "sha256": "7da237ea21546f4626d239466f8df1d1e1bb9dbe0df55a26e1611db3a8887e05"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/HomeViewModel.kt",
+        "sha256": "7c939d29604d5da5c02cedaab782fdaa18eff5ea37ef1e2224ee9e61072a1f22"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/search/SearchScreen.kt",
+        "sha256": "908ee729daf77d466b5fbad3149afe2bb6412b035201046b0935624112f518fc"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/settings/SettingsScreen.kt",
+        "sha256": "cf97451f982033091600bf7f3de3a7e38ef0ab8517fd6e8330bf567c6b816950"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/system/ControlCenter.kt",
+        "sha256": "77ccf6f9bb09ca4d89377393cca080f4416c826974a60a72c71da51353383943"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/ui/FocusMotion.kt",
+        "sha256": "6f0313d0584b4d04e56873d46bfcf7f67e60fe24078af0ffcb4b10c70918aaa7"
+      },
+      {
+        "path": "app/src/main/java/com/hamad/tvhome/ui/HomeScreen.kt",
+        "sha256": "8bb3a685e98eeb90ee1dbb5fa007dfc01fc6101c7a21504ca36a21dfaa59e732"
+      },
+      {
+        "path": "app/src/test/java/com/hamad/tvhome/GridNavTest.kt",
+        "sha256": "41e2407f1a884786da50d05d55cdf65173f31b37694dea9e4724c22779e7567f"
+      },
+      {
+        "path": "build.gradle.kts",
+        "sha256": "96826295e45d4f5110c81c87d086d6f789dd0a5657cabc7bafa4ee92e2843e5c"
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "sha256": "ddc716b1cfcdd5ad1e731cb7a933e781ae07f9888a544761a0aef191d7d037b6"
+      },
+      {
+        "path": "settings.gradle.kts",
+        "sha256": "4099cbabb08c73b8409d7b05cbb77750f0ae3e4a9d28e658f42e7be4f392434a"
+      }
+    ]
+  },
+  {
+    "repository": "mazer666/PhairPlay",
+    "revision": "bdc51c8e25a0fe4658ed61669c89e907765cdcaf",
+    "observed_release": null,
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "b157ab3c4e56b65a540d211ad21c2e924674ad34a73494c6ed6dd84e6cc04ed9"
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "e2ca80146e5a5e4786713b5ef01dd16d3f531276c1ed3a03ae2bfb23111d893c"
+      },
+      {
+        "path": "README.md",
+        "sha256": "59e26dd015278d32732eb809dc381eaf1ad9f3adcfe47f3e2cdaf86e6c458c58"
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "sha256": "6684a896d2675bd171e799c84fbcfe7d20b62b9f69e9c49b85dae5323337794f"
+      },
+      {
+        "path": "app/src/androidTest/kotlin/com/phairplay/MainActivityTest.kt",
+        "sha256": "ecb538a2743f6954b411c9971e0fb0eeb09341d5516413034f5cc17ba133b329"
+      },
+      {
+        "path": "app/src/firetv/kotlin/com/phairplay/cast/CastReceiver.kt",
+        "sha256": "71de84403117716a4eb84d7677105527ce98247e07f0f598de2cbe9a490491b3"
+      },
+      {
+        "path": "app/src/googletv/AndroidManifest.xml",
+        "sha256": "3c2b1167ab85ffc183102d25ed07b1c73f9508c723ca9d291d8747f48a340b30"
+      },
+      {
+        "path": "app/src/googletv/kotlin/com/phairplay/cast/CastReceiver.kt",
+        "sha256": "c70a3c730dc0735413002e12f4d468f24c9435996a62d1d7cd3560519471c51f"
+      },
+      {
+        "path": "app/src/googletv/kotlin/com/phairplay/cast/CastReceiverOptionsProvider.kt",
+        "sha256": "f25008676e3057eccd6a3659c5b5a79eded62686dda5a6e62429107b5f97859f"
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "sha256": "a80cebf2db5d5c773c8c916d25df3ac7659051f7b80408ed99f9dd1245f59c91"
+      },
+      {
+        "path": "app/src/main/cpp/CMakeLists.txt",
+        "sha256": "6b29eabaf1c50f08a4804c767590e02699a59a461d44e255255fc409db618bbd"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/MainActivity.kt",
+        "sha256": "a116cdb754915897dd908627b8e0796537a40e41999d91bd031c1113ec493466"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/airplay/AirPlayReceiver.kt",
+        "sha256": "754e391158e6426dc06d51a9db588567cf0c63aa01a1eeecae97d5f40e657637"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/airplay/PhotoHandler.kt",
+        "sha256": "82b462c19c8a9ff697e9b812228c589a3612b8a72dd57484d3359435f4271c1e"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/miracast/MiracastReceiver.kt",
+        "sha256": "757ab2506c8bcee30da57bcc68f2b182032b1b05f27b66ae9e92e2df2a4c0184"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/service/PhotoFrame.kt",
+        "sha256": "85299c5a87a0faa83404f59b7261915edba5a68cbdffb7a84974883fe9698121"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/ui/PhotoScreen.kt",
+        "sha256": "218f2137c2cc0c942cfea9c0dfede045b1c8a7ebe4fd9eb9cdff8bcee813b45e"
+      },
+      {
+        "path": "app/src/main/kotlin/com/phairplay/util/FetchableUrlPolicy.kt",
+        "sha256": "c1757fc7de1a7291a645c0a5c76925ec411bb04d8bc2cd09d5fba58373a8cab6"
+      },
+      {
+        "path": "app/src/test/kotlin/com/phairplay/MainActivityTest.kt",
+        "sha256": "27bc83d07cf4ec96066388fc2bf31dcf8a67f46e99012148fcfc41a3b0b65fc4"
+      },
+      {
+        "path": "app/src/test/kotlin/com/phairplay/airplay/PhotoHandlerTest.kt",
+        "sha256": "08670f9090f41e4571f8eedb02c7ac51e474e11056eff0a95f9be6033669b3ef"
+      },
+      {
+        "path": "app/src/test/kotlin/com/phairplay/cast/CastReceiverTest.kt",
+        "sha256": "55089f6816be04b126513ac4a09973bdd6ecb15f3d4c9ed384460e434c47a6a8"
+      },
+      {
+        "path": "app/src/test/kotlin/com/phairplay/miracast/MiracastReceiverTest.kt",
+        "sha256": "ed3e31f63395b3d030dc3abec6db4b9734eea0bc1b59c3fbc5ceb3aa9ad5fbb5"
+      },
+      {
+        "path": "app/src/test/kotlin/com/phairplay/util/FetchableUrlPolicyTest.kt",
+        "sha256": "42305e037f8ff8aacc98c69fce50ca396e7bf082b8048fbe86dbcc2ab2991802"
+      },
+      {
+        "path": "build.gradle.kts",
+        "sha256": "59422eae820cf2f1685d8e38e7079ab3962608a1ec5575a994507e179c159491"
+      },
+      {
+        "path": "gradle/libs.versions.toml",
+        "sha256": "e37b63f501eb9ca80c16e95d1a32fa533b4fd91dacf49ebed3e6d687cfa81646"
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "sha256": "712d9bc912d4b0d42b0faf8c6afeed13ae31ced75ca28463b1dfc4ced1a4bc9a"
+      },
+      {
+        "path": "scripts/release/build.sh",
+        "sha256": "4634f06be8b553ac1960af4bcf3fe4451ba74d261c458bf97b684d88296df41c"
+      },
+      {
+        "path": "scripts/release/notices.sh",
+        "sha256": "c4c0d881d343e08a4b6e1ca02b13c1b5cd4db5458ec3340b3895af8f01131dab"
+      },
+      {
+        "path": "settings.gradle.kts",
+        "sha256": "47c44b80f6439444880b52dedf3cffc4a9620a062469d7bfaa5141cabc7f6070"
+      }
+    ]
+  }
+]

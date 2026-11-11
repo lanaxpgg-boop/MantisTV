@@ -7,8 +7,8 @@
   "app/src/main/assets/aerials.json": "b2360e28766b18ae8b414b1b6d8fed87b378af71c9afc221e2a7d8d6cd4a28cc",
   "app/src/main/assets/inter-OFL.txt": "262481e844521b326f5ecd053e59b98c8b2da78c8ee1bdbb6e8174305e54935a",
   "app/src/main/assets/inter.ttf": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
-  "app/src/main/assets/web/i18n.js": "05b60997ad0b15255b6779c7d46cba87d91f0cec31f7d680d61830672c1e0f97",
-  "app/src/main/assets/web/index.html": "a4c57d5b916367f765ab09d74b7b85a6eda07b162aacb25a2e16a7c5b4d8e879",
+  "app/src/main/assets/web/i18n.js": "ed316361e1545352593594c9572e3fdb59e34a8f08cec830485c0b578ab57d8b",
+  "app/src/main/assets/web/index.html": "b0dcbad4ec851f4f52bcafdddebe4752e6b97a067406c96a9a38939f1e2c256b",
   "app/src/main/assets/welcome/Pacifico-OFL.txt": "e1b964e3f56697598c46363a8864f0a7b883c86a0c01a9a6a4e90e6949d60ba2",
   "app/src/main/assets/welcome/wordmark.json": "13e868c401da96482102fd8f226f921dde1734b5baa858317c9efaa05e0d710b",
   "app/src/main/java/com/leslie/tvhome/AdbAuthorization.kt": "859b1914fe4ffba4c00148dd6bca98f811c215a5d65d353a8420b7f6c3b96311",
@@ -56,7 +56,7 @@
   "app/src/main/java/com/leslie/tvhome/NowPlaying.kt": "3e048320415ce0f5885ccf6f0de1be0d7bffff894b08ef15cea793a2afa03ab2",
   "app/src/main/java/com/leslie/tvhome/OptionalAppPolicy.kt": "96385c3f3c8c1d7252183bead715f89bf80507f0aeb20a04f00ea4549637412e",
   "app/src/main/java/com/leslie/tvhome/OptionalAssets.kt": "7d106ed46f5ce25c6c7521c7cbfea4fe6a502713e0b77cbd342e25fcc42a8d73",
-  "app/src/main/java/com/leslie/tvhome/PhoneServer.kt": "bdbe4842d6dcc3e800f15365cbec29c7cae44f5f4db0dacf575a6d7527685071",
+  "app/src/main/java/com/leslie/tvhome/PhoneServer.kt": "a0230070ca915cb55b4a7cb3c38acc627c792d41f581d41e6785c9e5a6921482",
   "app/src/main/java/com/leslie/tvhome/PhotoFrame.kt": "89a18d411613273bf1c562c88182edd7654c51c850a808eab11c19fa7720ee3d",
   "app/src/main/java/com/leslie/tvhome/PowerButtonShutdownPolicy.kt": "8a7311896238fcf801e3d2e32abe1e49d74caa19d48c696ee3409e6511fe841b",
   "app/src/main/java/com/leslie/tvhome/Prefs.kt": "d33b21802fcedba8b252837da513d663a97ca66f6cdec65156f0468308e657cb",
@@ -237,5 +237,6 @@
   "app/src/test/java/com/leslie/tvhome/VideoUploadHttpTest.kt": "ac0ae9fab563190dbfafc3dc4bc6b41ff822f354c87bdf06a297a44833c05b5d",
   "app/src/test/java/com/leslie/tvhome/WallhavenApiTest.kt": "7df39032ddec2bec756d3b33294eaaa1d9a5699caf609b42b6dac5817c718bbb",
   "gradle.properties": "498d20e2a23a00bc137e36ab1cfc8ab370696f03d037b17d652164a17dc0f35d",
-  "settings.gradle.kts": "22e4c713807c138d6f2641702e2e3727d6d2f0bf3440c47668452cf419bb5d11"
+  "settings.gradle.kts": "22e4c713807c138d6f2641702e2e3727d6d2f0bf3440c47668452cf419bb5d11",
+  "tools/test_phone_i18n.cjs": "9e3a3f0ddd93530a3cbca5a299a1e956aa33a56dfe4d83a5fafeb68e675d26fc"
 }
