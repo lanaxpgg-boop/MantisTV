@@ -1,0 +1,2 @@
+Phone companion language coverage, dynamic copy, API route and browser fallback PASS
+Optional asset blocked, deletion, legacy fallback and busy-state transitions PASS

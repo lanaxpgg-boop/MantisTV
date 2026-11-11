@@ -1,5 +1,5 @@
 {
-  "run": "43013565038",
+  "run": "43015892267",
   "build_outcome": "success",
   "apk_verification_outcome": "success",
   "jvm_tests": 678,
@@ -18,7 +18,7 @@
       "failures": 0
     }
   },
-  "requested_local_commit": "c82db03dbdebcfe1ba2ad2698fa1c120fef36547",
+  "requested_local_commit": "e3949da72a8cb1f53161f52b9df77207302772b6",
   "lint": {
     "lint-results-mantisDebug.xml": {
       "errors": 0,
