@@ -1,0 +1,302 @@
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.8.2-bin.zip
+..............10%..............20%...............30%..............40%...............50%..............60%...............70%..............80%...............90%..............100%
+
+Welcome to Gradle 9.8.2!
+
+Here are the highlights of this release:
+ - Java 27 support
+ - Maven mirror settings reuse
+ - Linked problem locations in build output
+
+For more details see https://docs.gradle.org/9.8.2/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preMantisDebugBuild UP-TO-DATE
+> Task :app:generateMantisDebugBuildConfig
+> Task :app:generateMantisDebugResources
+> Task :app:packageMantisDebugResources
+> Task :app:processMantisDebugNavigationResources
+> Task :app:javaPreCompileMantisDebug
+> Task :app:parseMantisDebugLocalResources
+> Task :app:checkMantisDebugAarMetadata
+> Task :app:mapMantisDebugSourceSetPaths
+> Task :app:generateMantisDebugRFile
+> Task :app:compileMantisDebugNavigationResources
+
+> Task :app:mergeMantisDebugResources
+/home/runner/work/MantisTV/MantisTV/experiment/app/src/main/res/values-zh/strings.xml:6:4: Multiple substitutions specified in non-positional format of string resource string/glass_tint_help. Did you mean to add the formatted="false" attribute?
+
+> Task :app:createMantisDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksMantisDebug
+> Task :app:processMantisDebugMainManifest
+> Task :app:processMantisDebugManifest
+> Task :app:processMantisDebugManifestForPackage
+> Task :app:processMantisDebugResources
+> Task :app:preMantisDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileMantisDebugUnitTest
+> Task :app:preStandardDebugBuild UP-TO-DATE
+> Task :app:generateStandardDebugBuildConfig
+> Task :app:generateStandardDebugResources
+> Task :app:packageStandardDebugResources
+> Task :app:processStandardDebugNavigationResources
+> Task :app:parseStandardDebugLocalResources
+> Task :app:generateStandardDebugRFile
+> Task :app:compileMantisDebugKotlin
+> Task :app:compileStandardDebugKotlin
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt:79:54 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:375:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:600:55 'field scaledDensity: Float' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeGuardService.kt:196:46 'static field ACTION_CLOSE_SYSTEM_DIALOGS: String' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/MediaQuality.kt:73:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'MediaCodecInfo.VideoCapabilities?'.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/PhotoFrame.kt:190:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt:971:26 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsDialog.kt:118:57 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt:94:59 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt:409:22 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:275:30 'field signatures: Array<(out) Signature!>?' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:462:39 'fun <T : Parcelable!> getParcelableExtra(p0: String!): T?' is deprecated. Deprecated in Java.
+
+> Task :app:compileMantisDebugKotlin
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt:79:54 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:375:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:600:55 'field scaledDensity: Float' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeGuardService.kt:196:46 'static field ACTION_CLOSE_SYSTEM_DIALOGS: String' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/MediaQuality.kt:73:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'MediaCodecInfo.VideoCapabilities?'.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/PhotoFrame.kt:190:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt:971:26 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsDialog.kt:118:57 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt:94:59 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt:409:22 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:275:30 'field signatures: Array<(out) Signature!>?' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:462:39 'fun <T : Parcelable!> getParcelableExtra(p0: String!): T?' is deprecated. Deprecated in Java.
+
+> Task :app:compileMantisDebugJavaWithJavac
+> Task :app:bundleMantisDebugClassesToRuntimeJar
+> Task :app:bundleMantisDebugClassesToCompileJar
+> Task :app:processMantisDebugJavaRes
+> Task :app:javaPreCompileStandardDebug
+> Task :app:compileStandardDebugJavaWithJavac
+> Task :app:checkStandardDebugAarMetadata
+> Task :app:mapStandardDebugSourceSetPaths
+> Task :app:compileStandardDebugNavigationResources
+
+> Task :app:mergeStandardDebugResources
+/home/runner/work/MantisTV/MantisTV/experiment/app/src/main/res/values-zh/strings.xml:6:4: Multiple substitutions specified in non-positional format of string resource string/glass_tint_help. Did you mean to add the formatted="false" attribute?
+
+> Task :app:createStandardDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksStandardDebug
+> Task :app:processStandardDebugMainManifest
+> Task :app:processStandardDebugManifest
+> Task :app:processStandardDebugManifestForPackage
+> Task :app:processStandardDebugResources
+> Task :app:bundleStandardDebugClassesToRuntimeJar
+> Task :app:bundleStandardDebugClassesToCompileJar
+> Task :app:preStandardDebugUnitTestBuild UP-TO-DATE
+> Task :app:compileMantisDebugUnitTestKotlin
+> Task :app:compileMantisDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:compileStandardDebugUnitTestKotlin
+> Task :app:processMantisDebugUnitTestJavaRes
+> Task :app:testMantisDebugUnitTest
+> Task :app:javaPreCompileStandardDebugUnitTest
+> Task :app:processStandardDebugJavaRes
+> Task :app:compileStandardDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processStandardDebugUnitTestJavaRes
+> Task :app:testStandardDebugUnitTest
+> Task :app:preGuardDebugBuild UP-TO-DATE
+> Task :app:generateGuardDebugBuildConfig
+> Task :app:generateGuardDebugResources
+> Task :app:packageGuardDebugResources
+> Task :app:processGuardDebugNavigationResources
+> Task :app:javaPreCompileGuardDebug
+> Task :app:parseGuardDebugLocalResources
+> Task :app:checkGuardDebugAarMetadata
+> Task :app:mapGuardDebugSourceSetPaths
+> Task :app:compileGuardDebugNavigationResources
+> Task :app:generateGuardDebugRFile
+
+> Task :app:mergeGuardDebugResources
+/home/runner/work/MantisTV/MantisTV/experiment/app/src/main/res/values-zh/strings.xml:6:4: Multiple substitutions specified in non-positional format of string resource string/glass_tint_help. Did you mean to add the formatted="false" attribute?
+
+> Task :app:createGuardDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksGuardDebug
+> Task :app:processGuardDebugMainManifest
+> Task :app:processGuardDebugManifest
+> Task :app:processGuardDebugManifestForPackage
+> Task :app:processGuardDebugResources
+> Task :app:preGuardDebugUnitTestBuild UP-TO-DATE
+> Task :app:javaPreCompileGuardDebugUnitTest
+> Task :app:mergeStandardDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateStandardDebugAssets UP-TO-DATE
+> Task :app:mergeStandardDebugAssets
+> Task :app:compressStandardDebugAssets
+> Task :app:generateStandardDebugGlobalSynthetics
+> Task :app:l8DexDesugarLibStandardDebug
+> Task :app:checkStandardDebugDuplicateClasses
+> Task :app:desugarStandardDebugFileDependencies
+
+> Task :app:compileGuardDebugKotlin
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt:79:54 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:375:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:600:55 'field scaledDensity: Float' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeGuardService.kt:196:46 'static field ACTION_CLOSE_SYSTEM_DIALOGS: String' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/MediaQuality.kt:73:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'MediaCodecInfo.VideoCapabilities?'.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/PhotoFrame.kt:190:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt:971:26 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsDialog.kt:118:57 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt:94:59 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt:409:22 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:275:30 'field signatures: Array<(out) Signature!>?' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:462:39 'fun <T : Parcelable!> getParcelableExtra(p0: String!): T?' is deprecated. Deprecated in Java.
+
+> Task :app:mergeExtDexStandardDebug
+> Task :app:compileGuardDebugJavaWithJavac
+> Task :app:bundleGuardDebugClassesToRuntimeJar
+> Task :app:bundleGuardDebugClassesToCompileJar
+> Task :app:compileGuardDebugUnitTestKotlin
+> Task :app:compileGuardDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:processGuardDebugJavaRes
+> Task :app:processGuardDebugUnitTestJavaRes
+> Task :app:testGuardDebugUnitTest
+> Task :app:mergeLibDexStandardDebug
+> Task :app:dexBuilderStandardDebug
+> Task :app:mergeProjectDexStandardDebug
+> Task :app:mergeStandardDebugJniLibFolders
+> Task :app:mergeStandardDebugNativeLibs NO-SOURCE
+> Task :app:stripStandardDebugDebugSymbols NO-SOURCE
+> Task :app:mergeStandardDebugJavaResource
+> Task :app:validateSigningStandardDebug
+> Task :app:writeStandardDebugAppMetadata
+> Task :app:writeStandardDebugSigningConfigVersions
+> Task :app:mergeGuardDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateGuardDebugAssets UP-TO-DATE
+> Task :app:mergeGuardDebugAssets
+> Task :app:compressGuardDebugAssets
+> Task :app:generateGuardDebugGlobalSynthetics
+> Task :app:packageStandardDebug
+> Task :app:createStandardDebugApkListingFileRedirect
+> Task :app:assembleStandardDebug
+> Task :app:checkGuardDebugDuplicateClasses
+> Task :app:desugarGuardDebugFileDependencies
+> Task :app:l8DexDesugarLibGuardDebug
+> Task :app:mergeGuardDebugJavaResource
+> Task :app:mergeLibDexGuardDebug
+> Task :app:mergeExtDexGuardDebug
+> Task :app:dexBuilderGuardDebug
+> Task :app:mergeGuardDebugJniLibFolders
+> Task :app:mergeGuardDebugNativeLibs NO-SOURCE
+> Task :app:stripGuardDebugDebugSymbols NO-SOURCE
+> Task :app:validateSigningGuardDebug
+> Task :app:writeGuardDebugAppMetadata
+> Task :app:writeGuardDebugSigningConfigVersions
+> Task :app:preMantisReleaseBuild UP-TO-DATE
+> Task :app:mergeMantisReleaseJniLibFolders
+> Task :app:mergeMantisReleaseNativeLibs NO-SOURCE
+> Task :app:stripMantisReleaseDebugSymbols NO-SOURCE
+> Task :app:extractMantisReleaseNativeSymbolTables NO-SOURCE
+> Task :app:mergeMantisReleaseNativeDebugMetadata NO-SOURCE
+> Task :app:mergeProjectDexGuardDebug
+> Task :app:mergeMantisReleaseArtProfile
+> Task :app:packageGuardDebug
+> Task :app:createGuardDebugApkListingFileRedirect
+> Task :app:assembleGuardDebug
+> Task :app:checkMantisReleaseDuplicateClasses
+> Task :app:generateMantisReleaseBuildConfig
+> Task :app:expandMantisReleaseL8ArtProfileWildcards
+> Task :app:generateMantisReleaseResources
+> Task :app:packageMantisReleaseResources
+> Task :app:processMantisReleaseNavigationResources
+> Task :app:javaPreCompileMantisRelease
+> Task :app:parseMantisReleaseLocalResources
+> Task :app:checkMantisReleaseAarMetadata
+> Task :app:mapMantisReleaseSourceSetPaths
+> Task :app:generateMantisReleaseRFile
+> Task :app:compileMantisReleaseNavigationResources
+
+> Task :app:mergeMantisReleaseResources
+/home/runner/work/MantisTV/MantisTV/experiment/app/src/main/res/values-zh/strings.xml:6:4: Multiple substitutions specified in non-positional format of string resource string/glass_tint_help. Did you mean to add the formatted="false" attribute?
+
+> Task :app:createMantisReleaseCompatibleScreenManifests
+> Task :app:extractDeepLinksMantisRelease
+> Task :app:processMantisReleaseMainManifest
+> Task :app:processMantisReleaseManifest
+> Task :app:processMantisReleaseManifestForPackage
+> Task :app:processMantisReleaseResources
+> Task :app:extractProguardFiles
+> Task :app:mergeMantisReleaseStartupProfile
+> Task :app:generateMantisReleaseAssets UP-TO-DATE
+> Task :app:mergeMantisReleaseAssets
+> Task :app:compressMantisReleaseAssets
+> Task :app:extractMantisReleaseVersionControlInfo
+> Task :app:collectMantisReleaseDependencies
+> Task :app:sdkMantisReleaseDependencyData
+> Task :app:validateSigningMantisRelease
+> Task :app:writeMantisReleaseAppMetadata
+> Task :app:writeMantisReleaseSigningConfigVersions
+> Task :app:preMantisDebugAndroidTestBuild SKIPPED
+> Task :app:generateMantisDebugAndroidTestLintModel
+> Task :app:generateMantisDebugLintReportModel
+> Task :app:generateMantisDebugUnitTestLintModel
+
+> Task :app:compileMantisReleaseKotlin
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/FrameIdleProbe.kt:79:54 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:375:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeActivity.kt:600:55 'field scaledDensity: Float' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/HomeGuardService.kt:196:46 'static field ACTION_CLOSE_SYSTEM_DIALOGS: String' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/MediaQuality.kt:73:25 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type 'MediaCodecInfo.VideoCapabilities?'.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/PhotoFrame.kt:190:9 'fun overridePendingTransition(p0: Int, p1: Int): Unit' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsActivity.kt:971:26 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/SettingsDialog.kt:118:57 'static field SOFT_INPUT_ADJUST_RESIZE: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/TvOSFeatures.kt:94:59 'static field MOVE_TO_FOREGROUND: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/UpdateActivity.kt:409:22 'var isChecked: Boolean' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:275:30 'field signatures: Array<(out) Signature!>?' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/MantisTV/MantisTV/experiment/app/src/main/java/com/leslie/tvhome/Updates.kt:462:39 'fun <T : Parcelable!> getParcelableExtra(p0: String!): T?' is deprecated. Deprecated in Java.
+
+> Task :app:compileMantisReleaseJavaWithJavac
+> Task :app:expandMantisReleaseArtProfileWildcards
+> Task :app:mergeMantisReleaseGeneratedProguardFiles
+> Task :app:processMantisReleaseJavaRes
+> Task :app:mergeMantisReleaseJavaResource
+> Task :app:lintAnalyzeMantisDebug
+> Task :app:minifyMantisReleaseWithR8
+> Task :app:l8DexDesugarLibMantisRelease
+> Task :app:compileMantisReleaseArtProfile
+> Task :app:generateMantisReleaseLintVitalReportModel
+> Task :app:lintVitalAnalyzeMantisRelease
+> Task :app:lintVitalReportMantisRelease SKIPPED
+> Task :app:lintVitalMantisRelease SKIPPED
+> Task :app:convertShrunkResourcesToBinaryMantisRelease
+> Task :app:optimizeMantisReleaseResources
+> Task :app:packageMantisRelease
+> Task :app:createMantisReleaseApkListingFileRedirect
+> Task :app:assembleMantisRelease
+> Task :app:lintAnalyzeMantisDebugAndroidTest
+> Task :app:lintAnalyzeMantisDebugUnitTest
+> Task :app:generateMantisReleaseLintReportModel
+
+> Task :app:lintReportMantisDebug
+Wrote HTML report to file:///home/runner/work/MantisTV/MantisTV/experiment/app/build/reports/lint-results-mantisDebug.html
+Wrote SARIF report to file:///home/runner/work/MantisTV/MantisTV/experiment/app/build/reports/lint-results-mantisDebug.sarif
+
+> Task :app:lintMantisDebug
+> Task :app:lintAnalyzeMantisRelease
+
+> Task :app:lintReportMantisRelease
+Wrote HTML report to file:///home/runner/work/MantisTV/MantisTV/experiment/app/build/reports/lint-results-mantisRelease.html
+Wrote SARIF report to file:///home/runner/work/MantisTV/MantisTV/experiment/app/build/reports/lint-results-mantisRelease.sarif
+
+> Task :app:lintMantisRelease
+
+[Incubating] Problems report is available at: file:///home/runner/work/MantisTV/MantisTV/experiment/build/reports/problems/problems-report.html
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 4m 36s
+170 actionable tasks: 170 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.8.2/userguide/configuration_cache_enabling.html
