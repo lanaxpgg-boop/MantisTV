@@ -1,0 +1,33 @@
+PASS install snapshots original launcher and never removes apps
+PASS safe APK-only route preserves HOME, Guard and permissions
+PASS explicit TCL Guard retains vendor autostart and original HOME
+PASS upgrade retains initial snapshot
+PASS omitted keep_adb preserves user preference
+PASS explicit keep_adb changes still apply
+PASS native HOME upgrade with no configuration skips empty broadcast
+PASS Xiaomi keeps the guard on and holds the HOME role before set-home-activity
+PASS actual HOME failure enables guard even when resolver reports Tigris
+PASS unresolved HOME failure is not a successful installation
+PASS missing verification baseline does not enable guard
+PASS Sony with a stock launcher priority above zero enables the guard
+PASS Google TV with no stock launcher priority leaves the guard off
+PASS Hisense enables the guard
+PASS Coocaa/Skyworth enables the guard
+PASS repair re-grants the guard and reads mFocusedApp without disabling the stock launcher
+PASS inspect performs no TV mutations or key events
+PASS full-plan is read-only for non-Xiaomi brands
+PASS Xiaomi full-plan inspects without mutating HOME
+PASS native HOME inspection is Xiaomi-scoped and read-only
+PASS other brands cannot trigger Xiaomi native HOME trial
+PASS Xiaomi ad changes cannot run on Sony
+PASS restore failure blocks uninstall
+PASS signature mismatch stops before configuration without uninstall
+PASS restore retains app and other accessibility services
+PASS explicit uninstall supported
+PASS missing snapshot stops without changing TV
+PASS unsupported Android blocked
+PASS piped installer fetches all HOME dependencies without writes
+PASS versioned standard release selected and checksum verified
+PASS versioned guard release selected and checksum verified
+PASS legacy release names still install from exact version tag
+PASS checksum mismatch blocks installation

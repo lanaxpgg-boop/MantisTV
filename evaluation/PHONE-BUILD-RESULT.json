@@ -1,0 +1,38 @@
+{
+  "run": "42934555272",
+  "build_outcome": "success",
+  "apk_verification_outcome": "success",
+  "jvm_tests": 678,
+  "jvm_failures": 0,
+  "jvm_by_variant": {
+    "testGuardDebugUnitTest": {
+      "tests": 226,
+      "failures": 0
+    },
+    "testStandardDebugUnitTest": {
+      "tests": 226,
+      "failures": 0
+    },
+    "testMantisDebugUnitTest": {
+      "tests": 226,
+      "failures": 0
+    }
+  },
+  "requested_local_commit": "phone-0ce75c4f6baccb58199c879c8ba2d5561d5097fa",
+  "lint": {
+    "lint-results-mantisDebug.xml": {
+      "errors": 0,
+      "warnings": 79,
+      "new_api_issues": 0
+    },
+    "lint-results-mantisRelease.xml": {
+      "errors": 0,
+      "warnings": 79,
+      "new_api_issues": 0
+    }
+  },
+  "additional_cloud_builds_authorized": 1,
+  "additional_cloud_builds_used": 1,
+  "physical_tested": false,
+  "Mantis_existing_builds_modified": false
+}

@@ -1,0 +1,19 @@
+{
+  "package": "dev.mantistv.tigris.experimental",
+  "minSDK": 25,
+  "targetSDK": 31,
+  "bytes": 1557881,
+  "sha256": "a6c107547fd601ce95253232b3949794575cb1021ec2da8c6bdfd6f7cf813d06",
+  "certificate_sha256": "756a52bdcccd745e3c5b609d0142343824aa34a6b448097f7542af12ee6d8766",
+  "api25_signature_verified": true,
+  "zip_alignment_verified": true,
+  "native_libraries": [],
+  "dex_headers": {
+    "classes.dex": "dex\n037\u0000",
+    "classes2.dex": "dex\n037\u0000"
+  },
+  "HOME_category": false,
+  "privileged_services_removed": true,
+  "hardware_execution_tested": false,
+  "signing_key_persistence": "ephemeral; safe future updates not established"
+}
