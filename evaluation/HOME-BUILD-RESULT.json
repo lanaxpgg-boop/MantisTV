@@ -1,38 +1,38 @@
 {
-  "run": "43028222714",
+  "run": "43032388271",
   "build_outcome": "success",
   "apk_verification_outcome": "success",
-  "jvm_tests": 696,
+  "jvm_tests": 714,
   "jvm_failures": 0,
   "jvm_by_variant": {
     "testGuardDebugUnitTest": {
-      "tests": 232,
+      "tests": 238,
       "failures": 0
     },
     "testStandardDebugUnitTest": {
-      "tests": 232,
+      "tests": 238,
       "failures": 0
     },
     "testMantisDebugUnitTest": {
-      "tests": 232,
+      "tests": 238,
       "failures": 0
     }
   },
-  "requested_local_commit": "5cfce70bcc137a53f5400bd9050ff5672c276e66",
+  "requested_local_commit": "51a9e7137410058349a7cf8b17469296aba0ae9d",
   "lint": {
     "lint-results-mantisDebug.xml": {
       "errors": 0,
-      "warnings": 79,
+      "warnings": 81,
       "new_api_issues": 0
     },
     "lint-results-mantisRelease.xml": {
       "errors": 0,
-      "warnings": 79,
+      "warnings": 81,
       "new_api_issues": 0
     }
   },
   "additional_cloud_builds_authorized": 3,
-  "additional_cloud_builds_used": 1,
+  "additional_cloud_builds_used": 2,
   "physical_tested": false,
   "Mantis_existing_builds_modified": false
 }

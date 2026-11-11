@@ -2,9 +2,9 @@
   "package": "dev.mantistv.tigris.homepreview",
   "minSDK": 25,
   "targetSDK": 31,
-  "bytes": 1561317,
-  "sha256": "91d8867cdba0594c1b128fdf979c8f9a12be79ecb86df5e130a593d988f8eb5d",
-  "certificate_sha256": "f17e9e6b7cde35a4d0b87326a0261a0b5a4dab957069905541bcd2222f41b210",
+  "bytes": 1573177,
+  "sha256": "5e4b6406e7f5edb2b673de58954fb7d6d5e482433e8bf772b9e58069ecbb5ebe",
+  "certificate_sha256": "940627ea7d2b788239298413d846b4c8f5360eec012177c3655f443bdafe9a50",
   "api25_signature_verified": true,
   "zip_alignment_verified": true,
   "native_libraries": [],
@@ -15,5 +15,8 @@
   "HOME_category": false,
   "privileged_services_removed": true,
   "hardware_execution_tested": false,
+  "search_internal_only": true,
+  "Home_saved_state_enabled": true,
+  "Hume_notices_preserved": true,
   "signing_key_persistence": "ephemeral; safe future updates not established"
 }
