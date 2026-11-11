@@ -24,9 +24,10 @@ android {
         create("guard") { dimension = "home" }
         create("mantis") {
             dimension = "home"
-            applicationId = "dev.mantistv.tigris.experimental"
+            applicationId = "dev.mantistv.tigris.homepreview"
             minSdk = 25
-            versionNameSuffix = "-mantis-api25-experiment"
+            versionCode = 47
+            versionNameSuffix = "-mantis-api25-home-preview"
             ndk { abiFilters += "armeabi-v7a" }
         }
     }

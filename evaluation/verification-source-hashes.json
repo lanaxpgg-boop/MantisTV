@@ -1,7 +1,7 @@
 {
   "LICENSE": "305ad54ebefc97aec1ced0667446ec4fdac6a04e4231e9a87d92aad6c4373b63",
   "THIRD_PARTY_NOTICES.md": "d13e8bccfa268c5b4b182b76bb737e16965514961e15aacd11f322fc2205b549",
-  "app/build.gradle.kts": "6ec1158c69d5d1323f7d5f694bd1494e7c149d6a701f466d00e6d69bef0f5da8",
+  "app/build.gradle.kts": "5cc813904d672d21155f797055eb4edfadb43000dd6eb505b521d381a4c47ac4",
   "app/src/guard/AndroidManifest.xml": "eeebd0b9df8886106c7cd2d9c07211dc5a6666bb34eedbb77b5f9f04c100c2d9",
   "app/src/main/AndroidManifest.xml": "a7912210af3beb8fe66dddd99a2237e7709f522b573245dc533d6f1ce355f2cd",
   "app/src/main/assets/aerials.json": "b2360e28766b18ae8b414b1b6d8fed87b378af71c9afc221e2a7d8d6cd4a28cc",
@@ -190,7 +190,7 @@
   "app/src/main/res/xml/network_security_config.xml": "ee54971dd9cb5468f7463850a7936040c26b8a0e357ef1538cc62b8206edb84a",
   "app/src/main/res/xml/revival_account.xml": "7c462842ef54bf8d7c530e12d8f94b3f40ccbc567a15582ea1cfe2b14042381f",
   "app/src/main/res/xml/revival_sync.xml": "ddedeabdd63f2c7d52a71d1520e34c3193ba1708b267743def0c818291e48a0a",
-  "app/src/mantis/AndroidManifest.xml": "8b1c187738ce9720d267eb0dad58a2adeb149a70d870457ce02025b7de10988a",
+  "app/src/mantis/AndroidManifest.xml": "6ef8a2d64ed241f641db624e26c1c00dd3be754719d5fec0f364ff8e2281b135",
   "app/src/standard/AndroidManifest.xml": "eb40e6086c4cffbd0716f37ebc4fcc908c9309964e9042f4afa79cb8b8ec90d4",
   "app/src/test/java/com/leslie/tvhome/AdbAuthorizationTest.kt": "41a6dd5d4b793ad8cdd25c841cad66affd042045340143dc05174533e4a6b32b",
   "app/src/test/java/com/leslie/tvhome/AppTileArtworkTest.kt": "470f7f11d85b4d02ab09d31f6dffb4b0af836a11f239f4dfa8f58736bc8145b3",

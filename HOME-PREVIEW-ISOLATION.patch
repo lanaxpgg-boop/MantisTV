@@ -1,0 +1,30 @@
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index 07e245a..ec8828d 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -24,9 +24,10 @@ android {
+         create("guard") { dimension = "home" }
+         create("mantis") {
+             dimension = "home"
+-            applicationId = "dev.mantistv.tigris.experimental"
++            applicationId = "dev.mantistv.tigris.homepreview"
+             minSdk = 25
+-            versionNameSuffix = "-mantis-api25-experiment"
++            versionCode = 47
++            versionNameSuffix = "-mantis-api25-home-preview"
+             ndk { abiFilters += "armeabi-v7a" }
+         }
+     }
+diff --git a/app/src/mantis/AndroidManifest.xml b/app/src/mantis/AndroidManifest.xml
+index 00a4910..6281b5f 100644
+--- a/app/src/mantis/AndroidManifest.xml
++++ b/app/src/mantis/AndroidManifest.xml
+@@ -12,7 +12,7 @@
+   <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove"/>
+   <uses-feature android:name="android.hardware.touchscreen" android:required="false"/>
+   <uses-feature android:name="android.software.leanback" android:required="false"/>
+-  <application android:banner="@drawable/banner" android:label="MantisTV Tigris Experiment" tools:replace="android:label">
++  <application android:banner="@drawable/banner" android:label="MantisTV Home Preview" tools:replace="android:label">
+     <service android:name=".KeeperService" tools:node="remove"/>
+     <service android:name=".HomeGuardService" tools:node="remove"/>
+     <service android:name=".RevivalListener" tools:node="remove"/>
