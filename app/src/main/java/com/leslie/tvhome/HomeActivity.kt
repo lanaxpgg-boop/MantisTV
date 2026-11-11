@@ -59,6 +59,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         const val SHELF_SECONDS = 8
         private const val EXTRA_GUARD = "com.leslie.tvhome.GUARD"
         private const val EXTRA_WAKE = "com.leslie.tvhome.WAKE"
+        private const val STATE_FOCUS_PACKAGE = "home.focus.package"
+        private const val STATE_FOCUS_POSITION = "home.focus.position"
 
         /**
          * How the home guard and the boot receiver bring the home screen back: the same task, with
@@ -175,6 +177,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     private var expandedRowY = 0
 
     private var focusedPos = 0
+    private var restoreFocusPkg: String? = null
     private var firstFocus = true
     /** Grid scroll position; RecyclerView's own estimate is unreliable for grids. */
     private var scrollY = 0
@@ -223,7 +226,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     private var shelfConsumeExitKeyUp = -1
     private var shelfShown = false
     private var shelfBrowsing = false
-    private var shelfGeneration = 0L
+    @Volatile private var shelfGeneration = 0L
     private var shelfImageRequest = 0L
     private val shelfShow = Runnable { pendingShelf?.let { showShelf(it) } }
     private val shelfAdvance = Runnable {
@@ -383,6 +386,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        restoreFocusPkg = savedInstanceState?.getString(STATE_FOCUS_PACKAGE)
+        focusedPos = savedInstanceState?.getInt(STATE_FOCUS_POSITION, 0) ?: 0
         Tween.readScale(this)
         prefs = Prefs(this)
         glassExtreme = prefs.extremeGlass
@@ -532,8 +537,16 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        val pkg = if (::adapter.isInitialized) adapter.apps.getOrNull(focusedPos)?.pkg else null
+        outState.putString(STATE_FOCUS_PACKAGE, pkg ?: restoreFocusPkg)
+        outState.putInt(STATE_FOCUS_POSITION, focusedPos)
+        super.onSaveInstanceState(outState)
+    }
+
     override fun onDestroy() {
         resumed = false
+        ++shelfGeneration
         cancelIdle()
         wallpaperPlaying = false
         syncOwnPlayback()
@@ -571,16 +584,31 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         val dm = resources.displayMetrics
         sw = dm.widthPixels
         sh = dm.heightPixels
-        // Proportions measured from a 1920×1080 tvOS 26 screenshot.
-        val side = (sw * 0.06875f).toInt()
-        val gap = (sw * 0.0292f).toInt()           // 56 px
+        // Upstream keeps its tvOS26 proportions; Mantis adapts the official26 reference.
+        // Current-tvOS27 geometry and actual rendering remain acceptance work.
+        val side = (sw * (if (MantisExperiment.enabled) 0.05f else 0.06875f)).toInt()
+        val gap = (sw * (if (MantisExperiment.enabled) 0.025f else 0.0292f)).toInt()
         tileW = DockLayout.tileWidth(sw, side, gap, cols)
         tileH = tileW * 9 / 16
-        rowPitch = (sh * 0.2463f).toInt()          // 266 px
-        // The dock sits at the bottom; only the top edge of the next row peeks out below it.
-        val defaultTileWidth = DockLayout.tileWidth(sw, side, gap, DockLayout.DEFAULT_COLUMNS)
-        val defaultTileHeight = defaultTileWidth * 9 / 16
-        firstRowY = DockLayout.dockTop((sh * 0.744f).toInt(), defaultTileHeight, tileH) + dp(10)
+        if (MantisExperiment.enabled) {
+            // Keep next-row discovery visible for either saved column count. Measure the actual
+            // label font so large text gets vertical room without changing grid/focus ownership.
+            val labelPaint = android.text.TextPaint().apply {
+                typeface = Fonts.inter(this@HomeActivity, 600)
+                textSize = 15f * prefs.textScale * dm.scaledDensity
+            }
+            val metrics = labelPaint.fontMetricsInt
+            val labelClearance = dp(17) + metrics.descent - metrics.ascent + dp(8) +
+                (tileH * (TileSkin.FOCUS_SCALE - 1f) / 2f).toInt()
+            val rows = DockLayout.referenceRows(sh, tileH, labelClearance)
+            rowPitch = rows.pitch
+            firstRowY = rows.firstTop
+        } else {
+            rowPitch = (sh * 0.2463f).toInt()
+            val defaultTileWidth = DockLayout.tileWidth(sw, side, gap, DockLayout.DEFAULT_COLUMNS)
+            val defaultTileHeight = defaultTileWidth * 9 / 16
+            firstRowY = DockLayout.dockTop((sh * 0.744f).toInt(), defaultTileHeight, tileH) + dp(10)
+        }
         expandedRowY = (sh * 0.36f).toInt()
 
         // The dock hugs the first row: a focused tile (scaled 1.12) nearly touches its edges.
@@ -1102,12 +1130,16 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         val fallbackApp = app?.takeIf { MantisExperiment.enabled && it.folder == null && it.input == null }
         val hasFeed = Shelf.has(pkg, custom)
         net.execute {
+            if (session != shelfGeneration) return@execute
             val items = if (hasFeed) Shelf.items(pkg, custom) else emptyList()
+            if (session != shelfGeneration) return@execute
             val contentImage = items.firstOrNull()?.let { Shelf.image(this, it.image) }
+            if (session != shelfGeneration) return@execute
             val staticArtwork = contentImage == null && fallbackApp != null
             val first = contentImage ?: fallbackApp?.let {
                 runCatching { Shelf.appArtwork(repo.artwork(it).background) }.getOrNull()
             }
+            if (session != shelfGeneration) return@execute
             val glass = first?.let { shelfGlass(it) }
             main.post {
                 if (session != shelfGeneration || shelfPkg != pkg || !resumed ||
@@ -1339,6 +1371,15 @@ class HomeActivity : Activity(), TileAdapter.Listener {
     }
 
     fun resumeShelfRotation() {
+        if (!resumed || control.isOpen) return
+        if (!shelfShown) {
+            val pkg = pendingShelf
+            if (pkg != null && grid.hasFocus() && adapter.apps.getOrNull(focusedPos)?.pkg == pkg) {
+                main.removeCallbacks(shelfShow)
+                main.postDelayed(shelfShow, 300)
+            }
+            return
+        }
         if (shelfShown && !shelfBrowsing && shelfItems.size > 1) {
             main.removeCallbacks(shelfAdvance)
             main.postDelayed(shelfAdvance, SHELF_SECONDS * 1000L)
@@ -1398,13 +1439,18 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         io.execute {
             val list = repo.orderedVisible()
             main.post {
-                val focusedPkg = adapter.apps.getOrNull(focusedPos)?.pkg
+                if (isDestroyed || isFinishing) return@post
+                val restoring = restoreFocusPkg != null
+                val focusedPkg = restoreFocusPkg ?: adapter.apps.getOrNull(focusedPos)?.pkg
+                val idx = HomeFocusState.restoreIndex(list.map { it.pkg }, focusedPkg, focusedPos)
                 adapter.submit(list, changed)
-                val idx = list.indexOfFirst { it.pkg == focusedPkg }.coerceAtLeast(0)
-                grid.post {
+                if (idx >= 0) { focusedPos = idx; restoreFocusPkg = null }
+                grid.post focus@{
+                    if (isDestroyed || isFinishing) return@focus
                     // On first show the header buttons grab default focus; the grid should have it.
                     val headerOk = header.hasFocus() && !firstFocus
-                    if ((forceFocus || (!grid.hasFocus() && !headerOk)) && sheets.isEmpty() && !control.isOpen) focusAt(idx)
+                    if (idx >= 0 && (forceFocus || restoring || (!grid.hasFocus() && !headerOk)) &&
+                        sheets.isEmpty() && !control.isOpen) focusAt(idx)
                     firstFocus = false
                     // A new list can leave the grid between rows; put the focused row back where it belongs.
                     grid.post { grid.focusedChild?.let { grid.layoutManager?.requestChildRectangleOnScreen(grid, it, Rect(), false, true) } }
@@ -1442,7 +1488,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         val staticAllowed = MantisExperiment.enabled && app != null && app.folder == null && app.input == null
         if (pos < cols && pkg != null && (Shelf.has(pkg, shelfCustom()) || staticAllowed) && moving < 0) {
             if (pkg != shelfPkg || !shelfShown) {
-                if (shelfShown) hideShelf()
+                // Invalidate even a still-loading old app before the new300ms delay starts.
+                hideShelf()
                 pendingShelf = pkg
                 // Wait for focus to settle so sliding along the dock does not flicker.
                 main.postDelayed(shelfShow, 300)
@@ -1930,7 +1977,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         main.removeCallbacks(ticker)
         ticker.run()
         control.refresh()
-        if (shelfShown && !control.isOpen) resumeShelfRotation()
+        if (!control.isOpen) resumeShelfRotation()
         // Adopt a launch made by the App Switcher when returning here without a HOME intent
         // (e.g. the user pressed Back inside the launched app).
         if (outboundLaunch == null) outboundLaunch = HomeReturnHandoff.take()
@@ -1961,6 +2008,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         main.removeCallbacks(ticker)
         main.removeCallbacks(shelfShow)
         main.removeCallbacks(shelfAdvance)
+        ++shelfGeneration
         ++shelfImageRequest
         shelfBrowsing = false
         shelfPendingIndex = shelfIndex

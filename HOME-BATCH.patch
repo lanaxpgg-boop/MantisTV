@@ -1,0 +1,349 @@
+diff --git a/app/src/main/java/com/leslie/tvhome/DockLayout.kt b/app/src/main/java/com/leslie/tvhome/DockLayout.kt
+index db060ab..620f7cf 100644
+--- a/app/src/main/java/com/leslie/tvhome/DockLayout.kt
++++ b/app/src/main/java/com/leslie/tvhome/DockLayout.kt
+@@ -2,13 +2,26 @@ package com.leslie.tvhome
+ 
+ /**
+  * tvOS Home uses one consistent column count for its glass Dock and app grid.
+- * Existing installations keep five; six is an explicit opt-in in Home Settings.
++ * Standard/guard retain five; Mantis starts at six unless a column choice was saved.
+  * This is shared UI layout policy, never a vendor or installation adapter.
+  */
+ object DockLayout {
+     const val DEFAULT_COLUMNS = 5
+     const val SIX_COLUMNS = 6
+ 
++    fun defaultColumns(mantis: Boolean): Int = if (mantis) SIX_COLUMNS else DEFAULT_COLUMNS
++
++    data class HomeRows(val firstTop: Int, val pitch: Int)
++
++    /** Inherited tvOS26 composition: a small next-row hint, with room for real label metrics. */
++    fun referenceRows(screenHeight: Int, tileHeight: Int, labelClearance: Int): HomeRows {
++        require(screenHeight > 0 && tileHeight > 0 && labelClearance >= 0)
++        val gap = maxOf((screenHeight * 0.09f).toInt(), labelClearance)
++        val pitch = tileHeight + gap
++        val peek = (screenHeight * 0.02f).toInt().coerceAtLeast(1)
++        return HomeRows((screenHeight - peek - pitch).coerceAtLeast(0), pitch)
++    }
++
+     fun normalized(columns: Int): Int = if (columns == SIX_COLUMNS) SIX_COLUMNS else DEFAULT_COLUMNS
+ 
+     fun next(columns: Int): Int =
+diff --git a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+index d2ed511..a6f8667 100644
+--- a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+@@ -59,6 +59,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         const val SHELF_SECONDS = 8
+         private const val EXTRA_GUARD = "com.leslie.tvhome.GUARD"
+         private const val EXTRA_WAKE = "com.leslie.tvhome.WAKE"
++        private const val STATE_FOCUS_PACKAGE = "home.focus.package"
++        private const val STATE_FOCUS_POSITION = "home.focus.position"
+ 
+         /**
+          * How the home guard and the boot receiver bring the home screen back: the same task, with
+@@ -175,6 +177,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+     private var expandedRowY = 0
+ 
+     private var focusedPos = 0
++    private var restoreFocusPkg: String? = null
+     private var firstFocus = true
+     /** Grid scroll position; RecyclerView's own estimate is unreliable for grids. */
+     private var scrollY = 0
+@@ -223,7 +226,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+     private var shelfConsumeExitKeyUp = -1
+     private var shelfShown = false
+     private var shelfBrowsing = false
+-    private var shelfGeneration = 0L
++    @Volatile private var shelfGeneration = 0L
+     private var shelfImageRequest = 0L
+     private val shelfShow = Runnable { pendingShelf?.let { showShelf(it) } }
+     private val shelfAdvance = Runnable {
+@@ -383,6 +386,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
++        restoreFocusPkg = savedInstanceState?.getString(STATE_FOCUS_PACKAGE)
++        focusedPos = savedInstanceState?.getInt(STATE_FOCUS_POSITION, 0) ?: 0
+         Tween.readScale(this)
+         prefs = Prefs(this)
+         glassExtreme = prefs.extremeGlass
+@@ -532,8 +537,16 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         }
+     }
+ 
++    override fun onSaveInstanceState(outState: Bundle) {
++        val pkg = if (::adapter.isInitialized) adapter.apps.getOrNull(focusedPos)?.pkg else null
++        outState.putString(STATE_FOCUS_PACKAGE, pkg ?: restoreFocusPkg)
++        outState.putInt(STATE_FOCUS_POSITION, focusedPos)
++        super.onSaveInstanceState(outState)
++    }
++
+     override fun onDestroy() {
+         resumed = false
++        ++shelfGeneration
+         cancelIdle()
+         wallpaperPlaying = false
+         syncOwnPlayback()
+@@ -571,16 +584,31 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         val dm = resources.displayMetrics
+         sw = dm.widthPixels
+         sh = dm.heightPixels
+-        // Proportions measured from a 1920×1080 tvOS 26 screenshot.
+-        val side = (sw * 0.06875f).toInt()
+-        val gap = (sw * 0.0292f).toInt()           // 56 px
++        // Upstream keeps its tvOS26 proportions; Mantis adapts the official26 reference.
++        // Current-tvOS27 geometry and actual rendering remain acceptance work.
++        val side = (sw * (if (MantisExperiment.enabled) 0.05f else 0.06875f)).toInt()
++        val gap = (sw * (if (MantisExperiment.enabled) 0.025f else 0.0292f)).toInt()
+         tileW = DockLayout.tileWidth(sw, side, gap, cols)
+         tileH = tileW * 9 / 16
+-        rowPitch = (sh * 0.2463f).toInt()          // 266 px
+-        // The dock sits at the bottom; only the top edge of the next row peeks out below it.
+-        val defaultTileWidth = DockLayout.tileWidth(sw, side, gap, DockLayout.DEFAULT_COLUMNS)
+-        val defaultTileHeight = defaultTileWidth * 9 / 16
+-        firstRowY = DockLayout.dockTop((sh * 0.744f).toInt(), defaultTileHeight, tileH) + dp(10)
++        if (MantisExperiment.enabled) {
++            // Keep next-row discovery visible for either saved column count. Measure the actual
++            // label font so large text gets vertical room without changing grid/focus ownership.
++            val labelPaint = android.text.TextPaint().apply {
++                typeface = Fonts.inter(this@HomeActivity, 600)
++                textSize = 15f * prefs.textScale * dm.scaledDensity
++            }
++            val metrics = labelPaint.fontMetricsInt
++            val labelClearance = dp(17) + metrics.descent - metrics.ascent + dp(8) +
++                (tileH * (TileSkin.FOCUS_SCALE - 1f) / 2f).toInt()
++            val rows = DockLayout.referenceRows(sh, tileH, labelClearance)
++            rowPitch = rows.pitch
++            firstRowY = rows.firstTop
++        } else {
++            rowPitch = (sh * 0.2463f).toInt()
++            val defaultTileWidth = DockLayout.tileWidth(sw, side, gap, DockLayout.DEFAULT_COLUMNS)
++            val defaultTileHeight = defaultTileWidth * 9 / 16
++            firstRowY = DockLayout.dockTop((sh * 0.744f).toInt(), defaultTileHeight, tileH) + dp(10)
++        }
+         expandedRowY = (sh * 0.36f).toInt()
+ 
+         // The dock hugs the first row: a focused tile (scaled 1.12) nearly touches its edges.
+@@ -1102,12 +1130,16 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         val fallbackApp = app?.takeIf { MantisExperiment.enabled && it.folder == null && it.input == null }
+         val hasFeed = Shelf.has(pkg, custom)
+         net.execute {
++            if (session != shelfGeneration) return@execute
+             val items = if (hasFeed) Shelf.items(pkg, custom) else emptyList()
++            if (session != shelfGeneration) return@execute
+             val contentImage = items.firstOrNull()?.let { Shelf.image(this, it.image) }
++            if (session != shelfGeneration) return@execute
+             val staticArtwork = contentImage == null && fallbackApp != null
+             val first = contentImage ?: fallbackApp?.let {
+                 runCatching { Shelf.appArtwork(repo.artwork(it).background) }.getOrNull()
+             }
++            if (session != shelfGeneration) return@execute
+             val glass = first?.let { shelfGlass(it) }
+             main.post {
+                 if (session != shelfGeneration || shelfPkg != pkg || !resumed ||
+@@ -1339,6 +1371,15 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+     }
+ 
+     fun resumeShelfRotation() {
++        if (!resumed || control.isOpen) return
++        if (!shelfShown) {
++            val pkg = pendingShelf
++            if (pkg != null && grid.hasFocus() && adapter.apps.getOrNull(focusedPos)?.pkg == pkg) {
++                main.removeCallbacks(shelfShow)
++                main.postDelayed(shelfShow, 300)
++            }
++            return
++        }
+         if (shelfShown && !shelfBrowsing && shelfItems.size > 1) {
+             main.removeCallbacks(shelfAdvance)
+             main.postDelayed(shelfAdvance, SHELF_SECONDS * 1000L)
+@@ -1398,13 +1439,18 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         io.execute {
+             val list = repo.orderedVisible()
+             main.post {
+-                val focusedPkg = adapter.apps.getOrNull(focusedPos)?.pkg
++                if (isDestroyed || isFinishing) return@post
++                val restoring = restoreFocusPkg != null
++                val focusedPkg = restoreFocusPkg ?: adapter.apps.getOrNull(focusedPos)?.pkg
++                val idx = HomeFocusState.restoreIndex(list.map { it.pkg }, focusedPkg, focusedPos)
+                 adapter.submit(list, changed)
+-                val idx = list.indexOfFirst { it.pkg == focusedPkg }.coerceAtLeast(0)
+-                grid.post {
++                if (idx >= 0) { focusedPos = idx; restoreFocusPkg = null }
++                grid.post focus@{
++                    if (isDestroyed || isFinishing) return@focus
+                     // On first show the header buttons grab default focus; the grid should have it.
+                     val headerOk = header.hasFocus() && !firstFocus
+-                    if ((forceFocus || (!grid.hasFocus() && !headerOk)) && sheets.isEmpty() && !control.isOpen) focusAt(idx)
++                    if (idx >= 0 && (forceFocus || restoring || (!grid.hasFocus() && !headerOk)) &&
++                        sheets.isEmpty() && !control.isOpen) focusAt(idx)
+                     firstFocus = false
+                     // A new list can leave the grid between rows; put the focused row back where it belongs.
+                     grid.post { grid.focusedChild?.let { grid.layoutManager?.requestChildRectangleOnScreen(grid, it, Rect(), false, true) } }
+@@ -1442,7 +1488,8 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         val staticAllowed = MantisExperiment.enabled && app != null && app.folder == null && app.input == null
+         if (pos < cols && pkg != null && (Shelf.has(pkg, shelfCustom()) || staticAllowed) && moving < 0) {
+             if (pkg != shelfPkg || !shelfShown) {
+-                if (shelfShown) hideShelf()
++                // Invalidate even a still-loading old app before the new300ms delay starts.
++                hideShelf()
+                 pendingShelf = pkg
+                 // Wait for focus to settle so sliding along the dock does not flicker.
+                 main.postDelayed(shelfShow, 300)
+@@ -1930,7 +1977,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         main.removeCallbacks(ticker)
+         ticker.run()
+         control.refresh()
+-        if (shelfShown && !control.isOpen) resumeShelfRotation()
++        if (!control.isOpen) resumeShelfRotation()
+         // Adopt a launch made by the App Switcher when returning here without a HOME intent
+         // (e.g. the user pressed Back inside the launched app).
+         if (outboundLaunch == null) outboundLaunch = HomeReturnHandoff.take()
+@@ -1961,6 +2008,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         main.removeCallbacks(ticker)
+         main.removeCallbacks(shelfShow)
+         main.removeCallbacks(shelfAdvance)
++        ++shelfGeneration
+         ++shelfImageRequest
+         shelfBrowsing = false
+         shelfPendingIndex = shelfIndex
+diff --git a/app/src/main/java/com/leslie/tvhome/HomeFocusState.kt b/app/src/main/java/com/leslie/tvhome/HomeFocusState.kt
+new file mode 100644
+index 0000000..1a89b18
+--- /dev/null
++++ b/app/src/main/java/com/leslie/tvhome/HomeFocusState.kt
+@@ -0,0 +1,10 @@
++package com.leslie.tvhome
++
++/** Restore an app's identity across grid rebuilds, never its old row/column coordinates. */
++internal object HomeFocusState {
++    fun restoreIndex(packages: List<String>, packageName: String?, fallbackPosition: Int): Int {
++        if (packages.isEmpty()) return -1
++        if (packageName != null) return packages.indexOf(packageName).coerceAtLeast(0)
++        return fallbackPosition.coerceIn(0, packages.lastIndex)
++    }
++}
+diff --git a/app/src/main/java/com/leslie/tvhome/Prefs.kt b/app/src/main/java/com/leslie/tvhome/Prefs.kt
+index 18a9946..826bfad 100644
+--- a/app/src/main/java/com/leslie/tvhome/Prefs.kt
++++ b/app/src/main/java/com/leslie/tvhome/Prefs.kt
+@@ -52,9 +52,9 @@ class Prefs(ctx: Context) {
+         get() = sp.getString("order", "")!!.split(',').filter { it.isNotEmpty() }
+         set(v) = sp.edit().putString("order", v.joinToString(",")).apply()
+ 
+-    /** tvOS first-row Dock count (5 by default, 6 only after an explicit choice). */
++    /** Mantis uses six initially; an explicit saved five/six choice always wins. */
+     var dockColumns: Int
+-        get() = DockLayout.normalized(sp.getInt("dock_columns", DockLayout.DEFAULT_COLUMNS))
++        get() = DockLayout.normalized(sp.getInt("dock_columns", DockLayout.defaultColumns(MantisExperiment.enabled)))
+         set(value) = sp.edit().putInt("dock_columns", DockLayout.normalized(value)).apply()
+ 
+     /** New installs and upgrades start in fixed manual order; the user can opt in. */
+diff --git a/app/src/main/java/com/leslie/tvhome/TileAdapter.kt b/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
+index b3c2d44..a6f932f 100644
+--- a/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
++++ b/app/src/main/java/com/leslie/tvhome/TileAdapter.kt
+@@ -25,6 +25,8 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx)
+         gravity = Gravity.CENTER
+         maxLines = 1
+         alpha = 0f
++        // The tile owns the accessible name; this visual label extends below its bounds.
++        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+         ellipsize = android.text.TextUtils.TruncateAt.END
+         setShadowLayer(dp(6).toFloat(), 0f, dp(1).toFloat(), Color.argb(140, 0, 0, 0))
+     }
+@@ -33,6 +35,7 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx)
+     private val shadow = ImageView(ctx).apply {
+         setImageBitmap(shadowFor(ctx, tileW, tileH))
+         alpha = TileSkin.SHADOW_REST_ALPHA
++        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
+     }
+     private val shadowPad = dp(SHADOW_PAD)
+     private val focusTween = Tween()
+@@ -54,6 +57,8 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx)
+         isFocusable = true
+         isClickable = true
+         isLongClickable = true
++        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
++        card.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+         addView(shadow, LayoutParams(tileW + shadowPad * 2, tileH + shadowPad * 2))
+         shadow.translationX = -shadowPad.toFloat()
+         shadow.translationY = (-shadowPad + dp(4)).toFloat()
+@@ -279,6 +284,8 @@ class TileAdapter(
+         val app = apps[position]
+         val cell = h.cell
+         cell.label.text = app.label
++        // Rebind the name with the app identity, including dock tiles whose label is hidden.
++        cell.contentDescription = app.label
+         val same = cell.tag == app.pkg
+         cell.tag = app.pkg
+         cell.setJiggle(app.pkg == movingPkg)
+diff --git a/app/src/test/java/com/leslie/tvhome/DockLayoutTest.kt b/app/src/test/java/com/leslie/tvhome/DockLayoutTest.kt
+index 3ddd3eb..77f0a56 100644
+--- a/app/src/test/java/com/leslie/tvhome/DockLayoutTest.kt
++++ b/app/src/test/java/com/leslie/tvhome/DockLayoutTest.kt
+@@ -4,6 +4,35 @@ import org.junit.Assert.assertEquals
+ import org.junit.Test
+ 
+ class DockLayoutTest {
++    @Test fun mantisDefaultDoesNotChangeUpstreamDefault() {
++        assertEquals(6, DockLayout.defaultColumns(mantis = true))
++        assertEquals(5, DockLayout.defaultColumns(mantis = false))
++    }
++
++    @Test fun nextRowRemainsDiscoverableForBothColumnChoicesAndScreenSizes() {
++        for (height in listOf(720, 1080, 2160)) {
++            val width = height * 16 / 9
++            for (columns in listOf(5, 6)) {
++                val tile = DockLayout.tileWidth(width, width / 20, width / 40, columns) * 9 / 16
++                val rows = DockLayout.referenceRows(height, tile, height / 15)
++                org.junit.Assert.assertTrue(rows.firstTop > 0)
++                org.junit.Assert.assertTrue(rows.firstTop + tile < height)
++                org.junit.Assert.assertTrue(rows.pitch - tile >= height / 15)
++                val nextTop = rows.firstTop + rows.pitch
++                org.junit.Assert.assertTrue(nextTop < height)
++                org.junit.Assert.assertTrue(nextTop >= height * 0.97f)
++            }
++        }
++    }
++
++    @Test fun largerLabelsGainRoomWithoutLosingTheNextRowHint() {
++        val normal = DockLayout.referenceRows(1080, 139, 80)
++        val large = DockLayout.referenceRows(1080, 139, 140)
++        org.junit.Assert.assertTrue(large.pitch > normal.pitch)
++        assertEquals(normal.firstTop + normal.pitch, large.firstTop + large.pitch)
++        org.junit.Assert.assertTrue(large.pitch - 139 >= 140)
++    }
++
+     @Test fun existingUsersKeepTheOriginalFiveColumns() {
+         assertEquals(5, DockLayout.DEFAULT_COLUMNS)
+         assertEquals(5, DockLayout.normalized(0))
+diff --git a/app/src/test/java/com/leslie/tvhome/HomeFocusStateTest.kt b/app/src/test/java/com/leslie/tvhome/HomeFocusStateTest.kt
+new file mode 100644
+index 0000000..2d8411c
+--- /dev/null
++++ b/app/src/test/java/com/leslie/tvhome/HomeFocusStateTest.kt
+@@ -0,0 +1,21 @@
++package com.leslie.tvhome
++
++import org.junit.Assert.assertEquals
++import org.junit.Test
++
++class HomeFocusStateTest {
++    @Test fun reorderingKeepsTheSameAppInsteadOfItsOldPosition() {
++        assertEquals(2, HomeFocusState.restoreIndex(listOf("c", "a", "b"), "b", 1))
++        assertEquals(0, HomeFocusState.restoreIndex(listOf("b", "c", "a"), "b", 1))
++    }
++
++    @Test fun removedAppFallsBackToHomeAndEmptyCatalogHasNoTarget() {
++        assertEquals(0, HomeFocusState.restoreIndex(listOf("a", "c"), "b", 1))
++        assertEquals(-1, HomeFocusState.restoreIndex(emptyList(), "b", 1))
++    }
++
++    @Test fun legacyPositionIsBoundedWhenNoIdentityWasSaved() {
++        assertEquals(1, HomeFocusState.restoreIndex(listOf("a", "b"), null, 99))
++        assertEquals(0, HomeFocusState.restoreIndex(listOf("a", "b"), null, -1))
++    }
++}

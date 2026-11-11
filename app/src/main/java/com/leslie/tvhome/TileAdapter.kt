@@ -25,6 +25,8 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx) 
         gravity = Gravity.CENTER
         maxLines = 1
         alpha = 0f
+        // The tile owns the accessible name; this visual label extends below its bounds.
+        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
         ellipsize = android.text.TextUtils.TruncateAt.END
         setShadowLayer(dp(6).toFloat(), 0f, dp(1).toFloat(), Color.argb(140, 0, 0, 0))
     }
@@ -33,6 +35,7 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx) 
     private val shadow = ImageView(ctx).apply {
         setImageBitmap(shadowFor(ctx, tileW, tileH))
         alpha = TileSkin.SHADOW_REST_ALPHA
+        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO
     }
     private val shadowPad = dp(SHADOW_PAD)
     private val focusTween = Tween()
@@ -54,6 +57,8 @@ class TileCell(ctx: Context, val tileW: Int, val tileH: Int) : FrameLayout(ctx) 
         isFocusable = true
         isClickable = true
         isLongClickable = true
+        importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
+        card.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
         addView(shadow, LayoutParams(tileW + shadowPad * 2, tileH + shadowPad * 2))
         shadow.translationX = -shadowPad.toFloat()
         shadow.translationY = (-shadowPad + dp(4)).toFloat()
@@ -279,6 +284,8 @@ class TileAdapter(
         val app = apps[position]
         val cell = h.cell
         cell.label.text = app.label
+        // Rebind the name with the app identity, including dock tiles whose label is hidden.
+        cell.contentDescription = app.label
         val same = cell.tag == app.pkg
         cell.tag = app.pkg
         cell.setJiggle(app.pkg == movingPkg)

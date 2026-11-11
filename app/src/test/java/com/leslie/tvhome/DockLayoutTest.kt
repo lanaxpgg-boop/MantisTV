@@ -4,6 +4,35 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class DockLayoutTest {
+    @Test fun mantisDefaultDoesNotChangeUpstreamDefault() {
+        assertEquals(6, DockLayout.defaultColumns(mantis = true))
+        assertEquals(5, DockLayout.defaultColumns(mantis = false))
+    }
+
+    @Test fun nextRowRemainsDiscoverableForBothColumnChoicesAndScreenSizes() {
+        for (height in listOf(720, 1080, 2160)) {
+            val width = height * 16 / 9
+            for (columns in listOf(5, 6)) {
+                val tile = DockLayout.tileWidth(width, width / 20, width / 40, columns) * 9 / 16
+                val rows = DockLayout.referenceRows(height, tile, height / 15)
+                org.junit.Assert.assertTrue(rows.firstTop > 0)
+                org.junit.Assert.assertTrue(rows.firstTop + tile < height)
+                org.junit.Assert.assertTrue(rows.pitch - tile >= height / 15)
+                val nextTop = rows.firstTop + rows.pitch
+                org.junit.Assert.assertTrue(nextTop < height)
+                org.junit.Assert.assertTrue(nextTop >= height * 0.97f)
+            }
+        }
+    }
+
+    @Test fun largerLabelsGainRoomWithoutLosingTheNextRowHint() {
+        val normal = DockLayout.referenceRows(1080, 139, 80)
+        val large = DockLayout.referenceRows(1080, 139, 140)
+        org.junit.Assert.assertTrue(large.pitch > normal.pitch)
+        assertEquals(normal.firstTop + normal.pitch, large.firstTop + large.pitch)
+        org.junit.Assert.assertTrue(large.pitch - 139 >= 140)
+    }
+
     @Test fun existingUsersKeepTheOriginalFiveColumns() {
         assertEquals(5, DockLayout.DEFAULT_COLUMNS)
         assertEquals(5, DockLayout.normalized(0))
