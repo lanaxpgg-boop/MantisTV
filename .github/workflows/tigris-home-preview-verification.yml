@@ -21,7 +21,7 @@ jobs:
           import os
           s=os.statvfs(os.environ['GITHUB_WORKSPACE']);assert s.f_bavail*s.f_frsize > 8*1024**3
           PYCODE
-          git clone --depth 1 --single-branch --branch experiment/tigris-preview-e3949da-43013565038 "https://github.com/$GITHUB_REPOSITORY.git" experiment
+          git clone --depth 1 --single-branch --branch experiment/tigris-home-c82db03-43013565038 "https://github.com/$GITHUB_REPOSITORY.git" experiment
           cd experiment
           test "$(git rev-parse HEAD)" = 3d40f130779ab4d933efc36471a76cfdd9510a8b
           python3 - <<'PYCODE'
