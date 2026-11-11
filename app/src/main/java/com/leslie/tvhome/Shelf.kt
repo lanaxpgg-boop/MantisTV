@@ -70,6 +70,32 @@ object Shelf {
 
     fun has(pkg: String, custom: Custom? = null) = pickShelf(pkg, custom, customOk = true) != ShelfPick.NONE
 
+    /** Static, noninteractive fallback from installed artwork; no catalogue or playback claims. */
+    fun appArtwork(tile: Bitmap): Bitmap? = runCatching {
+        // Reuse the tile cache and blur primitive. Only active/cross-fading pictures survive;
+        // no second per-app cache, network request or full-resolution image decode is needed.
+        val soft = Bitmap.createBitmap(240, 135, Bitmap.Config.ARGB_8888)
+        try {
+            android.graphics.Canvas(soft).drawBitmap(tile, null,
+                android.graphics.Rect(0, 0, soft.width, soft.height),
+                android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
+            val pixels = IntArray(soft.width * soft.height)
+            soft.getPixels(pixels, 0, soft.width, 0, 0, soft.width, soft.height)
+            repeat(3) { LiquidGlass.boxBlur(pixels, soft.width, soft.height, 7) }
+            soft.setPixels(pixels, 0, soft.width, 0, 0, soft.width, soft.height)
+            val picture = Bitmap.createBitmap(960, 540, Bitmap.Config.ARGB_8888)
+            android.graphics.Canvas(picture).apply {
+                val paint = android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG)
+                drawBitmap(soft, null, android.graphics.Rect(0, 0, picture.width, picture.height), paint)
+                // Preserve the app's own proportions and resolution, rather than stretch its logo.
+                drawBitmap(tile, (picture.width - tile.width) / 2f, picture.height * 0.17f, paint)
+            }
+            darken(picture).also { it.prepareToDraw() }
+        } finally {
+            soft.recycle()
+        }
+    }.getOrNull()
+
     fun sourceName(pkg: String) = synchronized(cache) {
         shownName[pkg] ?: sources[pkg]?.name ?: ""
     }

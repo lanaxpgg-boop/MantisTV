@@ -140,6 +140,10 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         outboundLaunch = null
         if (tile == null) return
         if (!tile.hasFocus()) tile.requestFocus()
+        else if (!shelfShown && pendingShelf != null) {
+            // A fast app launch can cancel the delayed shelf before focus ever changes.
+            (tile as? TileCell)?.let { onTileFocused(pos, it) }
+        }
         cancelReturnCue()
         val lowEnd = Device.isLowEnd(this)
         returnCueView = tile
@@ -1094,24 +1098,32 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         val session = ++shelfGeneration
         ++shelfImageRequest
         val custom = shelfCustom()
+        val app = adapter.apps.firstOrNull { it.pkg == pkg }
+        val fallbackApp = app?.takeIf { MantisExperiment.enabled && it.folder == null && it.input == null }
+        val hasFeed = Shelf.has(pkg, custom)
         net.execute {
-            val items = Shelf.items(pkg, custom)
-            val first = items.firstOrNull()?.let { Shelf.image(this, it.image) }
+            val items = if (hasFeed) Shelf.items(pkg, custom) else emptyList()
+            val contentImage = items.firstOrNull()?.let { Shelf.image(this, it.image) }
+            val staticArtwork = contentImage == null && fallbackApp != null
+            val first = contentImage ?: fallbackApp?.let {
+                runCatching { Shelf.appArtwork(repo.artwork(it).background) }.getOrNull()
+            }
             val glass = first?.let { shelfGlass(it) }
             main.post {
                 if (session != shelfGeneration || shelfPkg != pkg || !resumed ||
                     isDestroyed || control.isOpen || first == null || glass == null) return@post
-                shelfItems = items
+                // Static app artwork has no content item, link, carousel or focus target.
+                shelfItems = if (staticArtwork) emptyList() else items
                 shelfIndex = 0
                 shelfPendingIndex = 0
                 shelfBrowsing = false
-                shelfSource.text = Shelf.sourceName(pkg)
+                shelfSource.text = if (staticArtwork) "" else Shelf.sourceName(pkg)
                 shelfDots.removeAllViews()
-                repeat(items.size) {
+                repeat(shelfItems.size) {
                     shelfDots.addView(View(this).apply { background = rounded(Color.WHITE, dp(4).toFloat()) },
                         LinearLayout.LayoutParams(dp(7), dp(7)).apply { marginStart = dp(7) })
                 }
-                showShelfItem(0, first, glass)
+                showShelfItem(0, first, glass, staticArtwork = staticArtwork)
                 setShelfVisible(true)
                 updateShelfHint()
                 resumeShelfRotation()
@@ -1224,8 +1236,9 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         }).also { it.prepareToDraw() }, null)
     }.getOrElse { ShelfGlass(null, null) }  // The picture still shows; the dock keeps its glass.
 
-    private fun showShelfItem(i: Int, b: Bitmap, glass: ShelfGlass) {
-        val item = shelfItems.getOrNull(i) ?: return
+    private fun showShelfItem(i: Int, b: Bitmap, glass: ShelfGlass, staticArtwork: Boolean = false) {
+        val item = shelfItems.getOrNull(i)
+        if (item == null && !staticArtwork) return
         shelfIndex = i
         shelfPendingIndex = i
         // The new picture fades in over the old one, settling from a slight zoom.
@@ -1250,11 +1263,13 @@ class HomeActivity : Activity(), TileAdapter.Listener {
                 if (old != null) control.refreshGlass()
             }.start()
         shelfInfo.animate().cancel()
+        shelfInfo.visibility = if (staticArtwork) View.GONE else View.VISIBLE
+        shelfDots.visibility = if (staticArtwork) View.GONE else View.VISIBLE
         shelfInfo.alpha = 0f
         shelfInfo.translationY = dp(10).toFloat()
-        shelfTitle.text = item.title
-        shelfMeta.text = item.meta
-        shelfInfo.animate().alpha(1f).translationY(0f).setDuration(450).setStartDelay(150).start()
+        shelfTitle.text = item?.title.orEmpty()
+        shelfMeta.text = item?.meta.orEmpty()
+        if (!staticArtwork) shelfInfo.animate().alpha(1f).translationY(0f).setDuration(450).setStartDelay(150).start()
         for (k in 0 until shelfDots.childCount) shelfDots.getChildAt(k).alpha = if (k == i) 1f else 0.35f
         // The dock refracts the new picture from this frame on, fading with it: the
         // shelf itself fades in over 500 ms the first time, later pictures over 700 ms.
@@ -1265,7 +1280,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         }
         glass.dock?.let { setDock(it, 600) }
         // Fetch the next picture ahead of time.
-        shelfItems.getOrNull((i + 1) % shelfItems.size)?.let { n -> net.execute { Shelf.image(this, n.image) } }
+        if (shelfItems.size > 1) shelfItems.getOrNull((i + 1) % shelfItems.size)?.let { n -> net.execute { Shelf.image(this, n.image) } }
     }
 
     private fun setShelfVisible(v: Boolean) {
@@ -1423,7 +1438,9 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         val pkg = adapter.apps.getOrNull(pos)?.pkg
         if (shelfBrowsing && pkg != shelfPkg) shelfBrowsing = false
         main.removeCallbacks(shelfShow)
-        if (pos < cols && pkg != null && Shelf.has(pkg, shelfCustom()) && moving < 0) {
+        val app = adapter.apps.getOrNull(pos)
+        val staticAllowed = MantisExperiment.enabled && app != null && app.folder == null && app.input == null
+        if (pos < cols && pkg != null && (Shelf.has(pkg, shelfCustom()) || staticAllowed) && moving < 0) {
             if (pkg != shelfPkg || !shelfShown) {
                 if (shelfShown) hideShelf()
                 pendingShelf = pkg
@@ -1942,6 +1959,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
         HomeForeground.pause(SystemClock.elapsedRealtime())
         cancelIdle()
         main.removeCallbacks(ticker)
+        main.removeCallbacks(shelfShow)
         main.removeCallbacks(shelfAdvance)
         ++shelfImageRequest
         shelfBrowsing = false

@@ -1,0 +1,258 @@
+diff --git a/app/src/main/java/com/leslie/tvhome/ControlCenter.kt b/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
+index ac976ab..0ca71ac 100644
+--- a/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
++++ b/app/src/main/java/com/leslie/tvhome/ControlCenter.kt
+@@ -44,7 +44,8 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+     private val ctx = home
+     private val prefs = Prefs(ctx)
+     private val gap = ctx.dp(12)
+-    private val cell = ctx.dp(47)
++    // Larger text needs real layout space, rather than shrinking the requested font.
++    private val cell = ctx.dp(47 * prefs.textScale.coerceAtLeast(1f))
+     private val width = cell * 4 + gap * 3
+     private var glassStyle = prefs.ccGlass(ctx)
+     private var extremeGlass = prefs.extremeGlass
+@@ -277,7 +278,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+ 
+         // tvOS layout: a square power tile beside two capsules, then a row of round buttons.
+         val top = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
+-        val power = GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_001)), R.drawable.ic_power, Shape.TILE) {
++        val power = GlassButton(I18n.text(R.string.i18n_controlcenter_001), R.drawable.ic_power, Shape.TILE, unavailableInMantis = true) {
+             confirm(I18n.text(R.string.i18n_controlcenter_002), I18n.text(R.string.i18n_controlcenter_003)) { Cleaner.shutdown(ctx) }
+         }
+         top.addView(power, LinearLayout.LayoutParams(0, cell * 2 + gap, 1f).apply { marginEnd = gap })
+@@ -287,24 +288,24 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+             runCatching { ctx.startActivity(tv.wifiIntent()) }
+         }
+         right.addView(networkModule, LinearLayout.LayoutParams(-1, cell))
+-        right.addView(GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_005)), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
++        right.addView(GlassButton(I18n.text(R.string.i18n_controlcenter_005), R.drawable.ic_moon, Shape.CAPSULE, unavailableInMantis = true) { needAdb { close(); Cleaner.sleep(ctx) } },
+             LinearLayout.LayoutParams(-1, cell).apply { topMargin = gap })
+         top.addView(right, LinearLayout.LayoutParams(0, -2, 1f))
+         generalPage.addView(top)
+ 
+         val utilities = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
+-        fun utility(label: String, icon: Int, action: () -> Unit): GlassButton =
+-            GlassButton(label, icon, Shape.ROUND, action = action).also {
++        fun utility(label: String, icon: Int, unavailableInMantis: Boolean = false, action: () -> Unit): GlassButton =
++            GlassButton(label, icon, Shape.ROUND, unavailableInMantis = unavailableInMantis, action = action).also {
+                 utilities.addView(it, LinearLayout.LayoutParams(cell, cell).apply {
+                     if (utilities.childCount > 0) marginStart = (this@ControlCenter.width - cell * 4) / 3
+                 })
+             }
+-        memButton = utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_006)), R.drawable.ic_memory) { cleanNow() }
++        memButton = utility(I18n.text(R.string.i18n_controlcenter_006), R.drawable.ic_memory, unavailableInMantis = true) { cleanNow() }
+         utility(I18n.text(R.string.i18n_controlcenter_007), R.drawable.ic_photo) {
+             close()
+             ctx.openFrame()
+         }
+-        utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_008)), R.drawable.ic_restart) {
++        utility(I18n.text(R.string.i18n_controlcenter_008), R.drawable.ic_restart, unavailableInMantis = true) {
+             confirm(I18n.text(R.string.i18n_controlcenter_009), I18n.text(R.string.i18n_controlcenter_010)) { Cleaner.reboot(ctx) }
+         }
+         utility(I18n.text(R.string.i18n_controlcenter_011), R.drawable.ic_gear) {
+@@ -873,6 +874,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+         icon: Int,
+         shape: Shape,
+         private val accent: Int = Color.WHITE,
++        unavailableInMantis: Boolean = false,
+         action: () -> Unit,
+     ) : LinearLayout(ctx) {
+         // Capsules and circles clamp this to half their height.
+@@ -882,27 +884,42 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
+             applyInk(isFocused)
+         }
+         private val glyph = ImageView(ctx)
+-        val title = ctx.text(12.5f, weight = 600).apply { text = label; maxLines = 1 }
++        private val unavailable = unavailableInMantis && MantisExperiment.enabled
++        val title = ctx.text(12.5f, weight = 600).apply {
++            text = label
++            maxLines = if (shape == Shape.TILE) 2 else 1
++            ellipsize = android.text.TextUtils.TruncateAt.END
++            if (shape == Shape.TILE) gravity = Gravity.CENTER
++        }
+         val sub = ctx.text(10.5f, Color.argb(205, 255, 255, 255), weight = 500).apply {
+-            visibility = GONE
++            visibility = if (unavailable) VISIBLE else GONE
++            if (unavailable) text = I18n.text(R.string.mantis_unavailable)
+             maxLines = 1
+             ellipsize = android.text.TextUtils.TruncateAt.END
++            if (shape == Shape.TILE) gravity = Gravity.CENTER
+         }
+         init {
+             id = View.generateViewId()
+-            contentDescription = label
++            contentDescription = if (unavailable) MantisExperiment.unavailableLabel(label) else label
+             focusables += this
+             orientation = if (shape == Shape.CAPSULE) HORIZONTAL else VERTICAL
+             gravity = if (shape == Shape.CAPSULE) Gravity.CENTER_VERTICAL else Gravity.CENTER
+             isFocusable = true
+             isClickable = true
+-            if (shape == Shape.CAPSULE) setPadding(ctx.dp(13), 0, ctx.dp(10), 0)
++            if (shape == Shape.CAPSULE) setPadding(ctx.dp(if (unavailable) 9 else 13), 0, ctx.dp(if (unavailable) 8 else 10), 0)
+             val size = ctx.dp(when (shape) { Shape.TILE -> 40; Shape.CAPSULE -> 20; Shape.ROUND -> 21 })
+             addView(glyph.apply { setImageResource(icon); setColorFilter(accent) },
+-                LayoutParams(size, size).apply { if (shape == Shape.CAPSULE) marginEnd = ctx.dp(9) })
++                LayoutParams(size, size).apply { if (shape == Shape.CAPSULE) marginEnd = ctx.dp(if (unavailable) 6 else 9) })
+             // Round buttons are icon-only, as on tvOS; the label stays for accessibility.
+             when (shape) {
+-                Shape.TILE -> addView(title, LayoutParams(-2, -2).apply { topMargin = ctx.dp(8) })
++                Shape.TILE -> {
++                    addView(title, LayoutParams(-1, -2).apply {
++                        topMargin = ctx.dp(8); marginStart = ctx.dp(8); marginEnd = ctx.dp(8)
++                    })
++                    addView(sub, LayoutParams(-1, -2).apply {
++                        topMargin = ctx.dp(2); marginStart = ctx.dp(8); marginEnd = ctx.dp(8)
++                    })
++                }
+                 Shape.CAPSULE -> addView(LinearLayout(ctx).apply {
+                     orientation = VERTICAL
+                     addView(title)
+diff --git a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+index 576d621..d2ed511 100644
+--- a/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
++++ b/app/src/main/java/com/leslie/tvhome/HomeActivity.kt
+@@ -140,6 +140,10 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         outboundLaunch = null
+         if (tile == null) return
+         if (!tile.hasFocus()) tile.requestFocus()
++        else if (!shelfShown && pendingShelf != null) {
++            // A fast app launch can cancel the delayed shelf before focus ever changes.
++            (tile as? TileCell)?.let { onTileFocused(pos, it) }
++        }
+         cancelReturnCue()
+         val lowEnd = Device.isLowEnd(this)
+         returnCueView = tile
+@@ -1094,24 +1098,32 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         val session = ++shelfGeneration
+         ++shelfImageRequest
+         val custom = shelfCustom()
++        val app = adapter.apps.firstOrNull { it.pkg == pkg }
++        val fallbackApp = app?.takeIf { MantisExperiment.enabled && it.folder == null && it.input == null }
++        val hasFeed = Shelf.has(pkg, custom)
+         net.execute {
+-            val items = Shelf.items(pkg, custom)
+-            val first = items.firstOrNull()?.let { Shelf.image(this, it.image) }
++            val items = if (hasFeed) Shelf.items(pkg, custom) else emptyList()
++            val contentImage = items.firstOrNull()?.let { Shelf.image(this, it.image) }
++            val staticArtwork = contentImage == null && fallbackApp != null
++            val first = contentImage ?: fallbackApp?.let {
++                runCatching { Shelf.appArtwork(repo.artwork(it).background) }.getOrNull()
++            }
+             val glass = first?.let { shelfGlass(it) }
+             main.post {
+                 if (session != shelfGeneration || shelfPkg != pkg || !resumed ||
+                     isDestroyed || control.isOpen || first == null || glass == null) return@post
+-                shelfItems = items
++                // Static app artwork has no content item, link, carousel or focus target.
++                shelfItems = if (staticArtwork) emptyList() else items
+                 shelfIndex = 0
+                 shelfPendingIndex = 0
+                 shelfBrowsing = false
+-                shelfSource.text = Shelf.sourceName(pkg)
++                shelfSource.text = if (staticArtwork) "" else Shelf.sourceName(pkg)
+                 shelfDots.removeAllViews()
+-                repeat(items.size) {
++                repeat(shelfItems.size) {
+                     shelfDots.addView(View(this).apply { background = rounded(Color.WHITE, dp(4).toFloat()) },
+                         LinearLayout.LayoutParams(dp(7), dp(7)).apply { marginStart = dp(7) })
+                 }
+-                showShelfItem(0, first, glass)
++                showShelfItem(0, first, glass, staticArtwork = staticArtwork)
+                 setShelfVisible(true)
+                 updateShelfHint()
+                 resumeShelfRotation()
+@@ -1224,8 +1236,9 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         }).also { it.prepareToDraw() }, null)
+     }.getOrElse { ShelfGlass(null, null) }  // The picture still shows; the dock keeps its glass.
+ 
+-    private fun showShelfItem(i: Int, b: Bitmap, glass: ShelfGlass) {
+-        val item = shelfItems.getOrNull(i) ?: return
++    private fun showShelfItem(i: Int, b: Bitmap, glass: ShelfGlass, staticArtwork: Boolean = false) {
++        val item = shelfItems.getOrNull(i)
++        if (item == null && !staticArtwork) return
+         shelfIndex = i
+         shelfPendingIndex = i
+         // The new picture fades in over the old one, settling from a slight zoom.
+@@ -1250,11 +1263,13 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+                 if (old != null) control.refreshGlass()
+             }.start()
+         shelfInfo.animate().cancel()
++        shelfInfo.visibility = if (staticArtwork) View.GONE else View.VISIBLE
++        shelfDots.visibility = if (staticArtwork) View.GONE else View.VISIBLE
+         shelfInfo.alpha = 0f
+         shelfInfo.translationY = dp(10).toFloat()
+-        shelfTitle.text = item.title
+-        shelfMeta.text = item.meta
+-        shelfInfo.animate().alpha(1f).translationY(0f).setDuration(450).setStartDelay(150).start()
++        shelfTitle.text = item?.title.orEmpty()
++        shelfMeta.text = item?.meta.orEmpty()
++        if (!staticArtwork) shelfInfo.animate().alpha(1f).translationY(0f).setDuration(450).setStartDelay(150).start()
+         for (k in 0 until shelfDots.childCount) shelfDots.getChildAt(k).alpha = if (k == i) 1f else 0.35f
+         // The dock refracts the new picture from this frame on, fading with it: the
+         // shelf itself fades in over 500 ms the first time, later pictures over 700 ms.
+@@ -1265,7 +1280,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         }
+         glass.dock?.let { setDock(it, 600) }
+         // Fetch the next picture ahead of time.
+-        shelfItems.getOrNull((i + 1) % shelfItems.size)?.let { n -> net.execute { Shelf.image(this, n.image) } }
++        if (shelfItems.size > 1) shelfItems.getOrNull((i + 1) % shelfItems.size)?.let { n -> net.execute { Shelf.image(this, n.image) } }
+     }
+ 
+     private fun setShelfVisible(v: Boolean) {
+@@ -1423,7 +1438,9 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         val pkg = adapter.apps.getOrNull(pos)?.pkg
+         if (shelfBrowsing && pkg != shelfPkg) shelfBrowsing = false
+         main.removeCallbacks(shelfShow)
+-        if (pos < cols && pkg != null && Shelf.has(pkg, shelfCustom()) && moving < 0) {
++        val app = adapter.apps.getOrNull(pos)
++        val staticAllowed = MantisExperiment.enabled && app != null && app.folder == null && app.input == null
++        if (pos < cols && pkg != null && (Shelf.has(pkg, shelfCustom()) || staticAllowed) && moving < 0) {
+             if (pkg != shelfPkg || !shelfShown) {
+                 if (shelfShown) hideShelf()
+                 pendingShelf = pkg
+@@ -1942,6 +1959,7 @@ class HomeActivity : Activity(), TileAdapter.Listener {
+         HomeForeground.pause(SystemClock.elapsedRealtime())
+         cancelIdle()
+         main.removeCallbacks(ticker)
++        main.removeCallbacks(shelfShow)
+         main.removeCallbacks(shelfAdvance)
+         ++shelfImageRequest
+         shelfBrowsing = false
+diff --git a/app/src/main/java/com/leslie/tvhome/Shelf.kt b/app/src/main/java/com/leslie/tvhome/Shelf.kt
+index f61a6f8..69e8040 100644
+--- a/app/src/main/java/com/leslie/tvhome/Shelf.kt
++++ b/app/src/main/java/com/leslie/tvhome/Shelf.kt
+@@ -70,6 +70,32 @@ object Shelf {
+ 
+     fun has(pkg: String, custom: Custom? = null) = pickShelf(pkg, custom, customOk = true) != ShelfPick.NONE
+ 
++    /** Static, noninteractive fallback from installed artwork; no catalogue or playback claims. */
++    fun appArtwork(tile: Bitmap): Bitmap? = runCatching {
++        // Reuse the tile cache and blur primitive. Only active/cross-fading pictures survive;
++        // no second per-app cache, network request or full-resolution image decode is needed.
++        val soft = Bitmap.createBitmap(240, 135, Bitmap.Config.ARGB_8888)
++        try {
++            android.graphics.Canvas(soft).drawBitmap(tile, null,
++                android.graphics.Rect(0, 0, soft.width, soft.height),
++                android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG))
++            val pixels = IntArray(soft.width * soft.height)
++            soft.getPixels(pixels, 0, soft.width, 0, 0, soft.width, soft.height)
++            repeat(3) { LiquidGlass.boxBlur(pixels, soft.width, soft.height, 7) }
++            soft.setPixels(pixels, 0, soft.width, 0, 0, soft.width, soft.height)
++            val picture = Bitmap.createBitmap(960, 540, Bitmap.Config.ARGB_8888)
++            android.graphics.Canvas(picture).apply {
++                val paint = android.graphics.Paint(android.graphics.Paint.FILTER_BITMAP_FLAG)
++                drawBitmap(soft, null, android.graphics.Rect(0, 0, picture.width, picture.height), paint)
++                // Preserve the app's own proportions and resolution, rather than stretch its logo.
++                drawBitmap(tile, (picture.width - tile.width) / 2f, picture.height * 0.17f, paint)
++            }
++            darken(picture).also { it.prepareToDraw() }
++        } finally {
++            soft.recycle()
++        }
++    }.getOrNull()
++
+     fun sourceName(pkg: String) = synchronized(cache) {
+         shownName[pkg] ?: sources[pkg]?.name ?: ""
+     }

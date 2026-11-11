@@ -44,7 +44,8 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
     private val ctx = home
     private val prefs = Prefs(ctx)
     private val gap = ctx.dp(12)
-    private val cell = ctx.dp(47)
+    // Larger text needs real layout space, rather than shrinking the requested font.
+    private val cell = ctx.dp(47 * prefs.textScale.coerceAtLeast(1f))
     private val width = cell * 4 + gap * 3
     private var glassStyle = prefs.ccGlass(ctx)
     private var extremeGlass = prefs.extremeGlass
@@ -277,7 +278,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
 
         // tvOS layout: a square power tile beside two capsules, then a row of round buttons.
         val top = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
-        val power = GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_001)), R.drawable.ic_power, Shape.TILE) {
+        val power = GlassButton(I18n.text(R.string.i18n_controlcenter_001), R.drawable.ic_power, Shape.TILE, unavailableInMantis = true) {
             confirm(I18n.text(R.string.i18n_controlcenter_002), I18n.text(R.string.i18n_controlcenter_003)) { Cleaner.shutdown(ctx) }
         }
         top.addView(power, LinearLayout.LayoutParams(0, cell * 2 + gap, 1f).apply { marginEnd = gap })
@@ -287,24 +288,24 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
             runCatching { ctx.startActivity(tv.wifiIntent()) }
         }
         right.addView(networkModule, LinearLayout.LayoutParams(-1, cell))
-        right.addView(GlassButton(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_005)), R.drawable.ic_moon, Shape.CAPSULE) { needAdb { close(); Cleaner.sleep(ctx) } },
+        right.addView(GlassButton(I18n.text(R.string.i18n_controlcenter_005), R.drawable.ic_moon, Shape.CAPSULE, unavailableInMantis = true) { needAdb { close(); Cleaner.sleep(ctx) } },
             LinearLayout.LayoutParams(-1, cell).apply { topMargin = gap })
         top.addView(right, LinearLayout.LayoutParams(0, -2, 1f))
         generalPage.addView(top)
 
         val utilities = LinearLayout(ctx).apply { orientation = LinearLayout.HORIZONTAL; clipChildren = false }
-        fun utility(label: String, icon: Int, action: () -> Unit): GlassButton =
-            GlassButton(label, icon, Shape.ROUND, action = action).also {
+        fun utility(label: String, icon: Int, unavailableInMantis: Boolean = false, action: () -> Unit): GlassButton =
+            GlassButton(label, icon, Shape.ROUND, unavailableInMantis = unavailableInMantis, action = action).also {
                 utilities.addView(it, LinearLayout.LayoutParams(cell, cell).apply {
                     if (utilities.childCount > 0) marginStart = (this@ControlCenter.width - cell * 4) / 3
                 })
             }
-        memButton = utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_006)), R.drawable.ic_memory) { cleanNow() }
+        memButton = utility(I18n.text(R.string.i18n_controlcenter_006), R.drawable.ic_memory, unavailableInMantis = true) { cleanNow() }
         utility(I18n.text(R.string.i18n_controlcenter_007), R.drawable.ic_photo) {
             close()
             ctx.openFrame()
         }
-        utility(MantisExperiment.unavailableLabel(I18n.text(R.string.i18n_controlcenter_008)), R.drawable.ic_restart) {
+        utility(I18n.text(R.string.i18n_controlcenter_008), R.drawable.ic_restart, unavailableInMantis = true) {
             confirm(I18n.text(R.string.i18n_controlcenter_009), I18n.text(R.string.i18n_controlcenter_010)) { Cleaner.reboot(ctx) }
         }
         utility(I18n.text(R.string.i18n_controlcenter_011), R.drawable.ic_gear) {
@@ -873,6 +874,7 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
         icon: Int,
         shape: Shape,
         private val accent: Int = Color.WHITE,
+        unavailableInMantis: Boolean = false,
         action: () -> Unit,
     ) : LinearLayout(ctx) {
         // Capsules and circles clamp this to half their height.
@@ -882,27 +884,42 @@ class ControlCenter(private val home: HomeActivity, private val host: FrameLayou
             applyInk(isFocused)
         }
         private val glyph = ImageView(ctx)
-        val title = ctx.text(12.5f, weight = 600).apply { text = label; maxLines = 1 }
+        private val unavailable = unavailableInMantis && MantisExperiment.enabled
+        val title = ctx.text(12.5f, weight = 600).apply {
+            text = label
+            maxLines = if (shape == Shape.TILE) 2 else 1
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            if (shape == Shape.TILE) gravity = Gravity.CENTER
+        }
         val sub = ctx.text(10.5f, Color.argb(205, 255, 255, 255), weight = 500).apply {
-            visibility = GONE
+            visibility = if (unavailable) VISIBLE else GONE
+            if (unavailable) text = I18n.text(R.string.mantis_unavailable)
             maxLines = 1
             ellipsize = android.text.TextUtils.TruncateAt.END
+            if (shape == Shape.TILE) gravity = Gravity.CENTER
         }
         init {
             id = View.generateViewId()
-            contentDescription = label
+            contentDescription = if (unavailable) MantisExperiment.unavailableLabel(label) else label
             focusables += this
             orientation = if (shape == Shape.CAPSULE) HORIZONTAL else VERTICAL
             gravity = if (shape == Shape.CAPSULE) Gravity.CENTER_VERTICAL else Gravity.CENTER
             isFocusable = true
             isClickable = true
-            if (shape == Shape.CAPSULE) setPadding(ctx.dp(13), 0, ctx.dp(10), 0)
+            if (shape == Shape.CAPSULE) setPadding(ctx.dp(if (unavailable) 9 else 13), 0, ctx.dp(if (unavailable) 8 else 10), 0)
             val size = ctx.dp(when (shape) { Shape.TILE -> 40; Shape.CAPSULE -> 20; Shape.ROUND -> 21 })
             addView(glyph.apply { setImageResource(icon); setColorFilter(accent) },
-                LayoutParams(size, size).apply { if (shape == Shape.CAPSULE) marginEnd = ctx.dp(9) })
+                LayoutParams(size, size).apply { if (shape == Shape.CAPSULE) marginEnd = ctx.dp(if (unavailable) 6 else 9) })
             // Round buttons are icon-only, as on tvOS; the label stays for accessibility.
             when (shape) {
-                Shape.TILE -> addView(title, LayoutParams(-2, -2).apply { topMargin = ctx.dp(8) })
+                Shape.TILE -> {
+                    addView(title, LayoutParams(-1, -2).apply {
+                        topMargin = ctx.dp(8); marginStart = ctx.dp(8); marginEnd = ctx.dp(8)
+                    })
+                    addView(sub, LayoutParams(-1, -2).apply {
+                        topMargin = ctx.dp(2); marginStart = ctx.dp(8); marginEnd = ctx.dp(8)
+                    })
+                }
                 Shape.CAPSULE -> addView(LinearLayout(ctx).apply {
                     orientation = VERTICAL
                     addView(title)
